@@ -84,8 +84,8 @@ namespace VNEngine
         {
             if (active && cur_node > 0)
             {
-                UIManager.ui_manager.text_panel.text = "";
-                UIManager.ui_manager.speaker_panel.text = "";
+                UIManager.ui_manager.dialogue_text.text = "";
+                UIManager.ui_manager.speaker_name_text.text = "";
                 all_nodes[cur_node].Stop_Node();
                 cur_node--;
                 Start_Node();

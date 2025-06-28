@@ -9,10 +9,10 @@ public class ClickOutsideToClose : MonoBehaviour
 {
 
     public bool ContinueConversationOnClick = false;
-
+    public GameObject defaultSelectionOnClose;
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2) || Input.GetKey(KeyCode.Escape))
         {
             this.gameObject.SetActive(ClickingSelfOrChild());
             if(ContinueConversationOnClick)
@@ -31,6 +31,7 @@ public class ClickOutsideToClose : MonoBehaviour
                 return true;
             };
         }
+        EventSystem.current.SetSelectedGameObject(defaultSelectionOnClose);
         return false;
     }
 }

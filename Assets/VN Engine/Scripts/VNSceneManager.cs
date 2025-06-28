@@ -279,19 +279,19 @@ namespace VNEngine
             PlayerPrefs.SetInt("TextAutosize", System.Convert.ToInt32(toggle));
 
             if (UIManager.ui_manager.text_autosize != null
-                && UIManager.ui_manager.text_panel != null)
+                && UIManager.ui_manager.dialogue_text != null)
             {
                 UIManager.ui_manager.text_autosize.isOn = toggle;
                 if (toggle)
                 {
                     // Turn on best fit
-                    UIManager.ui_manager.text_panel.resizeTextForBestFit = true;
+                    UIManager.ui_manager.dialogue_text.resizeTextForBestFit = true;
                     UIManager.ui_manager.text_size_slider.interactable = false;
                 }
                 else
                 {
                     // Turn off best fit for manual sizing
-                    UIManager.ui_manager.text_panel.resizeTextForBestFit = false;
+                    UIManager.ui_manager.dialogue_text.resizeTextForBestFit = false;
                     UIManager.ui_manager.text_size_slider.interactable = true;
                 }
             }
@@ -306,8 +306,8 @@ namespace VNEngine
             if (UIManager.ui_manager.text_size_slider != null)
                 UIManager.ui_manager.text_size_slider.value = text_size;
 
-            if (UIManager.ui_manager.text_panel != null)
-                UIManager.ui_manager.text_panel.fontSize = text_size;
+            if (UIManager.ui_manager.dialogue_text != null)
+                UIManager.ui_manager.dialogue_text.fontSize = text_size;
         }
 
 

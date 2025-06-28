@@ -21,8 +21,11 @@ namespace VNEngine
         public Font[] fonts;
 
         public Transform actor_parent;
-        public Text text_panel;
-        public Text speaker_panel;
+        public RectTransform dialogue_text_panel_container; // the actual full panel
+        public Text dialogue_text; // the Text inside
+
+        public RectTransform speaker_panel_container;
+        public Text speaker_name_text;
         public GameObject choice_panel;
         public Image background;    // Background image
         public Image foreground;    // Image appears in front of ALL ui elements
@@ -71,7 +74,131 @@ namespace VNEngine
         public Canvas canvas;
         public float canvas_width;
         public float canvas_height;
+        private string lastSpeakerName = "";
+        private string lastSpeakerNameForDialogueText = "";
 
+        public void MoveSpeakerPanelToActor(string actorName)
+        {
+            if (lastSpeakerName == actorName)
+                return; // No need to animate again
+
+            lastSpeakerName = actorName;
+
+            Actor actor = ActorManager.Get_Actor(actorName);
+
+            if (speaker_panel_container.anchorMin != new Vector2(0.5f, 1f))
+            {
+                speaker_panel_container.anchorMin = new Vector2(0.5f, 1f);
+                speaker_panel_container.anchorMax = new Vector2(0.5f, 1f);
+                speaker_panel_container.pivot = new Vector2(0.5f, 1f);
+            }
+
+            if (actor == null)
+            {
+                Debug.LogWarning($"Actor {actorName} not found. Centering Speaker Panel.");
+                Vector2 centerPosition = speaker_panel_container.anchoredPosition;
+                centerPosition.x = 0;
+                StopAllCoroutines();
+                StartCoroutine(SmoothMoveSpeakerPanel(centerPosition));
+                return;
+            }
+
+            // ✨ Convert the Actor's World Position into Canvas Space
+            Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, actor.transform.position);
+
+            Vector2 localPoint;
+            RectTransform canvasRect = speaker_panel_container.root.GetComponent<Canvas>().GetComponent<RectTransform>();
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, Camera.main, out localPoint);
+
+            Vector2 targetPosition = speaker_panel_container.anchoredPosition;
+            targetPosition.x = Mathf.Clamp(localPoint.x, -canvas_width / 2 + 150, canvas_width / 2 - 150);
+
+            StopAllCoroutines();
+            StartCoroutine(SmoothMoveSpeakerPanel(targetPosition));
+        }
+
+private IEnumerator SmoothMoveSpeakerPanel(Vector2 targetPosition)
+{
+    RectTransform speakerRect = speaker_panel_container.GetComponent<RectTransform>();
+    CanvasGroup speakerCanvasGroup = speaker_panel_container.GetComponent<CanvasGroup>();
+
+    if (speakerCanvasGroup == null)
+        speakerCanvasGroup = speaker_panel_container.gameObject.AddComponent<CanvasGroup>();
+
+    Vector2 startPos = speakerRect.anchoredPosition;
+    float moveTime = 0f;
+    float moveDuration = 0.3f;
+
+    Vector3 originalScale = Vector3.one;
+    Vector3 targetScale = originalScale * 1.1f; // Grow slightly during movement
+
+    // Fade out at start (optional)
+    speakerCanvasGroup.alpha = 0f;
+
+    // === MOVEMENT AND BOUNCE ===
+    while (moveTime < moveDuration)
+    {
+        moveTime += Time.deltaTime;
+
+        float t = moveTime / moveDuration;
+
+        // Smoothstep for natural ease in/out
+        t = t * t * (3f - 2f * t);
+
+        speakerRect.anchoredPosition = Vector2.Lerp(startPos, targetPosition, t);
+
+        // Gentle grow and shrink (optional mini-bounce)
+        if (t < 0.5f)
+            speakerRect.localScale = Vector3.Lerp(originalScale, targetScale, t * 2f);
+        else
+            speakerRect.localScale = Vector3.Lerp(targetScale, originalScale, (t - 0.5f) * 2f);
+
+        // Fade in
+        speakerCanvasGroup.alpha = Mathf.Clamp01(t);
+
+        yield return null;
+    }
+
+    speakerRect.anchoredPosition = targetPosition;
+    speakerRect.localScale = originalScale;
+    speakerCanvasGroup.alpha = 1f;
+
+    // === ARRIVAL SQUASH STRETCH ===
+    // Little squash at the end for polish
+    Vector3 squashed = new Vector3(1.15f, 0.85f, 1f);
+    Vector3 stretched = new Vector3(0.9f, 1.1f, 1f);
+
+    float squashDuration = 0.1f;
+    float squashTime = 0f;
+
+    while (squashTime < squashDuration)
+    {
+        squashTime += Time.deltaTime;
+        float t = squashTime / squashDuration;
+        speakerRect.localScale = Vector3.Lerp(originalScale, squashed, t);
+        yield return null;
+    }
+
+    squashTime = 0f;
+    while (squashTime < squashDuration)
+    {
+        squashTime += Time.deltaTime;
+        float t = squashTime / squashDuration;
+        speakerRect.localScale = Vector3.Lerp(squashed, stretched, t);
+        yield return null;
+    }
+
+    squashTime = 0f;
+    while (squashTime < squashDuration)
+    {
+        squashTime += Time.deltaTime;
+        float t = squashTime / squashDuration;
+        speakerRect.localScale = Vector3.Lerp(stretched, originalScale, t);
+        yield return null;
+    }
+
+    speakerRect.localScale = originalScale;
+}
 
         void Awake()
         {
@@ -92,6 +219,106 @@ namespace VNEngine
 
             // Get the current language stored in player prefs
             Set_Language(PlayerPrefs.GetString("Language", LocalizationManager.Supported_Languages[0]));
+        }
+
+        public void AnimateDialogueTextPanel(string currentSpeakerName)
+        {
+            // Only animate if the speaker has changed
+            if (lastSpeakerNameForDialogueText == currentSpeakerName)
+                return; // Same speaker, don't reanimate
+
+            lastSpeakerNameForDialogueText = currentSpeakerName;
+
+            RectTransform dialogueRect = dialogue_text_panel_container;
+            CanvasGroup dialogueCanvasGroup = dialogue_text_panel_container.GetComponent<CanvasGroup>();
+
+            if (dialogueCanvasGroup == null)
+                dialogueCanvasGroup = dialogue_text_panel_container.gameObject.AddComponent<CanvasGroup>();
+
+            Vector2 originalPosition = dialogueRect.anchoredPosition;
+            Vector2 startPosition = originalPosition + new Vector2(0, -30f); // slide up by 30 pixels
+            dialogueRect.anchoredPosition = startPosition;
+
+            dialogueCanvasGroup.alpha = 0f;
+
+            StopCoroutine("AnimateDialogueRoutine");
+            StartCoroutine(AnimateDialogueRoutine(dialogueRect, originalPosition, dialogueCanvasGroup));
+        }
+
+        private IEnumerator AnimateDialogueRoutine(RectTransform rect, Vector2 targetPos, CanvasGroup canvasGroup)
+        {
+            float time = 0f;
+            float duration = 0.3f; // same as speaker panel movement
+
+            Vector2 startPos = rect.anchoredPosition;
+
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                float t = time / duration;
+
+                // Use smoothstep for natural easing
+                t = t * t * (3f - 2f * t);
+
+                rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, t);
+                canvasGroup.alpha = Mathf.Clamp01(t);
+
+                yield return null;
+            }
+
+            rect.anchoredPosition = targetPos;
+            canvasGroup.alpha = 1f;
+        }
+        public void AnimateChoiceButtons(List<Button> buttons)
+        {
+            StartCoroutine(AnimateChoiceButtonsRoutine(buttons));
+        }
+
+        private IEnumerator AnimateChoiceButtonsRoutine(List<Button> buttons)
+        {
+            float delayBetweenButtons = 0.05f; // 50 ms between each button appearance
+            float duration = 0.3f; // how long each button takes to animate in
+
+            foreach (Button btn in buttons)
+            {
+                RectTransform rect = btn.GetComponent<RectTransform>();
+                CanvasGroup cg = btn.GetComponent<CanvasGroup>();
+
+                if (cg == null)
+                    cg = btn.gameObject.AddComponent<CanvasGroup>();
+
+                Vector2 originalPos = rect.anchoredPosition;
+                Vector2 startPos = originalPos + new Vector2(0, -30f); // start 30 pixels lower
+                rect.anchoredPosition = startPos;
+
+                cg.alpha = 0f;
+
+                StartCoroutine(AnimateSingleChoiceButton(rect, originalPos, cg, duration));
+
+                yield return new WaitForSeconds(delayBetweenButtons);
+            }
+        }
+
+        private IEnumerator AnimateSingleChoiceButton(RectTransform rect, Vector2 targetPos, CanvasGroup cg, float duration)
+        {
+            float time = 0f;
+            Vector2 startPos = rect.anchoredPosition;
+
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                float t = time / duration;
+
+                t = t * t * (3f - 2f * t); // smoothstep for nice easing
+
+                rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, t);
+                cg.alpha = Mathf.Clamp01(t);
+
+                yield return null;
+            }
+
+            rect.anchoredPosition = targetPos;
+            cg.alpha = 1f;
         }
 
 
@@ -229,4 +456,6 @@ namespace VNEngine
             yield break;
         }
     }
+    
+    
 }

@@ -22,7 +22,7 @@ namespace VNEngine
         {
             thoughtIndex = 0; // Reset the thought index
             thinking = true; // Ensure thinking is set to true
-            nextThoughtTime = Time.time + timeBetweenThoughts; // Initialize nextThoughtTime
+            nextThoughtTime = Time.time; // Initialize nextThoughtTime
 
             thought.gameObject.SetActive(true);
             thought.SetCharacter(characterImage);
@@ -47,6 +47,7 @@ namespace VNEngine
                     {
                         if (thoughtIndex != 0)
                         {
+                            Debug.Log("Fading Out Previous Thought");
                             // Fade out previous thought
                             thought.FadeOutText();
                             yield return new WaitForSeconds(timeBetweenThoughts);
@@ -81,6 +82,7 @@ namespace VNEngine
 
             VNSceneManager.Waiting_till_true = true;
             thought.gameObject.SetActive(false);
+            Debug.Log("Waiting is over, setting true: " + gameObject.name);
             base.Finish_Node();
         }
     }

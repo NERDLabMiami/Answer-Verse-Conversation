@@ -12,7 +12,19 @@ namespace VNEngine
         // Called initially when the node is run, put most of your logic here
         public override void Run_Node()
         {
-            StatsManager.Set_Numbered_Stat("week", week);
+            //Check the current week
+            float currentWeek = StatsManager.Get_Numbered_Stat("Week");
+            Debug.Log($"It's week {currentWeek}");
+            //If our previous save point is earlier than the minimum week advancement, we update the week.
+            if (currentWeek < week)
+            {
+                Debug.Log($"Advancing to Week {week}");
+                StatsManager.Set_Numbered_Stat("Week", week);
+            }
+            else
+            {
+                Debug.Log($"Keeping week {week}");
+            }
             CheckpointManager.SaveCheckpoint();
             Finish_Node();
         }

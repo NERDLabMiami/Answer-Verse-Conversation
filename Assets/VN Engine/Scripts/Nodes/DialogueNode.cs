@@ -52,10 +52,12 @@ namespace VNEngine
 
             running = true;
 
-            UIManager.ui_manager.text_panel.text = "";
+            UIManager.ui_manager.dialogue_text.text = "";
 
             // Get localized text and sub in Stats values
             GetLocalizedText(false);
+            UIManager.ui_manager.MoveSpeakerPanelToActor(actual_actor);
+            UIManager.ui_manager.AnimateDialogueTextPanel(actual_actor);
 
             StartCoroutine(Animate_Text(text));
 
@@ -100,7 +102,7 @@ namespace VNEngine
                 // instead of waiting it all to appear. User must click again to finish this dialogue piece.
                 done_printing = true;
                 StopAllCoroutines();
-                UIManager.ui_manager.text_panel.text = text;
+                UIManager.ui_manager.dialogue_text.text = text;
                 Canvas.ForceUpdateCanvases();
             }
         }
@@ -133,8 +135,8 @@ namespace VNEngine
 
             if (clear_text_after)
             {
-                UIManager.ui_manager.speaker_panel.text = "";
-                UIManager.ui_manager.text_panel.text = "";
+                UIManager.ui_manager.speaker_name_text.text = "";
+                UIManager.ui_manager.dialogue_text.text = "";
             }
 
             done_printing = false;
@@ -162,25 +164,25 @@ namespace VNEngine
 
                 // NEWLINE CHECK
                 // Check if this word will become too big and needs to be put on a new line
-                int line_count = UIManager.ui_manager.text_panel.cachedTextGenerator.lineCount;
+                int line_count = UIManager.ui_manager.dialogue_text.cachedTextGenerator.lineCount;
                 // Remove any formatting tags, as they don't count for line length
                 string non_formatted_word = Regex.Replace(cur_word, "<.*?>", string.Empty) + Get_All_Current_Formatting_Tags();
                 if (!string.IsNullOrEmpty(finalized_text))
                 {
                     finalized_text += " ";
-                    UIManager.ui_manager.text_panel.text = finalized_text + non_formatted_word;
+                    UIManager.ui_manager.dialogue_text.text = finalized_text + non_formatted_word;
                 }
                 else
-                    UIManager.ui_manager.text_panel.text = non_formatted_word;
+                    UIManager.ui_manager.dialogue_text.text = non_formatted_word;
 
                 Canvas.ForceUpdateCanvases();
-                int check_line_count = UIManager.ui_manager.text_panel.cachedTextGenerator.lineCount;
+                int check_line_count = UIManager.ui_manager.dialogue_text.cachedTextGenerator.lineCount;
 
                 if (check_line_count > line_count && line_count > 0)
                 {
                     finalized_text += "\n";
                 }
-                UIManager.ui_manager.text_panel.text = finalized_text;
+                UIManager.ui_manager.dialogue_text.text = finalized_text;
                 // END NEWLINE CHECK
 
 
@@ -255,7 +257,7 @@ namespace VNEngine
                         AudioManager.audio_manager.Play_Talking_Beep(talking_beeps);
                     }
 
-                    UIManager.ui_manager.text_panel.text = finalized_text + Get_All_Current_Formatting_Tags();
+                    UIManager.ui_manager.dialogue_text.text = finalized_text + Get_All_Current_Formatting_Tags();
 
                     if (VNSceneManager.text_scroll_speed != 0)
                         yield return new WaitForSeconds(VNSceneManager.text_scroll_speed);
@@ -313,7 +315,7 @@ namespace VNEngine
                 //     }
                 // }
 
-                UIManager.ui_manager.speaker_panel.text = speaker_title;
+                UIManager.ui_manager.speaker_name_text.text = speaker_title;
             }
 
 
@@ -333,7 +335,7 @@ namespace VNEngine
 
                 // If done printing, just change the text
                 if (!force_change && done_printing)
-                    UIManager.ui_manager.text_panel.text = text;
+                    UIManager.ui_manager.dialogue_text.text = text;
 
                 if (force_change && !done_printing)
                 {
@@ -343,7 +345,7 @@ namespace VNEngine
                 // Go through text, checking to see if we need to insert Stats values
                 text = Insert_Stats_into_Text(text);
 
-                UIManager.ui_manager.text_panel.text = text;
+                UIManager.ui_manager.dialogue_text.text = text;
             }
             else
             {

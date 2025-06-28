@@ -20,10 +20,10 @@ namespace VNEngine
 
         IEnumerator Remove_Text_One_Character_At_A_Time()
         {
-            while (UIManager.ui_manager.text_panel.text.Length != 0)
+            while (UIManager.ui_manager.dialogue_text.text.Length != 0)
             {
                 // Remove the last character of text
-                UIManager.ui_manager.text_panel.text = UIManager.ui_manager.text_panel.text.Remove(UIManager.ui_manager.text_panel.text.Length - 1);
+                UIManager.ui_manager.dialogue_text.text = UIManager.ui_manager.dialogue_text.text.Remove(UIManager.ui_manager.dialogue_text.text.Length - 1);
 
                 if (beeps != null)
                     AudioManager.audio_manager.Play_Talking_Beep(beeps);

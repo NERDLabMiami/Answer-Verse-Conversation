@@ -36,6 +36,7 @@ namespace VNEngine
             {
                 case Stat_Type.Set_Number:
                     StatsManager.Set_Numbered_Stat(stat_name, set_number_to);
+                    Debug.Log($"Setting Stat: [{stat_name}] to {set_number_to}");
                     break;
                 case Stat_Type.Modify_Number:
                     StatsManager.Add_To_Numbered_Stat(stat_name, modify_number_amount);
@@ -51,8 +52,8 @@ namespace VNEngine
                     break;
             }
 
-            if (print_all_stats_to_console)
-                StatsManager.Print_All_Stats();
+//            if (print_all_stats_to_console)
+//                StatsManager.Print_All_Stats();
 
             Finish_Node();
         }

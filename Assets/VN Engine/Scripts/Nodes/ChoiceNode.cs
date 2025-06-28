@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
-
+using System;
 
 namespace VNEngine
 {
@@ -24,9 +25,11 @@ namespace VNEngine
     // Each choice leads to a prescribed conversation.
     public class ChoiceNode : Node
     {
+        public Dictionary<int, string> originalOrder = new Dictionary<int, string>();
+        public List<int> randomizedOrder = new List<int>();
         // DO NOT CHANGE: is the maximum number of choices. Dictated by the number of ChoiceButtons listed in the UIManager. You shouldn't ever need more than 20 buttons.
         public static int max_number_of_buttons = 6;
-
+        
         [HideInInspector]
         public string Name_Of_Choice;   // Text that appears at the top of the choices menu. Ex: I'm at a crossroads. Which way should I go?
         [HideInInspector]
@@ -52,7 +55,7 @@ namespace VNEngine
         [HideInInspector]
         public bool[] Choice_Been_Clicked_Before = new bool[max_number_of_buttons];
         [HideInInspector]
-        public Select_Default_Choice default_selection = Select_Default_Choice.None;
+        public Select_Default_Choice default_selection = Select_Default_Choice.Top_Choice;
 
 
 
@@ -91,10 +94,11 @@ namespace VNEngine
             //            Debug.Log(UIManager.ui_manager.choice_buttons.Length);
 
             //           default_button_flexible_height = UIManager.ui_manager.choice_buttons[0].GetComponent<LayoutElement>().preferredHeight;
-                   }
+            default_selection = Select_Default_Choice.Top_Choice;
+    }
 
 
-        public override void Run_Node()
+    public override void Run_Node()
         {
             StartCoroutine(Running());
         }
@@ -120,6 +124,7 @@ namespace VNEngine
             // add call to Finish_Node() on the OnClick() listener and hook up the choices buttons to the events on this node
             for (int x = 0; x < Number_Of_Choices; x++)
             {
+                originalOrder[x] = Button_Text[x];
                 if (Button_Events[x].GetPersistentEventCount() > 0)
                 {
                     // Set a button image for this button if we have one
@@ -260,7 +265,7 @@ namespace VNEngine
             if (randomize_choices_order)
                 RandomizeButtonOrder();
 
-            
+//SET DEFAULT
             // Set which choice should be select by default
             if (default_selection == Select_Default_Choice.Top_Choice
                 || default_selection == Select_Default_Choice.Bottom_Choice)
@@ -289,6 +294,7 @@ namespace VNEngine
                     }
                 }
 
+
                 if (default_selection == Select_Default_Choice.Top_Choice 
                     && topmost_choice != null)
                     SelectChoice(topmost_choice.gameObject);
@@ -300,12 +306,31 @@ namespace VNEngine
             {
                 GetComponent<TimedChoiceNode>().Run_Node();
             }
+            // Gather active buttons
+            List<Button> activeButtons = new List<Button>();
+            foreach (Button b in UIManager.ui_manager.choice_buttons)
+            {
+                if (b.gameObject.activeInHierarchy)
+                {
+                    activeButtons.Add(b);
+                }
+            }
+
+// Animate them
+            UIManager.ui_manager.AnimateChoiceButtons(activeButtons);
+            if (activeButtons.Count > 0)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(activeButtons[0].gameObject);
+            }
+
         }
 
 
         public void SelectChoice(GameObject choice)
         {
             EventSystem.current.SetSelectedGameObject(null);
+            Debug.Log("Setting Choice to " + choice.name);
             EventSystem.current.SetSelectedGameObject(choice);
         }
 
@@ -347,15 +372,27 @@ namespace VNEngine
         }
 
 
-public void RandomizeButtonOrder()
+        public void RandomizeButtonOrder()
+        
         {
             Debug.Log("Randomizing choices button order");
+            randomizedOrder.Clear();
+            for (int x = 0; x < Number_Of_Choices; x++)
+            {
+                randomizedOrder.Add(x);
+            }
 
             for (int x = 0; x < Number_Of_Choices; x++)
             {
                 if (UIManager.ui_manager.choice_buttons[x].gameObject.activeSelf)
-                    UIManager.ui_manager.choice_buttons[x].transform.SetSiblingIndex(Random.Range(1, Number_Of_Choices + 1));
+                {                  
+                    int randomIndex = UnityEngine.Random.Range(0, randomizedOrder.Count);
+                    int choiceIndex = randomizedOrder[randomIndex];
+                    UIManager.ui_manager.choice_buttons[x].transform.SetSiblingIndex(randomIndex);
+
+                }
             }
+            Debug.Log("Randomized order: " + string.Join(", ", randomizedOrder));
         }
         public void UnrandomizeButtonOrder()
         {
@@ -384,15 +421,65 @@ public void RandomizeButtonOrder()
         public void Clear_Choices()
         {
             Debug.Log("Clearing Choices");
+
+            // Check VNSceneManager
+            if (VNSceneManager.current_conversation == null)
+            {
+                Debug.LogError("VNSceneManager.current_conversation is null.");
+                return;
+            }
+
+            if (VNSceneManager.current_conversation.Get_Current_Node() == null)
+            {
+                Debug.LogError("VNSceneManager.current_conversation.Get_Current_Node() returned null.");
+                return;
+            }
+
+            // Check UIManager
+            if (UIManager.ui_manager == null)
+            {
+                Debug.LogError("UIManager.ui_manager is null.");
+                return;
+            }
+
+            // Check choice_buttons array
+            if (UIManager.ui_manager.choice_buttons == null)
+            {
+                Debug.LogError("UIManager.ui_manager.choice_buttons is null.");
+                return;
+            }
+
+            // Ensure choice_buttons array has the expected size
+            if (UIManager.ui_manager.choice_buttons.Length < ChoiceNode.max_number_of_buttons)
+            {
+                Debug.LogError($"UIManager.ui_manager.choice_buttons array size is too small. Expected {ChoiceNode.max_number_of_buttons}, got {UIManager.ui_manager.choice_buttons.Length}.");
+                return;
+            }
+
             if (VNSceneManager.current_conversation.Get_Current_Node().GetType() != this.GetType()) // Don't clear the choices if the next node is a Choice node
             {
                 // Loop through every button
+                // Check each button in the array
                 for (int x = 0; x < ChoiceNode.max_number_of_buttons; x++)
                 {
+                    if (UIManager.ui_manager.choice_buttons[x] == null)
+                    {
+                        Debug.LogError($"UIManager.ui_manager.choice_buttons[{x}] is null.");
+                        continue;
+                    }
+
                     // Remove event listeners from buttons
                     UIManager.ui_manager.choice_buttons[x].onClick.RemoveAllListeners();
+
                     // Set all choice buttons to inactive
                     UIManager.ui_manager.choice_buttons[x].gameObject.SetActive(false);
+                }
+
+                // Check choice_panel
+                if (UIManager.ui_manager.choice_panel == null)
+                {
+                    Debug.LogError("UIManager.ui_manager.choice_panel is null.");
+                    return;
                 }
 
                 // Hide choice UI
@@ -433,11 +520,52 @@ public void RandomizeButtonOrder()
         // Record this specific choice has been clicked before
         public void Choice_Clicked(int choice_number)
         {
-            if (randomize_choices_order)
-                UnrandomizeButtonOrder();
+            try
+            {
+                Debug.Log($"Choice_Clicked called with choice_number: {choice_number}");
 
-            Choice_Been_Clicked_Before[choice_number] = true;
-            StatsManager.Set_Boolean_Stat(Name_Of_Choice + ": " + Button_Text[choice_number], true);
+                if (randomize_choices_order)
+                {
+                    Debug.Log("Unrandomizing button order.");
+                    UnrandomizeButtonOrder();
+                }
+
+                if (Choice_Been_Clicked_Before == null || Choice_Been_Clicked_Before.Length <= choice_number)
+                {
+                    Debug.LogError($"Choice_Been_Clicked_Before array is null or out of bounds. Length: {Choice_Been_Clicked_Before?.Length}, choice_number: {choice_number}");
+                    return;
+                }
+
+                Choice_Been_Clicked_Before[choice_number] = true;
+
+                if (Button_Text == null || Button_Text.Length <= choice_number)
+                {
+                    Debug.LogError($"Button_Text array is null or out of bounds. Length: {Button_Text?.Length}, choice_number: {choice_number}");
+                    return;
+                }
+
+                StatsManager.Set_Boolean_Stat(Name_Of_Choice + ": " + Button_Text[choice_number], true);
+
+                if (originalOrder == null || randomizedOrder == null)
+                {
+                    Debug.LogError($"originalOrder or randomizedOrder is null. originalOrder: {originalOrder}, randomizedOrder: {randomizedOrder}");
+                    return;
+                }
+                Debug.Log("ORDER: " + originalOrder.ToString());
+                Debug.Log("RANDOM ORDER: " + randomizedOrder.ToString());
+                //OPEN GAME DATA LOGGING IS CURRENTLY OFF. UNCOMMENT TO ADD.
+                if (Logging.Instance != null)
+                {
+                    // Logging.Instance.LogPlayerChoice(Name_Of_Choice, choice_number, originalOrder, randomizedOrder);
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"An error occurred in Choice_Clicked: {ex.Message}\n{ex.StackTrace}");
+            }
         }
 
 

@@ -8,7 +8,7 @@ namespace VNEngine
     {
         public override void Run_Node()
         {
-            UIManager.ui_manager.text_panel.gameObject.SetActive(false);
+            UIManager.ui_manager.dialogue_text.gameObject.SetActive(false);
 
             Finish_Node();
         }

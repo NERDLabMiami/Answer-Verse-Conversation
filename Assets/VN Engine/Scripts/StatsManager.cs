@@ -29,7 +29,6 @@ namespace VNEngine
         // Returns 0 if the stat is not present in the dictionaries
         public static float Get_Numbered_Stat(string stat_name)
         {
-            Debug.Log("GOT: " + stat_name);
             // Check if stat_name is null or empty
             if (string.IsNullOrEmpty(stat_name))
             {
@@ -119,13 +118,20 @@ namespace VNEngine
             bool result = false;
             // Check if it meets the requirements
             float stat = StatsManager.Get_Numbered_Stat(stat_name);
+            Debug.Log($"{stat_name} is {stat}.");
             switch (than)
             {
                 case Float_Stat_Comparator.Greater_than:
+                    Debug.Log($"{stat_name} is {stat}. Greater!");
+
                     result = stat > value;
                     break;
                 case Float_Stat_Comparator.Less_than:
+                    Debug.Log($"{stat_name} is {stat}. Less!!");
                     result = stat < value;
+                    break;
+                default:
+                    Debug.LogError($"{stat_name} is {stat}. Not a valid comparator.");
                     break;
             }
             return result;
