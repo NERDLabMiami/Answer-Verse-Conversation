@@ -11,10 +11,13 @@ namespace VNEngine
         public bool fade_out_previous_ambience;
         public float fadeOutTime = 1.0f;
 
-        public AudioClip new_ambience;
-
+//        public AudioClip new_ambience;
+        public string event_path;
         public override void Run_Node()
         {
+            
+            FMODAudioManager.Instance.PlayMusic(event_path);
+            /*
             if (new_ambience == AudioManager.audio_manager.ambience_audio_source.clip && AudioManager.audio_manager.ambience_audio_source.volume != 0)
             {
                 Debug.Log("Ambience is already playing", this.gameObject);
@@ -36,8 +39,10 @@ namespace VNEngine
                 // to be the child of MusicManager and have it play the AudioSource
                 Debug.Log("Setting ambience " + new_ambience.name);
                 AudioManager.audio_manager.Set_Ambience(new_ambience);
-                Finish_Node();
             }
+*/
+            Finish_Node();    
+            
         }
 
 
@@ -46,7 +51,7 @@ namespace VNEngine
         public IEnumerator Wait(float seconds)
         {
             yield return new WaitForSeconds(seconds);
-            AudioManager.audio_manager.Set_Ambience(new_ambience);
+           // AudioManager.audio_manager.Set_Ambience(new_ambience);
             Finish_Node();
         }
 

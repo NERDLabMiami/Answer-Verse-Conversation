@@ -2,16 +2,18 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using FMODUnity;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace VNEngine
 {
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager audio_manager;
-        public AudioSource background_music_audio_source;    // Music that plays in background. Only one track of music will ever be playing at once
-        public AudioSource voice_audio_source;    // Audio source playing the talking of the voice actors
-        public AudioSource ambience_audio_source;   // Rain falling, city streets, vague murmuring. Allows an extra layer of sounds to be used in addition to background_music
 
+        public StudioEventEmitter ambience_emitter;
+        public StudioEventEmitter voice_emitter;
+        public StudioEventEmitter background_emitter;
         bool muted = false;     // If muted, NO audio will play
         public GameObject sound_effect_prefab;  // Must be an object with an audiosource, and necessary for PlaySoundEffect nodes
 
@@ -60,8 +62,9 @@ namespace VNEngine
         // Fades out the current background music over seconds_it_takes_to_fade_out
         public IEnumerator Fade_Out_Music(float seconds_it_takes_to_fade_out)
         {
-
-            if (background_music_audio_source != null)
+background_emitter.EventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+/*
+if (background_music_audio_source != null)
             {
                 while (background_music_audio_source.volume > 0)
                 {
@@ -69,10 +72,14 @@ namespace VNEngine
                     yield return null;
                 }
             }
+  */
+            yield return null;
         }
         // Fades out the current background music over seconds_it_takes_to_fade_out
         public IEnumerator Fade_Out_Ambience(float seconds_it_takes_to_fade_out)
         {
+            ambience_emitter.EventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+            /*
             if (ambience_audio_source != null)
             {
                 while (ambience_audio_source.volume > 0)
@@ -81,24 +88,34 @@ namespace VNEngine
                     yield return null;
                 }
             }
+            */
+            yield return null;
+
         }
 
 
         // Starts the new background music and starts it playing
         public void Set_Music(AudioClip new_music)
         {
+            background_emitter.Play();
+            /*
+            
             background_music_audio_source.clip = new_music;
             background_music_audio_source.loop = true;
             background_music_audio_source.volume = music_volume;
             background_music_audio_source.Play();
+        */
         }
         // Starts the new ambience music and starts it playing
         public void Set_Ambience(AudioClip new_music)
         {
+            ambience_emitter.Play();
+            /*
             ambience_audio_source.clip = new_music;
             ambience_audio_source.loop = true;
             ambience_audio_source.volume = music_volume;
             ambience_audio_source.Play();
+        */
         }
 
 
@@ -118,26 +135,34 @@ namespace VNEngine
 
         public void Play_Voice_Clip(AudioClip voice_clip)
         {
+            voice_emitter.Play();
+/*
             voice_audio_source.Stop();
             voice_audio_source.clip = voice_clip;
             voice_audio_source.Play();
+  */
         }
 
 
         // Creates a new gameobject with its own AudioSource that destroys itself after the sound is done playing
         public void Play_Sound_Effect(AudioClip voice_clip)
         {
+            ambience_emitter.Play();
+/*
             GameObject sound_obj = Instantiate(sound_effect_prefab) as GameObject;
             AudioSource audio = sound_obj.GetComponent<AudioSource>();
             audio.clip = voice_clip;
             audio.playOnAwake = true;
             audio.volume = effects_volume;
+ */
         }
 
 
         // Called every time a character is printed to the screen, plays 1 instance of the given sound
         public void Play_Talking_Beep(AudioClip beep)
         {
+            voice_emitter.Play();
+            /*
             bool found_free_audiosource = false;
             foreach (AudioSource aud in talking_beeps_list)
             {
@@ -153,7 +178,9 @@ namespace VNEngine
             }
             if (!found_free_audiosource)
                 Debug.Log("Could not find silent AudioSource for Play_Talking_Beep to use. Please add more AudioSources to the talking_beeps_list in AudioManager", this.gameObject);
+        */
         }
+        
 
 
         // Volume options managed by the sliders in the pause menu
@@ -169,7 +196,7 @@ namespace VNEngine
         public void Voice_Volume_Changed(float new_volume)
         {
             voice_volume = new_volume;
-            voice_audio_source.volume = new_volume;
+            //voice_audio_source.volume = new_volume;
 
             // Change the talking beeps volume, as they count as voice volume
             foreach (AudioSource aud in talking_beeps_list)
@@ -181,11 +208,14 @@ namespace VNEngine
         }
         public void Music_Volume_Changed(float new_volume)
         {
+            background_emitter.EventInstance.setVolume(new_volume);
+/*
             music_volume = new_volume;
             background_music_audio_source.volume = new_volume;
             ambience_audio_source.volume = new_volume;
 
             SavePlayerPreference("MusicVolume", new_volume);
+  */
         }
         public void Effects_Volume_Changed(float new_volume)
         {

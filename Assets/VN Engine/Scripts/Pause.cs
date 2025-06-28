@@ -45,32 +45,38 @@ namespace VNEngine
 
 
         // Pause
-        public void PauseGame()
+        private void PauseGame()
         {
+         FMODAudioManager.Instance.Pause(true);   
             pause_menu.SetActive(true);
             Time.timeScale = 0;
             paused = true;
-
+/*
             if (pause_all_audio_when_paused)
                 AudioListener.pause = true;
             if (pause_voices_when_paused)
-                AudioManager.audio_manager.voice_audio_source.Pause();
+                //AudioManager.audio_manager.voice_audio_source.Pause();
             if (pause_music_when_paused)
-                AudioManager.audio_manager.background_music_audio_source.Pause();
+//
+            AudioManager.audio_manager.background_music_audio_source.Pause();
+  */
         }
         // Resume/Unpause
         public void ResumeGame()
         {
+            FMODAudioManager.Instance.Pause(false);   
+
             pause_menu.SetActive(false);
             Time.timeScale = 1;
             paused = false;
-
+/*
             if (pause_all_audio_when_paused)
                 AudioListener.pause = false;
             if (pause_voices_when_paused)
-                AudioManager.audio_manager.voice_audio_source.UnPause();
+  //              AudioManager.audio_manager.voice_audio_source.UnPause();
             if (pause_music_when_paused)
-                AudioManager.audio_manager.background_music_audio_source.UnPause();
+  //              AudioManager.audio_manager.background_music_audio_source.UnPause();
+  */
         }
 
 

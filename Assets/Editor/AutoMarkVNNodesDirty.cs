@@ -51,7 +51,10 @@ namespace VNEngine.EditorTools
             foreach (var node in nodes)
             {
                 EditorUtility.SetDirty(node);
-                EditorSceneManager.MarkSceneDirty(node.gameObject.scene);
+                if (!Application.isPlaying)
+                {
+                    EditorSceneManager.MarkSceneDirty(node.gameObject.scene);
+                }
             }
             Debug.Log($"[VNEngine] Automatically marked {nodes.Length} node(s) dirty ({reason}).");
         }

@@ -5,10 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12350360-3134-43e8-9848-a6e5f6e3da4c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/AutoMarkVNNodesDirty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/AutoMarkVNNodesDirty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/PathGeneratorEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/PathGeneratorEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/DialogueCanvas - Clean.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/DialogueCanvas - Clean.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterStageRouterNode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/JsonUtilityHack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NodeCheckpointCharacterStage.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/VN Engine Editor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Editor/VN Engine Editor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/AmbienceNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/AmbienceNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/ChangeMusic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/ChangeMusic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMap.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMapRemove.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMapRemove.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeNotification.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeNotification.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/SetMusicNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/SetMusicNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Pause.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Pause.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,30 +50,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2xPqOKFedeWBcypddvLj2UYWbUd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/2021.3.34f1/Unity.app/Contents/MacOS/Unity" />
+      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/2021.3.45f1/Unity.app/Contents/MacOS/Unity" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath $PROJECT_DIR$ -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -50,7 +81,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/2021.3.34f1/Unity.app/Contents/MacOS/Unity" />
+      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/2021.3.45f1/Unity.app/Contents/MacOS/Unity" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath $PROJECT_DIR$ -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -93,6 +124,7 @@
       <option name="presentableId" value="Default" />
       <updated>1747850023923</updated>
       <workItem from="1747850025320" duration="4117000" />
+      <workItem from="1751129634709" duration="5935000" />
     </task>
     <servers />
   </component>

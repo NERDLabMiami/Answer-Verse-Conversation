@@ -93,7 +93,7 @@ namespace VNEngine
                     // If possible, load the necessary resource
                     try
                     {
-                        node.new_music = Resources.Load<AudioClip>(split_line[1]);
+                        //node.new_music = Resources.Load<AudioClip>(split_line[1]);
                     }
                     catch (Exception e)
                     {

@@ -1,17 +1,21 @@
 using UnityEngine;
 using System.Collections;
+using System.Runtime.InteropServices;
 using VNEngine;
 
 namespace VNEngine
 {
     public class ChangeMusic : Node
     {
-
+        public string event_path;
         public override void Run_Node()
         {
+            FMODAudioManager.Instance.PlayMusic(event_path);
+/*
             StartCoroutine(AudioManager.audio_manager.Fade_Out_Music(5));
             AudioManager.audio_manager.Set_Music(gameObject.GetComponent<AudioSource>().clip);
             SaveManager.SetSaveFeature(this, AudioManager.audio_manager.background_music_audio_source.gameObject);
+  */
             Finish_Node();
         }
 

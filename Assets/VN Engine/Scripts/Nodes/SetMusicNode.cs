@@ -11,10 +11,11 @@ namespace VNEngine
         public bool fadeOutPreviousMusic;
         public float fadeOutTime = 1.0f;
 
-        public AudioClip new_music;
-
+//        public AudioClip new_music;
+        public string event_path;
         public override void Run_Node()
         {
+            /*
             if (new_music == null || new_music == AudioManager.audio_manager.background_music_audio_source.clip)
             {
                 SaveManager.RemoveSaveFeature(AudioManager.audio_manager.background_music_audio_source.gameObject);
@@ -37,6 +38,8 @@ namespace VNEngine
                 AudioManager.audio_manager.Set_Music(new_music);
                 Finish_Node();
             }
+            */
+            FMODAudioManager.Instance.PlayMusic(event_path);
         }
 
 
@@ -45,7 +48,7 @@ namespace VNEngine
         public IEnumerator Wait(float seconds)
         {
             yield return new WaitForSeconds(seconds);
-            AudioManager.audio_manager.Set_Music(new_music);
+         //   AudioManager.audio_manager.Set_Music(new_music);
             Finish_Node();
         }
 
