@@ -6,41 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12350360-3134-43e8-9848-a6e5f6e3da4c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Brad/CampusRep-Talk4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Campus Rep/CampusRep-Talk4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/AutoMarkVNNodesDirty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/AutoMarkVNNodesDirty.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/PathGeneratorEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/PathGeneratorEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/DialogueCanvas - Clean.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/DialogueCanvas - Clean.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterStageRouterNode.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/JsonUtilityHack.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NodeCheckpointCharacterStage.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/VN Engine Editor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Editor/VN Engine Editor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/AudioManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/AmbienceNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/AmbienceNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/ChangeMusic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/ChangeMusic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMap.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMap.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMapRemove.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeMapRemove.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeNotification.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/NodeNotification.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/SetMusicNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Nodes/SetMusicNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Pause.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VN Engine/Scripts/Pause.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +90,8 @@
       <option name="presentableId" value="Default" />
       <updated>1747850023923</updated>
       <workItem from="1747850025320" duration="4117000" />
-      <workItem from="1751129634709" duration="5935000" />
+      <workItem from="1751129634709" duration="9306000" />
+      <workItem from="1755210078775" duration="1000" />
     </task>
     <servers />
   </component>
