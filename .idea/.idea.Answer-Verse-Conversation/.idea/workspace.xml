@@ -7,6 +7,223 @@
     <list default="true" id="12350360-3134-43e8-9848-a6e5f6e3da4c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ButtonAnimationController - NoExpand.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ButtonAnimationController - NoExpand.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ButtonAnimationController.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ButtonAnimationController.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ScrollLogPanel.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ScrollLogPanel.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ScrollLogSlideUp.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/ScrollLogSlideUp.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/UIAnimation.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/UIAnimation.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/UISlideUp.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Animations/UISlideUp.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Automatic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Automatic.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/AutomaticOn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/AutomaticOn.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/BackBarOutline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/BackBarOutline.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/BackGradient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/BackGradient.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Black.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Black.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/ButtonOutline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/ButtonOutline.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Hide UI.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Hide UI.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Items.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Items.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/LoadingCircle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/LoadingCircle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Log.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Log.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Menu.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Mute_Icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Mute_Icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/SidewaysGradient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/SidewaysGradient.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Speaker_Icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Speaker_Icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Transparent.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/Transparent.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/check-mark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/check-mark.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/fast-forward.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Art/Menus/fast-forward.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/AlterStatNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/AlterStatNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/ChoiceNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/ChoiceNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/DialogueNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/DialogueNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/EnterActorNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/EnterActorNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/IfNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/IfNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/StaticImageNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/StaticImageNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/VN Engine Editor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/VN Engine Editor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/VideoNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/VideoNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/WaitNodeEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Editor/WaitNodeEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Localization.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Localization/ExampleLocalizedText-Tutorial.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Localization/ExampleLocalizedText-Tutorial.csv.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Localization/LocalizedUI.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Localization/LocalizedUI.csv.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Beau.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Beau.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Brad.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Brad.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Breanna.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Breanna.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Breanna2.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Breanna2.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Charli.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Charli.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Deepak.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Deepak.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Eric.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Eric.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Ji-ah.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Ji-ah.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Leilani.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Leilani.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Matthew.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Matthew.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Professor Blanche.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Actors/Professor Blanche.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Backward.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Backward.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Forward.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Forward.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Inward.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Inward.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Outward.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Actor Outward.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Add Map Location.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Add Map Location.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Brighten Actor.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Brighten Actor.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Brighten All Actors.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Brighten All Actors.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Change Conversation.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Change Conversation.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Change Image.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Change Image.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Change Money.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Change Money.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Classroom Router.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Classroom Router.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Clear Text.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Clear Text.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Closer Look.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Closer Look.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Conversation Reference Image.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Conversation Reference Image.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Conversation Router.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Conversation Router.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Darken All Actors.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Darken All Actors.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Dialogue with Image.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Dialogue with Image.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Dialogue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Dialogue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Enter Actor.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Enter Actor.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Enter Multiple Actors.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Enter Multiple Actors.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Exit Actor.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Exit Actor.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Exit All Actors.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Exit All Actors.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Fade in from Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Fade in from Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Fade out to Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Fade out to Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Flip Facing.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Flip Facing.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Get Achievement.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Get Achievement.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Hide Dialogue Panel.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Hide Dialogue Panel.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/KeyboardEntry.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/KeyboardEntry.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Load Scene.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Load Scene.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Move Actor.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Move Actor.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/New Contact.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/New Contact.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Object Close Up.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Object Close Up.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Pan Actors.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Pan Actors.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Phone Notification.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Phone Notification.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Play Sound Effect.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Play Sound Effect.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Play Video.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Play Video.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Remove Image and Keep Talking.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Remove Image and Keep Talking.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Remove Map Location.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Remove Map Location.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Save Checkpoint Character.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Save Checkpoint Character.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Save Checkpoint.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Save Checkpoint.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Set Background.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Set Background.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Set Music.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Set Music.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Show Choices - Timed.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Show Choices - Timed.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Show Choices.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Show Choices.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Task.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Task.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Text Message.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Text Message.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Text Overlay.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Text Overlay.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Think.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Think.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Time Passes.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Time Passes.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Turn Off Background.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Turn Off Background.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Turn Off Foreground.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Turn Off Foreground.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Wait.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation Pieces/Wait.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Conversation.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/DialogueCanvas.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/DialogueCanvas.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/DialogueCanvasAC_1080p.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/DialogueCanvasAC_1080p.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Arcon-Regular-SIL Open Font License.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Arcon-Regular-SIL Open Font License.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Arcon-Regular.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Arcon-Regular.otf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Diskontented-logan_kruger read me.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Diskontented-logan_kruger read me.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Diskontented.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/Fonts/Diskontented.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/SoundEffect.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VN Engine/Resources/SoundEffect.prefab.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +309,7 @@
       <workItem from="1747850025320" duration="4117000" />
       <workItem from="1751129634709" duration="9306000" />
       <workItem from="1755210078775" duration="1000" />
+      <workItem from="1755210085337" duration="600000" />
     </task>
     <servers />
   </component>
