@@ -3428,6 +3428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 740240585}
   - component: {fileID: 740240586}
+  - component: {fileID: 740240587}
   m_Layer: 0
   m_Name: Show Choices
   m_TagString: Untagged
@@ -3466,28 +3467,13 @@ MonoBehaviour:
   executed_from_load: 0
   randomizedOrder: 
   Name_Of_Choice: 
-  Number_Of_Choices: 2
+  Number_Of_Choices: 6
   Hide_Dialogue_UI: 1
   randomize_choices_order: 0
   Localize_Choice_Text: 0
   Button_Text:
-  - 1 horse-sized duck.
-  - 100 duck-sized horses.
-  - <i>Whisper to Leilani</i> I'd let it go. Didn't you read his RateMyProfessor?
-    You gotta stay on his good side.
-  - Do you know where I can get some weed?
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 1 HORSE-sized duck.
+  - 100 duck sized HORSES.
   - 
   - 
   - 
@@ -3495,20 +3481,6 @@ MonoBehaviour:
   Has_Requirements: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   Requirement_Not_Met_Actions: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   Disabled_Text:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
@@ -5172,6 +5144,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &740240587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740240584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 6d3f22a4a5e0d4391b140ab88635411b
 --- !u!1 &785430286
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,6 +5427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 944442109}
   - component: {fileID: 944442110}
+  - component: {fileID: 944442111}
   m_Layer: 0
   m_Name: Flip Actor
   m_TagString: Untagged
@@ -5479,6 +5465,19 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Eric
+--- !u!114 &944442111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944442108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 97c9402adc64044da8f477dc00c7335b
 --- !u!1 &948801792
 GameObject:
   m_ObjectHideFlags: 0
@@ -6021,6 +6020,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1033322968}
   - component: {fileID: 1033322969}
+  - component: {fileID: 1033322970}
   m_Layer: 0
   m_Name: Change Actor Image - Eric
   m_TagString: Untagged
@@ -6059,10 +6059,23 @@ MonoBehaviour:
   executed_from_load: 0
   actor_name_from: 0
   actor_name: Eric
-  new_image: {fileID: 21300000, guid: df5cb74e5629d184ca70241b018718c9, type: 3}
+  new_image: {fileID: 21300000, guid: dff8e6a4559077547b43fd203247a027, type: 3}
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
+--- !u!114 &1033322970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033322967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 5f92af71e00884f16b5662b3181754f8
 --- !u!1001 &1035914278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6175,6 +6188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050790365}
   - component: {fileID: 1050790366}
+  - component: {fileID: 1050790367}
   m_Layer: 0
   m_Name: Change Actor Image
   m_TagString: Untagged
@@ -6217,6 +6231,19 @@ MonoBehaviour:
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
+--- !u!114 &1050790367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050790364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: e194766c97cb84297ae9623d59aa2cf2
 --- !u!1 &1098695090
 GameObject:
   m_ObjectHideFlags: 0
@@ -6228,6 +6255,7 @@ GameObject:
   - component: {fileID: 1098695091}
   - component: {fileID: 1098695093}
   - component: {fileID: 1098695092}
+  - component: {fileID: 1098695094}
   m_Layer: 0
   m_Name: Fade in from Black
   m_TagString: Untagged
@@ -6283,6 +6311,19 @@ MonoBehaviour:
   fade_out: 1
   fade_in: 0
   wait_for_all_fading: 1
+--- !u!114 &1098695094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098695090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: a2f895fe25b944ad88bdf5a772e10768
 --- !u!1 &1180875088
 GameObject:
   m_ObjectHideFlags: 0
@@ -6293,6 +6334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1180875089}
   - component: {fileID: 1180875090}
+  - component: {fileID: 1180875091}
   m_Layer: 0
   m_Name: Enter Actor - Blanche
   m_TagString: Untagged
@@ -6335,6 +6377,19 @@ MonoBehaviour:
   fade_in_time: 1
   destination: 3
   custom_position: {fileID: 1823725680}
+--- !u!114 &1180875091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180875088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: cc2971e7e433a4ab6856f7230f706db9
 --- !u!1 &1227728606
 GameObject:
   m_ObjectHideFlags: 0
@@ -6848,6 +6903,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1491372084}
   - component: {fileID: 1491372085}
+  - component: {fileID: 1491372086}
   m_Layer: 0
   m_Name: Enter Actor - Eric
   m_TagString: Untagged
@@ -6890,6 +6946,19 @@ MonoBehaviour:
   fade_in_time: 1
   destination: 3
   custom_position: {fileID: 1035914279}
+--- !u!114 &1491372086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491372083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 4dc02c9678ecc407489e10bbbe2fc315
 --- !u!1 &1551158771
 GameObject:
   m_ObjectHideFlags: 0
@@ -7327,6 +7396,7 @@ GameObject:
   - component: {fileID: 1748718530}
   - component: {fileID: 1748718532}
   - component: {fileID: 1748718531}
+  - component: {fileID: 1748718533}
   m_Layer: 0
   m_Name: Dialogue - Blanche
   m_TagString: Untagged
@@ -7466,7 +7536,7 @@ MonoBehaviour:
   fetch_localized_stat_value: 0
   dialogue_from: 0
   localized_key: 
-  text: Would you rather fight 1 horse-sized duck or 100 duck-sized horses?
+  text: Would you rather fight 1 HORSE-sized duck or 100 duck-sized HORSES?
   talking_beeps: {fileID: 0}
   darken_all_other_characters: 1
   bring_speaker_to_front: 1
@@ -7476,6 +7546,19 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!114 &1748718533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748718529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: b08ec518968d34ec2910c5f39ba9176e
 --- !u!1 &1749998285
 GameObject:
   m_ObjectHideFlags: 0
@@ -7487,6 +7570,7 @@ GameObject:
   - component: {fileID: 1749998286}
   - component: {fileID: 1749998288}
   - component: {fileID: 1749998287}
+  - component: {fileID: 1749998289}
   m_Layer: 0
   m_Name: Dialogue - Eric
   m_TagString: Untagged
@@ -7626,7 +7710,7 @@ MonoBehaviour:
   fetch_localized_stat_value: 0
   dialogue_from: 0
   localized_key: 
-  text: Do those exist?
+  text: What? Those exist?
   talking_beeps: {fileID: 0}
   darken_all_other_characters: 1
   bring_speaker_to_front: 1
@@ -7636,6 +7720,19 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!114 &1749998289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749998285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 4b9fd7c9b26a44f878663b45f620f083
 --- !u!1 &1804089925
 GameObject:
   m_ObjectHideFlags: 0
@@ -8357,6 +8454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1944794888}
   - component: {fileID: 1944794889}
+  - component: {fileID: 1944794890}
   m_Layer: 0
   m_Name: Set Background
   m_TagString: Untagged
@@ -8393,10 +8491,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_to_next_node: 1
   executed_from_load: 0
-  sprite: {fileID: 21300000, guid: b7950e61dfc582b4ea6517a2cdb71583, type: 3}
+  sprite: {fileID: 0}
   set_foreground: 0
   fade_out: 0
   fade_in: 0
+--- !u!114 &1944794890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944794887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1967302909}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 5f6a8315224e94e3d8c513f5cc55a686
+--- !u!115 &1967302909
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 5
+  m_Script: 
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_ExecutionOrder: 0
+  m_ClassName: NodeExportTag
+  m_Namespace: VNEngine.EditorTools
 --- !u!1 &1967701564
 GameObject:
   m_ObjectHideFlags: 0
