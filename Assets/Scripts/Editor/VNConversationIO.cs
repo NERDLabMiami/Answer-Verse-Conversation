@@ -319,48 +319,118 @@ namespace VNEngine.EditorTools
 
         Vector2 _scroll;
 
-        void OnGUI()
+   // 2) Update OnGUI() to show the new button when a set root is selected
+void OnGUI()
+{
+    _scroll = EditorGUILayout.BeginScrollView(_scroll);
+    EditorGUILayout.Space();
+    EditorGUILayout.LabelField("VNEngine Conversation IO", EditorStyles.boldLabel);
+    EditorGUILayout.HelpBox(
+        "Select either:\n• A single Conversation root (has ConversationManager + child Nodes), or\n• A parent whose direct children are ConversationManager objects.",
+        MessageType.Info);
+
+    conversationRoot =
+        (GameObject)EditorGUILayout.ObjectField("Selected Root", conversationRoot, typeof(GameObject), true);
+    removeMissingOnImport = EditorGUILayout.ToggleLeft("Remove scene nodes not present in JSON (destructive)", removeMissingOnImport);
+
+    bool isSingle = IsValidConversationRoot(conversationRoot);
+    bool isSet    = IsValidConversationSetRoot(conversationRoot);
+
+    using (new EditorGUI.DisabledScope(!(isSingle || isSet)))
+    {
+        EditorGUILayout.Space();
+
+        // Single-conversation tools (existing)
+        using (new EditorGUI.DisabledScope(!isSingle))
         {
-            _scroll = EditorGUILayout.BeginScrollView(_scroll);
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("VNEngine Conversation IO", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox(
-                "Select the conversation root (the GameObject whose direct children are Node components, in order).",
-                MessageType.Info);
-
-            conversationRoot =
-                (GameObject)EditorGUILayout.ObjectField("Conversation Root", conversationRoot, typeof(GameObject),
-                    true);
-            removeMissingOnImport = EditorGUILayout.ToggleLeft("Remove scene nodes not present in JSON (destructive)",
-                removeMissingOnImport);
-
-            using (new EditorGUI.DisabledScope(!IsValidConversationRoot(conversationRoot)))
+            if (GUILayout.Button("Export Unified CSV (1 sheet)…", GUILayout.Height(24)))
             {
-                EditorGUILayout.Space();
-
-                if (GUILayout.Button("Export Unified CSV (1 sheet)…", GUILayout.Height(24)))
-                {
-                    if (!IsValidConversationRoot(conversationRoot)) return;
-                    var path = EditorUtility.SaveFilePanel("Export Unified CSV", Application.dataPath, conversationRoot.name + "_nodes", "csv");
-                    if (!string.IsNullOrEmpty(path))
-                        ExportUnifiedCsv(conversationRoot, path);
-                }
-              
-                if (GUILayout.Button("Import Unified CSV (Patch)…", GUILayout.Height(24)))
-                {
-                    if (!IsValidConversationRoot(conversationRoot)) return;
-                    var path = EditorUtility.OpenFilePanel("Import Unified CSV", Application.dataPath, "csv");
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        Undo.RegisterFullObjectHierarchyUndo(conversationRoot, "Patch Unified CSV");
-                        ImportUnifiedCsv(conversationRoot, path);
-                    }
-                }
-                
+                if (!IsValidConversationRoot(conversationRoot)) return;
+                var path = EditorUtility.SaveFilePanel("Export Unified CSV", Application.dataPath, conversationRoot.name + "_nodes", "csv");
+                if (!string.IsNullOrEmpty(path))
+                    ExportUnifiedCsv(conversationRoot, path);
             }
 
+            if (GUILayout.Button("Import Unified CSV (Patch)…", GUILayout.Height(24)))
+            {
+                if (!IsValidConversationRoot(conversationRoot)) return;
+                var path = EditorUtility.OpenFilePanel("Import Unified CSV", Application.dataPath, "csv");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    Undo.RegisterFullObjectHierarchyUndo(conversationRoot, "Patch Unified CSV");
+                    ImportUnifiedCsv(conversationRoot, path);
+                }
+            }
+        }
 
-            EditorGUILayout.EndScrollView();
+        // NEW: Conversation set export
+        using (new EditorGUI.DisabledScope(!isSet))
+        {
+            if (GUILayout.Button("Export All Child Conversations (CSV Folder)…", GUILayout.Height(24)))
+            {
+                var folder = EditorUtility.SaveFolderPanel("Export Conversations CSVs", Application.dataPath, conversationRoot.name + "_CSVs");
+                if (!string.IsNullOrEmpty(folder))
+                {
+                    ExportAllChildConversationsCsv(conversationRoot, folder);
+                }
+            }
+        }
+    }
+
+    EditorGUILayout.EndScrollView();
+}
+
+// 1) Add these helpers near IsValidConversationRoot(...)
+        static bool IsValidConversationSetRoot(GameObject go)
+        {
+            if (!go) return false;
+            // "Set" = direct children that are ConversationManager(s). We only look at direct children,
+            // matching your structure description.
+            return go.transform.Cast<Transform>().Any(t => t.parent == go.transform && t.GetComponent<VNEngine.ConversationManager>() != null);
+        }
+
+        static bool HasAnyNodeChild(Transform t)
+        {
+            // must have at least one direct child Node (or deeper)
+            return t.GetComponentsInChildren<VNEngine.Node>(true).Length > 0;
+        }
+
+        static void ExportAllChildConversationsCsv(GameObject setRoot, string folderPath)
+        {
+            if (string.IsNullOrEmpty(folderPath)) return;
+            if (!System.IO.Directory.Exists(folderPath))
+                System.IO.Directory.CreateDirectory(folderPath);
+
+            int exported = 0, skipped = 0;
+            foreach (Transform child in setRoot.transform)
+            {
+                var cm = child.GetComponent<VNEngine.ConversationManager>();
+                if (!cm) continue;
+
+                // Avoid exporting empty shells
+                if (!HasAnyNodeChild(child))
+                {
+                    skipped++;
+                    continue;
+                }
+
+                // Reuse the existing per-conversation exporter so we keep behavior consistent
+                var safeName = child.name.Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+                var outPath = Path.Combine(folderPath, safeName + "_nodes.csv");
+
+                try
+                {
+                    ExportUnifiedCsv(child.gameObject, outPath);
+                    exported++;
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Failed to export CSV for {child.name}: {ex.Message}", child.gameObject);
+                }
+            }
+
+            Debug.Log($"Conversation set export complete. Exported: {exported}, Skipped (no nodes): {skipped} → {folderPath}");
+            EditorUtility.RevealInFinder(folderPath);
         }
 
         static bool IsValidConversationRoot(GameObject go)
