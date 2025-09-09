@@ -319,140 +319,121 @@ namespace VNEngine.EditorTools
 
         Vector2 _scroll;
 
-        void OnGUI()
+   // 2) Update OnGUI() to show the new button when a set root is selected
+void OnGUI()
+{
+    _scroll = EditorGUILayout.BeginScrollView(_scroll);
+    EditorGUILayout.Space();
+    EditorGUILayout.LabelField("VNEngine Conversation IO", EditorStyles.boldLabel);
+    EditorGUILayout.HelpBox(
+        "Select either:\n• A single Conversation root (has ConversationManager + child Nodes), or\n• A parent whose direct children are ConversationManager objects.",
+        MessageType.Info);
+
+    conversationRoot =
+        (GameObject)EditorGUILayout.ObjectField("Selected Root", conversationRoot, typeof(GameObject), true);
+    removeMissingOnImport = EditorGUILayout.ToggleLeft("Remove scene nodes not present in JSON (destructive)", removeMissingOnImport);
+
+    bool isSingle = IsValidConversationRoot(conversationRoot);
+    bool isSet    = IsValidConversationSetRoot(conversationRoot);
+
+    using (new EditorGUI.DisabledScope(!(isSingle || isSet)))
+    {
+        EditorGUILayout.Space();
+
+        // Single-conversation tools (existing)
+        using (new EditorGUI.DisabledScope(!isSingle))
         {
-            _scroll = EditorGUILayout.BeginScrollView(_scroll);
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("VNEngine Conversation IO", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox(
-                "Select the conversation root (the GameObject whose direct children are Node components, in order).",
-                MessageType.Info);
-
-            conversationRoot =
-                (GameObject)EditorGUILayout.ObjectField("Conversation Root", conversationRoot, typeof(GameObject),
-                    true);
-            jsonToImport =
-                (TextAsset)EditorGUILayout.ObjectField("JSON to Import", jsonToImport, typeof(TextAsset), false);
-            removeMissingOnImport = EditorGUILayout.ToggleLeft("Remove scene nodes not present in JSON (destructive)",
-                removeMissingOnImport);
-
-            using (new EditorGUI.DisabledScope(!IsValidConversationRoot(conversationRoot)))
+            if (GUILayout.Button("Export Unified CSV (1 sheet)…", GUILayout.Height(24)))
             {
-                EditorGUILayout.Space();
-
-                if (GUILayout.Button("Export Unified CSV (1 sheet)…", GUILayout.Height(24)))
-                {
-                    if (!IsValidConversationRoot(conversationRoot)) return;
-                    var path = EditorUtility.SaveFilePanel("Export Unified CSV", Application.dataPath, conversationRoot.name + "_nodes", "csv");
-                    if (!string.IsNullOrEmpty(path))
-                        ExportUnifiedCsv(conversationRoot, path);
-                }
-              
-                if (GUILayout.Button("Import Unified CSV (Patch)…", GUILayout.Height(24)))
-                {
-                    if (!IsValidConversationRoot(conversationRoot)) return;
-                    var path = EditorUtility.OpenFilePanel("Import Unified CSV", Application.dataPath, "csv");
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        Undo.RegisterFullObjectHierarchyUndo(conversationRoot, "Patch Unified CSV");
-                        ImportUnifiedCsv(conversationRoot, path);
-                    }
-                }
-                
-            }
-            using (new EditorGUI.DisabledScope(jsonToImport == null || !IsValidConversationRoot(conversationRoot)))
-            {
-                if (GUILayout.Button("Patch & Match Import JSON", GUILayout.Height(28)))
-                {
-                    PatchAndMatchAuto(conversationRoot, jsonToImport, removeMissingOnImport);
-                }
+                if (!IsValidConversationRoot(conversationRoot)) return;
+                var path = EditorUtility.SaveFilePanel("Export Unified CSV", Application.dataPath, conversationRoot.name + "_nodes", "csv");
+                if (!string.IsNullOrEmpty(path))
+                    ExportUnifiedCsv(conversationRoot, path);
             }
 
-            EditorGUILayout.EndScrollView();
+            if (GUILayout.Button("Import Unified CSV (Patch)…", GUILayout.Height(24)))
+            {
+                if (!IsValidConversationRoot(conversationRoot)) return;
+                var path = EditorUtility.OpenFilePanel("Import Unified CSV", Application.dataPath, "csv");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    Undo.RegisterFullObjectHierarchyUndo(conversationRoot, "Patch Unified CSV");
+                    ImportUnifiedCsv(conversationRoot, path);
+                }
+            }
         }
-static List<string> ExportJsonlLines(GameObject root)
-{
-    EnsureIds(root);
 
-    var lines = new List<string>();
-    var ordered = root.transform.Cast<Transform>().ToList();
-
-    for (int i = 0; i < ordered.Count; i++)
-    {
-        var t = ordered[i];
-        var node = t.GetComponent<VNEngine.Node>();
-        if (!node) continue;
-
-        var tag = t.GetComponent<NodeExportTag>();
-        var id = tag ? tag.Id : GUID.Generate().ToString();
-
-        var obj = NodeToJsonlObject(node, t, id);
-        lines.Add(MiniJson.Write(obj)); // one JSON object per line
-    }
-    return lines;
-}
-
-static Dictionary<string, object> NodeToJsonlObject(VNEngine.Node node, Transform t, string id)
-{
-    var rec = new Dictionary<string, object>
-    {
-        ["id"] = id,
-        ["type"] = node.GetType().Name,
-        ["goName"] = t.name,
-        ["order"] = t.GetSiblingIndex()
-    };
-
-    switch (node.GetType().Name)
-    {
-        case "DialogueNode":
+        // NEW: Conversation set export
+        using (new EditorGUI.DisabledScope(!isSet))
         {
-            var p = BuildDialoguePayload((VNEngine.DialogueNode)node);
-            rec["dialogue"] = ObjToDict(p);
-            break;
+            if (GUILayout.Button("Export All Child Conversations (CSV Folder)…", GUILayout.Height(24)))
+            {
+                var folder = EditorUtility.SaveFolderPanel("Export Conversations CSVs", Application.dataPath, conversationRoot.name + "_CSVs");
+                if (!string.IsNullOrEmpty(folder))
+                {
+                    ExportAllChildConversationsCsv(conversationRoot, folder);
+                }
+            }
         }
-        case "ChoiceNode":
-        {
-            var p = BuildChoicePayload((VNEngine.ChoiceNode)node, id);
-            rec["choice"] = ObjToDict(p);
-            break;
-        }
-        case "ChangeActorImageNode":
-        {
-            var p = BuildChangeActorImagePayload((VNEngine.ChangeActorImageNode)node);
-            rec["changeActorImage"] = ObjToDict(p);
-            break;
-        }
-        case "SetBackground":
-        {
-            var p = BuildSetBackgroundPayload(node);
-            rec["setBackground"] = ObjToDict(p);
-            break;
-        }
-        case "SetBackgroundTransparent":
-        {
-            var p = BuildSetBackgroundTransparentPayload(node);
-            rec["setBackgroundTransparent"] = ObjToDict(p);
-            break;
-        }
-        case "EnterActorNode":
-        {
-            var p = BuildEnterActorPayload((VNEngine.EnterActorNode)node);
-            rec["enterActor"] = ObjToDict(p);
-            break;
-        }
-        case "IfNode":
-        {
-            var p = BuildIfNodePayload((VNEngine.IfNode)node);
-            rec["ifNode"] = ObjToDict(p);
-            break;
-        }
-        // Add more node types here as you need (MoveActor, HideShowUINode, etc.)
     }
 
-    return rec;
+    EditorGUILayout.EndScrollView();
 }
 
-static bool IsValidConversationRoot(GameObject go)
+// 1) Add these helpers near IsValidConversationRoot(...)
+        static bool IsValidConversationSetRoot(GameObject go)
+        {
+            if (!go) return false;
+            // "Set" = direct children that are ConversationManager(s). We only look at direct children,
+            // matching your structure description.
+            return go.transform.Cast<Transform>().Any(t => t.parent == go.transform && t.GetComponent<VNEngine.ConversationManager>() != null);
+        }
+
+        static bool HasAnyNodeChild(Transform t)
+        {
+            // must have at least one direct child Node (or deeper)
+            return t.GetComponentsInChildren<VNEngine.Node>(true).Length > 0;
+        }
+
+        static void ExportAllChildConversationsCsv(GameObject setRoot, string folderPath)
+        {
+            if (string.IsNullOrEmpty(folderPath)) return;
+            if (!System.IO.Directory.Exists(folderPath))
+                System.IO.Directory.CreateDirectory(folderPath);
+
+            int exported = 0, skipped = 0;
+            foreach (Transform child in setRoot.transform)
+            {
+                var cm = child.GetComponent<VNEngine.ConversationManager>();
+                if (!cm) continue;
+
+                // Avoid exporting empty shells
+                if (!HasAnyNodeChild(child))
+                {
+                    skipped++;
+                    continue;
+                }
+
+                // Reuse the existing per-conversation exporter so we keep behavior consistent
+                var safeName = child.name.Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+                var outPath = Path.Combine(folderPath, safeName + "_nodes.csv");
+
+                try
+                {
+                    ExportUnifiedCsv(child.gameObject, outPath);
+                    exported++;
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Failed to export CSV for {child.name}: {ex.Message}", child.gameObject);
+                }
+            }
+
+            Debug.Log($"Conversation set export complete. Exported: {exported}, Skipped (no nodes): {skipped} → {folderPath}");
+            EditorUtility.RevealInFinder(folderPath);
+        }
+
+        static bool IsValidConversationRoot(GameObject go)
 {
     if (!go) return false;
     // Must be a real conversation root: has a ConversationManager
@@ -582,7 +563,7 @@ static bool IsValidConversationRoot(GameObject go)
         }
 
         static SetBackgroundTransparentPayload BuildSetBackgroundTransparentPayload(
-            object n /*SetBackgroundTransparent*/)
+            object n)
         {
             return new SetBackgroundTransparentPayload
             {
@@ -613,91 +594,8 @@ static bool IsValidConversationRoot(GameObject go)
             }
         }
         
-
-        // ==== IMPORT ROUTER ====================================================
-        public static void PatchAndMatchAuto(GameObject root, TextAsset json, bool removeMissing)
-        {
-            if (json == null)
-            {
-                Debug.LogError("No JSON assigned.");
-                return;
-            }
-
-            // Quick sniff: does it look like clean or legacy?
-            if (json.text.Contains("\"payloadJson\"") || json.text.Contains("\"payloadType\""))
-            {
-                var data = JsonUtility.FromJson<ConversationExport>(json.text);
-                if (data?.nodes == null)
-                {
-                    Debug.LogError("Clean JSON parse failed or has no nodes.");
-                    return;
-                }
-
-                PatchAndMatchClean(root, data, removeMissing);
-            }
-            else
-            {
-                var data = JsonUtility.FromJson<ExportedConversation>(json.text);
-                if (data?.nodes == null)
-                {
-                    Debug.LogError("Legacy JSON parse failed or has no nodes.");
-                    return;
-                }
-
-                PatchAndMatchLegacy(root, data, removeMissing);
-            }
-        }
-
-        // -- Clean importer
-        static void PatchAndMatchClean(GameObject root, ConversationExport json, bool removeMissing)
-        {
-            Undo.RegisterFullObjectHierarchyUndo(root, "Patch & Match (Clean)");
-
-            var sceneMap = BuildSceneMap(root);
-
-            for (int i = 0; i < json.nodes.Count; i++)
-            {
-                var rec = json.nodes[i];
-                var t = EnsureNodeGO(root, sceneMap, rec.id, rec.goName, rec.type);
-                var node = t.GetComponent<VNEngine.Node>();
-
-                // Apply payload into concrete node
-                ApplyTypedPayload(node, rec);
-
-                // Order
-                t.SetSiblingIndex(Mathf.Clamp(i, 0, root.transform.childCount - 1));
-            }
-
-            if (removeMissing) RemoveMissing(root, json.nodes.Select(n => n.id));
-            EditorUtility.SetDirty(root);
-            Debug.Log($"Patched {json.nodes.Count} node(s){(removeMissing ? " and removed extras" : "")} (clean).");
-        }
-
-        // -- Legacy importer
-        static void PatchAndMatchLegacy(GameObject root, ExportedConversation json, bool removeMissing)
-        {
-            Undo.RegisterFullObjectHierarchyUndo(root, "Patch & Match (Legacy)");
-
-            var sceneMap = BuildSceneMap(root);
-
-            for (int i = 0; i < json.nodes.Count; i++)
-            {
-                var rec = json.nodes[i];
-                var t = EnsureNodeGO(root, sceneMap, rec.id, rec.goName, rec.type);
-                var node = t.GetComponent<VNEngine.Node>();
-
-                // Apply generic fields
-                ApplyFields(node, rec.fields);
-
-                // Order
-                t.SetSiblingIndex(Mathf.Clamp(i, 0, root.transform.childCount - 1));
-            }
-
-            if (removeMissing) RemoveMissing(root, json.nodes.Select(n => n.id));
-            EditorUtility.SetDirty(root);
-            Debug.Log($"Patched {json.nodes.Count} node(s){(removeMissing ? " and removed extras" : "")} (legacy).");
-        }
-static void ApplyIfNodePayload(VNEngine.IfNode n, IfNodePayload p)
+ 
+    static void ApplyIfNodePayload(VNEngine.IfNode n, IfNodePayload p)
 {
     // Enums
     SetEnum(n, "Is_Condition_Met", p.conditionIs);
@@ -758,21 +656,20 @@ static void ApplyIfNodePayload(VNEngine.IfNode n, IfNodePayload p)
 
 // --- CSV helpers ---
 
-static string CsvEscape(string s)
+    static string CsvEscape(string s)
 {
     if (s == null) return "";
     bool needs = s.IndexOfAny(new[] { ',', '"', '\n', '\r' }) >= 0;
     if (!needs) return s;
     return "\"" + s.Replace("\"", "\"\"") + "\"";
 }
-static string CJ(bool b) => b ? "true" : "false";
 
-const char ChoiceSep = '|';
+    const char ChoiceSep = '|';
 
-static bool Has(string s) => !string.IsNullOrWhiteSpace(s);
+    static bool Has(string s) => !string.IsNullOrWhiteSpace(s);
 
-static string[] SplitChoices(string s)
-{
+    static string[] SplitChoices(string s)
+{   
     if (!Has(s)) return Array.Empty<string>();
     return s.Split(new[] { ChoiceSep }, StringSplitOptions.None)
         .Select(x => x.Trim())
@@ -780,26 +677,14 @@ static string[] SplitChoices(string s)
         .ToArray();
 }
 
-// Mirror logic: if only one of (keys, text) is set/changed, copy it to the other.
-static void MirrorChoiceKeysAndText(ref string keysJoined, ref string textJoined)
-{
-    bool hasKeys = Has(keysJoined);
-    bool hasText = Has(textJoined);
-
-    if (hasKeys && !hasText)
-        textJoined = keysJoined;
-    else if (!hasKeys && hasText)
-        keysJoined = textJoined;
-    // if both set, leave as-is
-}
 
 // Split/join with '|'
-static string JoinPipe(IEnumerable<string> arr) => arr == null ? "" : string.Join("|", arr.Select(x => x ?? ""));
-static string[] SplitPipe(string s) => string.IsNullOrEmpty(s) ? Array.Empty<string>() : s.Split('|');
+    static string JoinPipe(IEnumerable<string> arr) => arr == null ? "" : string.Join("|", arr.Select(x => x ?? ""));
+    static string[] SplitPipe(string s) => string.IsNullOrEmpty(s) ? Array.Empty<string>() : s.Split('|');
 
 // Minimal CSV line parser (handles quotes)
-static List<string> ParseCsvLine(string line)
-{
+    static List<string> ParseCsvLine(string line)
+    {
     var cells = new List<string>();
     if (string.IsNullOrEmpty(line)) return cells;
     int i = 0, n = line.Length;
@@ -829,7 +714,7 @@ static List<string> ParseCsvLine(string line)
     return cells;
 }
 // ---------- CHOICES: one-row export helper ----------
-static (bool localize, string keysPipe, string textsPipe, string disabledPipe)
+    static (bool localize, string keysPipe, string textsPipe, string disabledPipe)
     ExportRow_ChoiceNode(VNEngine.ChoiceNode cn, string nodeGuid)
 {
     // Build runtime-ish payload to get resolved text if localization is on,
@@ -854,65 +739,8 @@ static (bool localize, string keysPipe, string textsPipe, string disabledPipe)
     var disPipe   = JoinPipe(disabled.Select(s => s ?? ""));
 
     return (payload.localize, keysPipe, textsPipe, disPipe);}
-
-static void ImportRow_ChoiceNode(Dictionary<string, string> row, VNEngine.ChoiceNode cn)
-{
-    // read CSV cells (missing headers safely return "")
-    string localizeStr  = Get(row, "choice_localize");      // "TRUE"/"FALSE" or blank
-    string keysJoined   = Get(row, "choice_keys");          // pipe-delimited
-    string textJoined   = Get(row, "choice_text");          // pipe-delimited
-    string disabledJoin = Get(row, "choice_disabled");      // pipe-delimited (optional)
-
-    // If editor only changed one column, mirror it into the other.
-    MirrorChoiceKeysAndText(ref keysJoined, ref textJoined);
-
-    // Now, if blank after mirroring, *do nothing* (don’t overwrite node data).
-    if (!Has(keysJoined) && !Has(textJoined))
-        return;
-
-    // Split into arrays
-    var keys     = SplitChoices(keysJoined);
-    var texts    = SplitChoices(textJoined);
-    var disabled = SplitChoices(disabledJoin);
-
-    // Align lengths (pad shorter arrays with empty strings so Button_Text is stable)
-    int n = Math.Max(keys.Length, texts.Length);
-    if (n == 0) return;
-
-    Array.Resize(ref keys, n);
-    Array.Resize(ref texts, n);
-    Array.Resize(ref disabled, n);
-
-    // Apply to node:
-    // - We always write Button_Text from KEYS (authoritative id)
-    // - Localize flag controls whether runtime resolves keys to visible text
-    // - If you want non-localized plain text, keep Localize=false so keys==text for export next time
-// Parse a bool from CSV text ("" leaves it unchanged)
-    bool locVal;
-    if (TryParseBool(localizeStr, out locVal))
-        Set(cn, "Localize_Choice_Text", locVal);
-
-// Always set the count we’re applying
-    Set(cn, "Number_Of_Choices", n);
-
-// Push arrays back
-    SetArray(cn, "Button_Text", keys);
-    SetArray(cn, "Disabled_Text", disabled);
-
-
-    // Note: We do not need to store 'texts' on the node for non-localized mode because
-    // Button_Text doubles as the human text. On the next export we’ll emit both columns again,
-    // mirroring keys->text when not localized (or resolving from CSV when localized).
-}
-// Utility method
-private static string Get(Dictionary<string, string> row, string key)
-{
-    if (row.TryGetValue(key, out string value))
-        return value;
-    return string.Empty;
-}
-
-static bool TryParseBool(string s, out bool value)
+    
+    static bool TryParseBool(string s, out bool value)
 {
     value = false;
     if (string.IsNullOrWhiteSpace(s)) return false;
@@ -922,7 +750,7 @@ static bool TryParseBool(string s, out bool value)
     return false;
 }
 
-static void ExportUnifiedCsv(GameObject root, string outPath)
+    static void ExportUnifiedCsv(GameObject root, string outPath)
 {
     EnsureIds(root);
 
@@ -1044,7 +872,7 @@ static void ExportUnifiedCsv(GameObject root, string outPath)
     EditorUtility.RevealInFinder(outPath);
 }
 
-static void ImportUnifiedCsv(GameObject root, string path)
+    static void ImportUnifiedCsv(GameObject root, string path)
 {
     if (!File.Exists(path)) { Debug.LogWarning("CSV not found: " + path); return; }
     var lines = File.ReadAllLines(path).ToList();
@@ -1253,8 +1081,8 @@ static void ImportUnifiedCsv(GameObject root, string path)
     UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(root.scene);
     Debug.Log("Unified CSV import complete.");
 }
-// Case‑insensitive column lookup
-static int Col(IReadOnlyList<string> header, string name)
+    // Case‑insensitive column lookup
+    static int Col(IReadOnlyList<string> header, string name)
 {
     if (header == null || string.IsNullOrEmpty(name)) return -1;
     for (int i = 0; i < header.Count; i++)
@@ -1262,7 +1090,7 @@ static int Col(IReadOnlyList<string> header, string name)
             return i;
     return -1;
 }
-static bool TrySetAssetByGuidSafe(UnityEngine.Object target, string fieldName, string guid)
+    static bool TrySetAssetByGuidSafe(UnityEngine.Object target, string fieldName, string guid)
 {
     if (string.IsNullOrWhiteSpace(guid)) return false;
     if (string.Equals(guid, "none", StringComparison.OrdinalIgnoreCase) ||
@@ -1280,7 +1108,7 @@ static bool TrySetAssetByGuidSafe(UnityEngine.Object target, string fieldName, s
 #endif
 }
 
-static bool TrySetAssetByNameSafe(UnityEngine.Object target, string fieldName, string file)
+    static bool TrySetAssetByNameSafe(UnityEngine.Object target, string fieldName, string file)
 {
     if (string.IsNullOrWhiteSpace(file)) return false;
     if (string.Equals(file, "none", StringComparison.OrdinalIgnoreCase) ||
@@ -1302,45 +1130,6 @@ static bool TrySetAssetByNameSafe(UnityEngine.Object target, string fieldName, s
     return false;
 }
 
-// Convenience overloads
-static int Col(List<string> header, string name) => Col((IReadOnlyList<string>)header, name);
-static int Col(string[] header, string name)     => Col((IReadOnlyList<string>)header, name);
-
-// Try to set a UnityEngine.Object field by GUID (Editor only)
-static void SetAssetByGuidSafe(object compOrNode, string fieldName, string guid)
-{
-#if UNITY_EDITOR
-    if (string.IsNullOrEmpty(guid)) return;
-    var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-    if (string.IsNullOrEmpty(path)) return;
-    var obj = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
-    if (!obj) return;
-    var so = new UnityEditor.SerializedObject((UnityEngine.Object)compOrNode);
-    var sp = so.FindProperty(fieldName);
-    if (sp != null) { sp.objectReferenceValue = obj; so.ApplyModifiedProperties(); }
-#endif
-}
-static void SetAssetByNameSafe(object compOrNode, string fieldName, string assetName)
-{
-#if UNITY_EDITOR
-    if (string.IsNullOrEmpty(assetName)) return;
-    var guids = UnityEditor.AssetDatabase.FindAssets(Path.GetFileNameWithoutExtension(assetName));
-    foreach (var g in guids)
-    {
-        var path = UnityEditor.AssetDatabase.GUIDToAssetPath(g);
-        var obj = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
-        if (obj && string.Equals(obj.name, Path.GetFileNameWithoutExtension(assetName), StringComparison.OrdinalIgnoreCase))
-        {
-            var so = new UnityEditor.SerializedObject((UnityEngine.Object)compOrNode);
-            var sp = so.FindProperty(fieldName);
-            if (sp != null) { sp.objectReferenceValue = obj; so.ApplyModifiedProperties(); }
-            break;
-        }
-    }
-#endif
-}
-
-
 static GameObject FindSceneObjectByName(string name)
 {
     if (string.IsNullOrEmpty(name)) return null;
@@ -1350,7 +1139,6 @@ static GameObject FindSceneObjectByName(string name)
     return all.FirstOrDefault(x => x.name == name);
 }
 // Utility: tries to find a scene object by name (edit-time). Returns null if not found.
-
         static void ApplyTypedPayload(VNEngine.Node node, NodeRecord rec)
         {
             switch (rec.type)
@@ -1390,36 +1178,6 @@ static GameObject FindSceneObjectByName(string name)
                     break;                
             }
         }
-        static void ImportJsonl(GameObject root, IEnumerable<string> lines)
-        {
-            var sceneMap = BuildSceneMap(root); // existing helper that maps GUID -> Transform
-
-            int index = 0;
-            foreach (var line in lines)
-            {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                NodeRecord rec;
-                try { rec = JsonUtility.FromJson<NodeRecord>(line); }
-                catch (Exception e) { Debug.LogWarning($"JSONL parse error on line {index}: {e.Message}"); continue; }
-
-                if (rec == null || string.IsNullOrEmpty(rec.id) || string.IsNullOrEmpty(rec.type)) continue;
-
-                var t = EnsureNodeGO(root, sceneMap, rec.id, rec.goName, rec.type);
-                var node = t.GetComponent<VNEngine.Node>();
-                if (node == null) continue;
-
-                ApplyTypedPayload(node, rec);
-
-                // Order (keep incoming order but clamp)
-                t.SetSiblingIndex(Mathf.Clamp(rec.order, 0, root.transform.childCount - 1));
-
-                index++;
-            }
-
-            Debug.Log($"Patched {index} node(s) from JSONL.");
-        }
-
         static void ApplyDialoguePayload(VNEngine.DialogueNode dn, DialoguePayload p)
         {
             Set(dn, "actor", p.actorKey);
@@ -1431,7 +1189,6 @@ static GameObject FindSceneObjectByName(string name)
             Set(dn, "bring_speaker_to_front", p.bringToFront);
             Set(dn, "darken_all_other_characters", p.darkenOthers);
         }
-
         static void ApplyChoicePayload(VNEngine.ChoiceNode cn, ChoicePayload p)
         {
             Set(cn, "Localize_Choice_Text", p.localize);
@@ -1453,7 +1210,6 @@ static GameObject FindSceneObjectByName(string name)
             SetArray(cn, "Button_Text", keys);
             SetArray(cn, "Disabled_Text", disabled);
         }
-
         static void ApplyChangeActorImagePayload(VNEngine.ChangeActorImageNode n, ChangeActorImagePayload p)
         {
             Set(n, "actor_name", p.actorName);
@@ -1464,7 +1220,6 @@ static GameObject FindSceneObjectByName(string name)
                 if (sprite != null) SetObject(n, "new_image", sprite);
             }
         }
-
         static void ApplySetBackgroundPayload(object node /*SetBackground*/, SetBackgroundPayload p)
         {
             Set(node, "set_foreground", p.setForeground);
@@ -1478,7 +1233,6 @@ static GameObject FindSceneObjectByName(string name)
                 if (sprite != null) SetObject(node, "sprite", sprite);
             }
         }
-
         static void ApplySetBackgroundTransparentPayload(object node /*SetBackgroundTransparent*/,
             SetBackgroundTransparentPayload p)
         {
@@ -1493,325 +1247,6 @@ static GameObject FindSceneObjectByName(string name)
             SetEnum(n, "entrance_type", p.entranceType);
             Set(n, "fade_in_time", p.fadeInTime);
             SetEnum(n, "destination", p.destination);
-        }
-
-        // ==== LEGACY FIELD EXPORT/IMPORT HELPERS ===============================
-        static List<FieldEntry> ExportFields(object target)
-        {
-            var list = new List<FieldEntry>();
-
-            // Whitelist human-facing fields per node type
-            string type = target.GetType().Name;
-
-            void Add(string f) => AddField(list, target, f);
-            void AddAsset(string f) => AddAssetField(list, target, f);
-            void AddArray(string f) => AddArrayField(list, target, f);
-
-            switch (type)
-            {
-                case "DialogueNode":
-                    Add("actor");
-                    Add("actor_name_from");
-                    Add("textbox_title");
-                    Add("localized_key");
-                    Add("dialogue_from");
-                    Add("text");
-                    break;
-
-                case "ChoiceNode":
-                    Add("Localize_Choice_Text");
-                    Add("Number_Of_Choices");
-                    AddArray("Button_Text");
-                    AddArray("Disabled_Text");
-                    break;
-
-                case "ChangeActorImageNode":
-                    Add("actor_name");
-                    AddAsset("new_image");
-                    Add("fade_in_new_image");
-                    Add("lighten_actor");
-                    Add("bring_actor_to_front");
-                    break;
-
-                case "SetBackground":
-                    AddAsset("sprite");
-                    Add("set_foreground");
-                    Add("fade_out");
-                    Add("fade_in");
-                    break;
-
-                case "SetBackgroundTransparent":
-                    Add("fade_out");
-                    Add("fade_in");
-                    break;
-
-                case "EnterActorNode":
-                    Add("actor_name");
-                    Add("actor_name_from");
-                    Add("entrance_type");
-                    Add("fade_in_time");
-                    Add("destination");
-                    break;
-
-                default:
-                    break;
-            }
-
-            return list;
-        }
-
-// Try to fetch a Sprite by GUID (Editor only)
-static bool TryGetSpriteByGuid(string guid, out Sprite sprite)
-{
-    sprite = null;
-#if UNITY_EDITOR
-    if (string.IsNullOrEmpty(guid)) return false;
-    var path = AssetDatabase.GUIDToAssetPath(guid);
-    if (!string.IsNullOrEmpty(path))
-    {
-        sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-        return sprite != null;
-    }
-#endif
-    return false;
-}
-
-// Try to fetch a Sprite by filename (no extension needed). Editor only.
-static bool TryGetSpriteByName(string nameOrPath, out Sprite sprite)
-{
-    sprite = null;
-#if UNITY_EDITOR
-    if (string.IsNullOrEmpty(nameOrPath)) return false;
-    var needle = Path.GetFileNameWithoutExtension(nameOrPath);
-
-    // Search by Sprite type; prefer exact name matches
-    var guids = AssetDatabase.FindAssets($"{needle} t:Sprite");
-    foreach (var g in guids)
-    {
-        var path = AssetDatabase.GUIDToAssetPath(g);
-        var s = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-        if (s == null) continue;
-
-        if (string.Equals(s.name, needle, System.StringComparison.OrdinalIgnoreCase))
-        {
-            sprite = s;
-            return true;
-        }
-
-        // fallback: match file name
-        var fileNoExt = Path.GetFileNameWithoutExtension(path);
-        if (string.Equals(fileNoExt, needle, System.StringComparison.OrdinalIgnoreCase))
-        {
-            sprite = s;
-            return true;
-        }
-    }
-#endif
-    return false;
-}
-
-// Generic field setter for Sprite by GUID, no-ops if not found / no Editor
-
-
-
-        private static void AddField(List<FieldEntry> list, object target, string fieldName)
-        {
-            if (!TryGetField(target.GetType(), fieldName, out var fi)) return;
-            var val = fi.GetValue(target);
-
-            var entry = new FieldEntry
-            {
-                name = fieldName,
-                type = fi.FieldType.AssemblyQualifiedName
-            };
-
-            if (fi.FieldType == typeof(string))
-            {
-                entry.kind = "String";
-                entry.value = (string)val;
-            }
-            else if (fi.FieldType.IsEnum)
-            {
-                entry.kind = "Enum";
-                entry.value = val != null ? Enum.GetName(fi.FieldType, val) : null;
-            }
-            else if (fi.FieldType.IsPrimitive)
-            {
-                entry.kind = "Primitive";
-                entry.value = Convert.ToString(val, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            else if (typeof(UnityEngine.Object).IsAssignableFrom(fi.FieldType))
-            {
-                // treat UnityEngine.Object as Asset
-                var obj = val as UnityEngine.Object;
-                entry.kind = "Asset";
-                entry.assetType = fi.FieldType.AssemblyQualifiedName;
-                if (obj != null)
-                {
-                    var path = AssetDatabase.GetAssetPath(obj);
-                    entry.assetGuid = string.IsNullOrEmpty(path) ? null : AssetDatabase.AssetPathToGUID(path);
-                }
-            }
-            else
-            {
-                entry.kind = "Other";
-                entry.value = val != null ? val.ToString() : null;
-            }
-
-            list.Add(entry);
-        }
-
-        private static void AddAssetField(List<FieldEntry> list, object target, string fieldName)
-        {
-            if (!TryGetField(target.GetType(), fieldName, out var fi)) return;
-            if (!typeof(UnityEngine.Object).IsAssignableFrom(fi.FieldType)) return;
-
-            var obj = fi.GetValue(target) as UnityEngine.Object;
-            var entry = new FieldEntry
-            {
-                name = fieldName,
-                type = fi.FieldType.AssemblyQualifiedName,
-                kind = "Asset",
-                assetType = fi.FieldType.AssemblyQualifiedName
-            };
-
-            if (obj != null)
-            {
-                var path = AssetDatabase.GetAssetPath(obj);
-                entry.assetGuid = string.IsNullOrEmpty(path) ? null : AssetDatabase.AssetPathToGUID(path);
-            }
-
-            list.Add(entry);
-        }
-
-        private static void AddArrayField(List<FieldEntry> list, object target, string fieldName)
-        {
-            if (!TryGetField(target.GetType(), fieldName, out var fi)) return;
-
-            if (fi.FieldType == typeof(string[]))
-            {
-                var arr = (string[])fi.GetValue(target) ?? Array.Empty<string>();
-                list.Add(new FieldEntry
-                {
-                    name = fieldName,
-                    type = fi.FieldType.AssemblyQualifiedName,
-                    kind = "Array",
-                    stringArray = arr.ToArray()
-                });
-            }
-        }
-
-        static void ApplyFields(object target, List<FieldEntry> fields)
-        {
-            if (fields == null) return;
-
-            foreach (var e in fields)
-            {
-                if (!TryGetField(target.GetType(), e.name, out var fi)) continue;
-
-                if (e.kind == "String" && fi.FieldType == typeof(string))
-                {
-                    fi.SetValue(target, e.value);
-                }
-                else if (e.kind == "Primitive")
-                {
-                    if (fi.FieldType == typeof(int) && int.TryParse(e.value, out int i))
-                        fi.SetValue(target, i);
-                    else if (fi.FieldType == typeof(float) && float.TryParse(e.value,
-                                 System.Globalization.NumberStyles.Float,
-                                 System.Globalization.CultureInfo.InvariantCulture, out float f))
-                        fi.SetValue(target, f);
-                    else if (fi.FieldType == typeof(bool))
-                        fi.SetValue(target, SafeParseBool(e.value));
-                }
-                else if (e.kind == "Enum" && fi.FieldType.IsEnum)
-                {
-                    try
-                    {
-                        fi.SetValue(target, Enum.Parse(fi.FieldType, e.value));
-                    }
-                    catch
-                    {
-                    }
-                }
-                else if (e.kind == "Asset" && typeof(UnityEngine.Object).IsAssignableFrom(fi.FieldType))
-                {
-                    if (!string.IsNullOrEmpty(e.assetGuid))
-                    {
-                        var path = AssetDatabase.GUIDToAssetPath(e.assetGuid);
-                        var obj = AssetDatabase.LoadAssetAtPath(path, fi.FieldType);
-                        if (obj) fi.SetValue(target, obj);
-                    }
-                }
-                else if (e.name == "Button_Text" && fi.FieldType == typeof(string[]))
-                {
-                    fi.SetValue(target, e.stringArray ?? Array.Empty<string>());
-                }
-                else if (e.name == "Disabled_Text" && fi.FieldType == typeof(string[]))
-                {
-                    fi.SetValue(target, e.stringArray ?? Array.Empty<string>());
-                }
-            }
-        }
-
-        // ==== SCENE UTILS ======================================================
-        static Dictionary<string, Transform> BuildSceneMap(GameObject root)
-        {
-            var map = new Dictionary<string, Transform>();
-            foreach (Transform child in root.transform)
-            {
-                var tag = child.GetComponent<NodeExportTag>();
-                if (tag != null && !string.IsNullOrEmpty(tag.Id))
-                    map[tag.Id] = child;
-            }
-
-            return map;
-        }
-
-        static Transform EnsureNodeGO(GameObject root, Dictionary<string, Transform> map, string id, string goName,
-            string shortType)
-        {
-            if (!map.TryGetValue(id, out var t))
-            {
-                var go = new GameObject(string.IsNullOrEmpty(goName) ? shortType : goName);
-                go.transform.SetParent(root.transform, false);
-                t = go.transform;
-
-                var tag = go.AddComponent<NodeExportTag>();
-                typeof(NodeExportTag).GetField("_id", BindingFlags.NonPublic | BindingFlags.Instance)
-                    ?.SetValue(tag, id);
-
-                map[id] = t;
-            }
-
-            // Ensure component type matches
-            var node = t.GetComponent<VNEngine.Node>();
-            if (node == null || node.GetType().Name != shortType)
-            {
-                if (node != null) UnityEngine.Object.DestroyImmediate(node);
-                var compType = FindTypeRecursively(shortType);
-                if (compType != null) t.gameObject.AddComponent(compType);
-                else
-                    Debug.LogError(
-                        $"Missing script type '{shortType}' for node {id}. Node will be left without a component.");
-            }
-
-            return t;
-        }
-
-        static void RemoveMissing(GameObject root, IEnumerable<string> keepIds)
-        {
-            var keep = new HashSet<string>(keepIds);
-            var toRemove = new List<GameObject>();
-            foreach (Transform child in root.transform)
-            {
-                var tag = child.GetComponent<NodeExportTag>();
-                if (tag != null && !keep.Contains(tag.Id))
-                    toRemove.Add(child.gameObject);
-            }
-
-            foreach (var go in toRemove)
-                UnityEngine.Object.DestroyImmediate(go);
         }
 
         // ==== REFLECTION HELPERS (get) ========================================
@@ -1901,28 +1336,7 @@ static bool TryGetSpriteByName(string nameOrPath, out Sprite sprite)
                 fi.SetValue(o, obj);
         }
 
-        // ==== TYPE / ASSET HELPERS ============================================
-        static Type FindTypeRecursively(string shortName)
-        {
-            var all = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a =>
-                {
-                    try
-                    {
-                        return a.GetTypes();
-                    }
-                    catch
-                    {
-                        return Array.Empty<Type>();
-                    }
-                })
-                .Where(t => t.IsClass && !t.IsAbstract);
-
-            var exact = all.FirstOrDefault(t => t.Name == shortName);
-            if (exact != null) return exact;
-            return all.FirstOrDefault(t => t.FullName != null && t.FullName.EndsWith("." + shortName));
-        }
-
+   
         static (string guid, string file) AssetGuidAndFile(object target, string fieldName)
         {
             if (!TryGetField(target.GetType(), fieldName, out var fi)) return (null, null);
@@ -1947,8 +1361,7 @@ static bool TryGetSpriteByName(string nameOrPath, out Sprite sprite)
             "enter_actorName",
             "if_conditionIs","if_action","if_continue"
         };
-
-
+        
 // safe put
         static void Put(Dictionary<string,string> row, string key, string value)
         {
@@ -1968,44 +1381,7 @@ static bool TryGetSpriteByName(string nameOrPath, out Sprite sprite)
             }
             return string.Join(",", cells);
         }
-
-        static bool SafeParseBool(string s)
-        {
-            if (bool.TryParse(s, out var b)) return b;
-            if (int.TryParse(s, out var i)) return i != 0;
-            return false;
-        }
         
-        static Dictionary<string, object> ObjToDict(object obj)
-        {
-            var dict = new Dictionary<string, object>();
-            if (obj == null) return dict;
-
-            var flags = BindingFlags.Instance | BindingFlags.Public;
-            foreach (var f in obj.GetType().GetFields(flags))
-            {
-                var val = f.GetValue(obj);
-                if (val == null)
-                {
-                    dict[f.Name] = null;
-                    continue;
-                }
-
-                // Lists/arrays → plain object arrays so MiniJson writes them nicely
-                if (val is System.Collections.IEnumerable en && !(val is string))
-                {
-                    var list = new List<object>();
-                    foreach (var it in en) list.Add(it);
-                    dict[f.Name] = list.ToArray();
-                }
-                else
-                {
-                    dict[f.Name] = val;
-                }
-            }
-
-            return dict;
-        }
     }
 }
 #endif

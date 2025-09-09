@@ -85,21 +85,7 @@ namespace VNEngine
                         Debug.Log("Error loading audio clip " + split_line[1] + ". Make sure your named clip matches the resource. Ex: some_folder/cool_music");
                     }
                 }
-                else if (line.StartsWith("SetMusic", true, System.Globalization.CultureInfo.InvariantCulture))
-                {
-                    GameObject go = new GameObject("Set Music " + split_line[1]);
-                    go.transform.parent = cur_conversation.transform;
-                    SetMusicNode node = go.AddComponent<SetMusicNode>();
-                    // If possible, load the necessary resource
-                    try
-                    {
-                        //node.new_music = Resources.Load<AudioClip>(split_line[1]);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.Log("Error loading audio clip " + split_line[1] + ". Make sure your named clip matches the resource. Ex: some_folder/cool_music");
-                    }
-                }
+
                 // ADD MORE HERE IF YOU WISH TO EXTEND THE IMPORTING FUNCTIONALITY
                 //
                 //
@@ -249,16 +235,28 @@ namespace VNEngine
             go.AddComponent<WaitNode>();
         }
 
-
-        [MenuItem("GameObject/VN Engine/Branching/Show Choices", false, 0)]
-        private static void ShowChoicesNode(MenuCommand menuCommand)
+// GameObject ▸ VN Engine ▸ Branching ▸ Gate Traits
+        [MenuItem("GameObject/VN Engine/Branching/Gate Traits", false, 0)]
+        private static void GateTraits(MenuCommand menuCommand)
         {
-            GameObject go = new GameObject("Show Choices");     // Create new object
-            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject); // Parent the new object
-            Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);    // Register the creation in the undo system
+            GameObject go = new GameObject("Gate Traits");
+            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+            Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
             Selection.activeObject = go;
 
-            go.AddComponent<ChoiceNode>();
+            go.AddComponent<GateTraitsNode>();
+        }
+
+// GameObject ▸ VN Engine ▸ Branching ▸ Show Choice
+        [MenuItem("GameObject/VN Engine/Branching/Show Choice", false, 0)]
+        private static void ShowChoiceNode(MenuCommand menuCommand)
+        {
+            GameObject go = new GameObject("Show Choice");
+            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+            Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
+            Selection.activeObject = go;
+
+            go.AddComponent<ShowChoiceNode>(); // <-- new lean node
         }
 
 
