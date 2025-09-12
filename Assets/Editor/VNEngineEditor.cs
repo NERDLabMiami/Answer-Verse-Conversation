@@ -256,7 +256,13 @@ namespace VNEngine
             Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
             Selection.activeObject = go;
 
-            go.AddComponent<ShowChoiceNode>(); // <-- new lean node
+            ShowChoiceNode sc = go.AddComponent<ShowChoiceNode>(); // <-- new lean node
+#if UNITY_EDITOR
+            // fill the registry immediately
+            sc.GetType().GetField("traitRegistry", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(sc, TraitRegistry.Load());
+            EditorUtility.SetDirty(sc);
+#endif
         }
 
 

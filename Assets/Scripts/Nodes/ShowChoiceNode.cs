@@ -13,16 +13,36 @@ namespace VNEngine
         {
             [TextArea] public string text;
             public ConversationManager nextConversation;      // null => continue current
-            public List<TraitRequirement> requirements = new List<TraitRequirement>(); // ALL must pass
+            public List<FlexibleTraitRequirement> requirements = new List<FlexibleTraitRequirement>(); // ALL must pass
+            public ButtonModifier buttonModifier;
+            public bool enableLogging;
+            public string label;      // stable research ID, e.g. "gain_frame_A"
+            public string category;   // optional grouping, e.g. "framing"
+            public string variant;    // optional arm, e.g. "A" | "B"
         }
 
         public List<Choice> choices = new List<Choice>();
+        private List<int> _presentedOrder = new(); // shownIndex -> origIndex
 
-        [Header("Presentation")]
+        public bool logOnShow = true;
+        public bool logOnSelect = true;
+        public bool includeTraitSnapshot = true; 
         public bool hideDialogueUI = true; // default Answer Campus behavior
 
+        [SerializeField] private TraitRegistry traitRegistry;
         private readonly List<Button> _activeButtons = new();
+        private void Reset()  // called when the component is first added
+        {
+            if (traitRegistry == null) traitRegistry = TraitRegistry.Load();
+        }
 
+#if UNITY_EDITOR
+        private void OnValidate() // keeps it filled when edited/duplicated
+        {
+            if (!Application.isPlaying && traitRegistry == null)
+                traitRegistry = TraitRegistry.Load();
+        }
+#endif
         public override void Run_Node()
         {
             if (hideDialogueUI)
@@ -47,6 +67,7 @@ namespace VNEngine
                 (visible[i], visible[j]) = (visible[j], visible[i]);
             }
 
+            _presentedOrder = new List<int>(visible);
             // 3) Paint buttons
             _activeButtons.Clear();
             for (int slot = 0; slot < visible.Count && slot < uiMax; slot++)
@@ -78,10 +99,43 @@ namespace VNEngine
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(_activeButtons[0].gameObject);
             }
+            if (logOnShow && Logging.Instance != null)
+            {
+                var cm = GetComponentInParent<ConversationManager>();
+                var json = new Dictionary<string, object>
+                {
+                    { "conversation", cm ? cm.name : "" },
+                    { "node", name },
+                    { "nodeIndex", cm ? cm.cur_node : 0 },                   // current node index
+                    { "hidden_count", Mathf.Max(0, choices.Count - _presentedOrder.Count) },
+                    { "order", _presentedOrder },                            // shownIndex -> origIndex
+                    { "options", BuildOptionsArray() }                       // descriptors incl. research tags
+                };
+                if (includeTraitSnapshot) json["traits_current"] = CurrentTraitMap();
+
+                SafeLogJson("choice_presented", json);
+            }
+            
         }
 
         private void OnChoice(int idx)
         {
+            if (logOnSelect && Logging.Instance != null)
+            {
+                var cm = GetComponentInParent<ConversationManager>();
+                var json = new Dictionary<string, object>
+                {
+                    { "conversation", cm ? cm.name : "" },
+                    { "node", name },
+                    { "nodeIndex", cm ? cm.cur_node : 0 },
+                    { "order", _presentedOrder },
+                    { "selected", OptionDescriptor(idx) }
+                };
+                if (includeTraitSnapshot) json["traits_current"] = CurrentTraitMap();
+
+                SafeLogJson("choice_selected", json);
+            }
+
             var c = choices[idx];
 
             // Jump? End current conversation then start target (same as ChoicesManager.Change_Conversation)
@@ -101,6 +155,95 @@ namespace VNEngine
             CleanupAndHide();
             base.Finish_Node();                                                      // advance to next node in current convo :contentReference[oaicite:10]{index=10}
         }
+// Build array of descriptors for the presented buttons
+        private List<Dictionary<string, object>> BuildOptionsArray()
+        {
+            var list = new List<Dictionary<string, object>>();
+            for (int shown = 0; shown < _presentedOrder.Count; shown++)
+            {
+                int orig = _presentedOrder[shown];
+                var ch = choices[orig];
+                list.Add(new Dictionary<string, object> {
+                    { "id", $"{name}#{orig}" },
+                    { "label", ch.label ?? "" },
+                    { "category", ch.category ?? "" },
+                    { "variant", ch.variant ?? "" },
+                    { "text", ch.text ?? "" },
+                    { "origIndex", orig },
+                    { "shownIndex", shown }
+                });
+            }
+            return list;
+        }
+
+        private Dictionary<string, object> OptionDescriptor(int origIndex)
+        {
+            // Map orig index to shown index for completeness
+            int shownIndex = _presentedOrder.IndexOf(origIndex);
+            var ch = choices[origIndex];
+            return new Dictionary<string, object> {
+                { "id", $"{name}#{origIndex}" },
+                { "label", ch.label ?? "" },
+                { "category", ch.category ?? "" },
+                { "variant", ch.variant ?? "" },
+                { "text", ch.text ?? "" },
+                { "origIndex", origIndex },
+                { "shownIndex", shownIndex }
+            };
+        }
+        private Dictionary<string, object> CurrentTraitMap() {
+            var map = new Dictionary<string, object>();
+            foreach (var k in GateTraitsNode.AllTraitKeys())
+                map[k] = StatsManager.Get_Numbered_Stat(k);
+            return map;
+        }private void SafeLogJson(string eventName, Dictionary<string, object> payload)
+{
+    try
+    {
+        if (Logging.Instance == null) return;
+        string json = WriteJson(payload);
+        Logging.Instance.BeginCustom(eventName);          // see #6
+        Logging.Instance.ParamJson("payload", json);      // single packed blob
+        // Optional: add a couple scalars for query-ability
+        Logging.Instance.Param("conversation", GetComponentInParent<ConversationManager>()?.name ?? "");
+        Logging.Instance.Param("node", name);
+        Logging.Instance.SubmitCustom();
+    }
+    catch (System.Exception e)
+    {
+        Debug.LogWarning($"ShowChoiceNode log failed: {e.Message}");
+    }
+}
+
+private static string WriteJson(object obj)
+{
+    // very small JSON writer to handle dictionaries/lists/scalars
+    var sb = new System.Text.StringBuilder();
+    void W(object o)
+    {
+        switch (o)
+        {
+            case null: sb.Append("null"); break;
+            case string s: sb.Append('"').Append(s.Replace("\\","\\\\").Replace("\"","\\\"")
+                                                  .Replace("\n","\\n").Replace("\r","\\r").Replace("\t","\\t")).Append('"'); break;
+            case bool b: sb.Append(b ? "true" : "false"); break;
+            case int i: sb.Append(i); break;
+            case float f: sb.Append(f.ToString(System.Globalization.CultureInfo.InvariantCulture)); break;
+            case double d: sb.Append(d.ToString(System.Globalization.CultureInfo.InvariantCulture)); break;
+            case IDictionary<string, object> dict:
+                sb.Append('{'); bool first = true;
+                foreach (var kv in dict) { if(!first) sb.Append(','); first=false; W(kv.Key); sb.Append(':'); W(kv.Value); }
+                sb.Append('}'); break;
+            case System.Collections.IEnumerable seq:
+                sb.Append('['); first = true;
+                foreach (var v in seq) { if(!first) sb.Append(','); first=false; W(v); }
+                sb.Append(']'); break;
+            default: sb.Append('"').Append(o.ToString()).Append('"'); break;
+        }
+    }
+    W(obj);
+    return sb.ToString();
+}
 
         private void CleanupAndHide()
         {
@@ -123,15 +266,14 @@ namespace VNEngine
             }
         }
 
-        private static bool MeetsRequirements(List<TraitRequirement> reqs)
+        private static bool MeetsRequirements(List<FlexibleTraitRequirement> reqs)
         {
             if (reqs == null || reqs.Count == 0) return true;
-            for (int i = 0; i < reqs.Count; i++)
+            foreach (var r in reqs)
             {
-                var r = reqs[i];
-                float current = StatsManager.Get_Numbered_Stat(r.trait.ToString());
-                if (!CompareNumber(current, r.compare, r.value))
-                    return false;
+                var key = r.ResolveKey();
+                float current = StatsManager.Get_Numbered_Stat(key);
+                if (!CompareNumber(current, r.compare, r.value)) return false;
             }
             return true;
         }
