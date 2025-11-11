@@ -13,7 +13,7 @@ namespace VNEngine
     public class FlexibleTraitRequirement
     {
         // Back-compat path:
-        public Trait enumTrait = Trait.Humor; // existing enum
+//        public enumTrait = Trait.Humor; // existing enum
 
         // New flexible path (preferred):
         public string traitKey;               // if non-empty, use this
@@ -23,7 +23,7 @@ namespace VNEngine
         public string ResolveKey()
         {
             if (!string.IsNullOrEmpty(traitKey)) return traitKey;
-            return GateTraitsNode.TraitKey(enumTrait); // existing mapper
+            return GateTraitsNode.TraitKey(Trait.Charisma); // existing mapper
         }
     }
 

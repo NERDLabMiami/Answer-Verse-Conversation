@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc1ff22e6d6d465882c7485654a6012, type: 3}
+  m_Name: Ji-ah
+  m_EditorClassIdentifier: 
+  displayName: Ji-ah
+  key: jiah
+  aliases: []
+  prefabName: Ji-ah
+  actorVariants:
+  - key: default
+    displayName: Default
+  defaultVariantKey: default
+  bodyExpressions:
+  - baseKey: content
+    variantKey: 
+    mouth: 0
+    gaze: 0
+    hands: 1
+    sprite: {fileID: 21300000, guid: 298de7a36d5970a46bd0729e17753795, type: 3}
+  - baseKey: content
+    variantKey: 
+    mouth: 0
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: 078baae88375c1b4c9930b5fd72a16da, type: 3}
+  - baseKey: content
+    variantKey: 
+    mouth: 0
+    gaze: 1
+    hands: 2
+    sprite: {fileID: 21300000, guid: 16c5a461e72fd134d812b7a9f88f16ca, type: 3}
+  - baseKey: content
+    variantKey: 
+    mouth: 0
+    gaze: 0
+    hands: 2
+    sprite: {fileID: 21300000, guid: 79327935a74609c48aad60c3e6976b01, type: 3}
+  - baseKey: content
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 2
+    sprite: {fileID: 21300000, guid: 9b2e69065e120eb4fbcf22d39e64a872, type: 3}
+  - baseKey: content
+    variantKey: 
+    mouth: 1
+    gaze: 0
+    hands: 2
+    sprite: {fileID: 21300000, guid: 05b8992e7808a4c48bc71185e7a87822, type: 3}
+  - baseKey: sad
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 2
+    sprite: {fileID: 21300000, guid: 3303c5928f1e3ea448f5e8bf9d45a0ff, type: 3}
+  - baseKey: sad
+    variantKey: 
+    mouth: 0
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: 832bdad30fa23124a89b988b1e6252e9, type: 3}
+  - baseKey: scared
+    variantKey: 
+    mouth: 0
+    gaze: 0
+    hands: 2
+    sprite: {fileID: 21300000, guid: 0317cb4ea27bc2049ae3be1b8d671543, type: 3}
+  - baseKey: scared
+    variantKey: 
+    mouth: 0
+    gaze: 1
+    hands: 2
+    sprite: {fileID: 21300000, guid: dc187333301e2284b83af99efff90e36, type: 3}
+  - baseKey: surprised
+    variantKey: 
+    mouth: 1
+    gaze: 0
+    hands: 2
+    sprite: {fileID: 21300000, guid: bf5337d6db0218c4d9eb4cb4b6004a2b, type: 3}
+  - baseKey: surprised
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 2
+    sprite: {fileID: 21300000, guid: 466be745692743245a401d739127e4ef, type: 3}
+  - baseKey: angry
+    variantKey: 
+    mouth: 1
+    gaze: 0
+    hands: 1
+    sprite: {fileID: 21300000, guid: 4a73dafc1087c604d871afcd9aaaed84, type: 3}
+  - baseKey: angry
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: 90da40eaf8a761b42bde5c1c6775f7d2, type: 3}
+  - baseKey: confused
+    variantKey: 
+    mouth: 0
+    gaze: 0
+    hands: 1
+    sprite: {fileID: 21300000, guid: 36e0082cf956339458510e4636f5d6ac, type: 3}
+  - baseKey: confused
+    variantKey: 
+    mouth: 0
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: 2036e0cbac167c047b0706efd3bba77f, type: 3}
+  - baseKey: drunk
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: ff00626a6a97ef949b7b3a70958dc193, type: 3}
+  - baseKey: happy
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: 46abbfda53219944d891bcdc025327ff, type: 3}
+  - baseKey: book
+    variantKey: 
+    mouth: 1
+    gaze: 1
+    hands: 1
+    sprite: {fileID: 21300000, guid: 34286184e49fcde41bace53a32d8c531, type: 3}
+  portraitExpressions: []
+  drumIndex: 0
+  requiredBaselines:
+  - neutral
