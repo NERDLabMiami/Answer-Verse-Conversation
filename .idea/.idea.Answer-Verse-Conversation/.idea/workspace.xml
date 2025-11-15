@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="12350360-3134-43e8-9848-a6e5f6e3da4c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Answer-Verse-Conversation/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/html5/lib/libfmodstudiounityplugin.bc.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/html5/lib/libfmodstudiounityplugin.bc.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/DialogueCanvas - Clean.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/DialogueCanvas - Clean.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Actors/Professor Blanche.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Actors/Professor Blanche.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Breanna.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Breanna.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Conversation.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Leilani.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Leilani.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Matthew.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Matthew.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Nodes/GateTraitsNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Nodes/GateTraitsNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ActI.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ActI.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Nodes/LoadSceneNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Nodes/LoadSceneNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,20 +33,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ep1-firstsemester&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "ep2-leilani",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/2021.3.45f1/Unity.app/Contents/MacOS/Unity" />
@@ -116,6 +110,7 @@
       <workItem from="1757883450975" duration="819000" />
       <workItem from="1760985071367" duration="622000" />
       <workItem from="1761082644137" duration="3231000" />
+      <workItem from="1763075563923" duration="873000" />
     </task>
     <servers />
   </component>

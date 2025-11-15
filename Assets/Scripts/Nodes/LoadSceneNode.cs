@@ -20,12 +20,8 @@ namespace VNEngine
             PlayerPrefs.SetString("Scene After Save", level_to_load);
             Time.timeScale = 1;
 
-            if (!async_loading)
-//                UnityEngine.SceneManagement.SceneManager.LoadScene(level_to_load);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(autoSaveScene);
-
-                    else
-                        StartCoroutine(Async_Load_Level());
+            if (!async_loading) SceneManager.LoadScene(level_to_load);
+            else StartCoroutine(Async_Load_Level());
         }
 
 
