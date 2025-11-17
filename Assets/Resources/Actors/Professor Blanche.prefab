@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 11486432}
   - component: {fileID: 11430486}
   m_Layer: 5
-  m_Name: Professor Blanche 1
+  m_Name: Professor Blanche
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
