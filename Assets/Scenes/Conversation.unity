@@ -7177,6 +7177,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6568508446615833468, guid: bfcea6cf3b0ee4790b1614a5c7e7a78e, type: 3}
+      propertyPath: traitRequirements.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568508446615833468, guid: bfcea6cf3b0ee4790b1614a5c7e7a78e, type: 3}
       propertyPath: successDeltas.Array.data[0].amount
       value: 1
       objectReference: {fileID: 0}
@@ -12624,7 +12628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6568508446615833468, guid: bfcea6cf3b0ee4790b1614a5c7e7a78e, type: 3}
       propertyPath: traitRequirements.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6568508446615833468, guid: bfcea6cf3b0ee4790b1614a5c7e7a78e, type: 3}
       propertyPath: successDeltas.Array.data[0].amount
