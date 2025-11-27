@@ -13,6 +13,7 @@ namespace VNEngine
         {
             [TextArea] public string text;
             public ConversationManager nextConversation;      // null => continue current
+<<<<<<< HEAD
             public List<FlexibleTraitRequirement> requirements = new List<FlexibleTraitRequirement>(); // ALL must pass
             public ButtonModifier buttonModifier;
             public bool enableLogging;
@@ -43,6 +44,18 @@ namespace VNEngine
                 traitRegistry = TraitRegistry.Load();
         }
 #endif
+=======
+            public List<TraitRequirement> requirements = new List<TraitRequirement>(); // ALL must pass
+        }
+
+        public List<Choice> choices = new List<Choice>();
+
+        [Header("Presentation")]
+        public bool hideDialogueUI = true; // default Answer Campus behavior
+
+        private readonly List<Button> _activeButtons = new();
+
+>>>>>>> main
         public override void Run_Node()
         {
             if (hideDialogueUI)
@@ -67,7 +80,10 @@ namespace VNEngine
                 (visible[i], visible[j]) = (visible[j], visible[i]);
             }
 
+<<<<<<< HEAD
             _presentedOrder = new List<int>(visible);
+=======
+>>>>>>> main
             // 3) Paint buttons
             _activeButtons.Clear();
             for (int slot = 0; slot < visible.Count && slot < uiMax; slot++)
@@ -99,6 +115,7 @@ namespace VNEngine
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(_activeButtons[0].gameObject);
             }
+<<<<<<< HEAD
             if (logOnShow && Logging.Instance != null)
             {
                 var cm = GetComponentInParent<ConversationManager>();
@@ -116,10 +133,13 @@ namespace VNEngine
                 SafeLogJson("choice_presented", json);
             }
             
+=======
+>>>>>>> main
         }
 
         private void OnChoice(int idx)
         {
+<<<<<<< HEAD
             if (logOnSelect && Logging.Instance != null)
             {
                 var cm = GetComponentInParent<ConversationManager>();
@@ -136,6 +156,8 @@ namespace VNEngine
                 SafeLogJson("choice_selected", json);
             }
 
+=======
+>>>>>>> main
             var c = choices[idx];
 
             // Jump? End current conversation then start target (same as ChoicesManager.Change_Conversation)
@@ -155,6 +177,7 @@ namespace VNEngine
             CleanupAndHide();
             base.Finish_Node();                                                      // advance to next node in current convo :contentReference[oaicite:10]{index=10}
         }
+<<<<<<< HEAD
 // Build array of descriptors for the presented buttons
         private List<Dictionary<string, object>> BuildOptionsArray()
         {
@@ -244,6 +267,8 @@ private static string WriteJson(object obj)
     W(obj);
     return sb.ToString();
 }
+=======
+>>>>>>> main
 
         private void CleanupAndHide()
         {
@@ -266,6 +291,7 @@ private static string WriteJson(object obj)
             }
         }
 
+<<<<<<< HEAD
         private static bool MeetsRequirements(List<FlexibleTraitRequirement> reqs)
         {
             if (reqs == null || reqs.Count == 0) return true;
@@ -274,6 +300,17 @@ private static string WriteJson(object obj)
                 var key = r.ResolveKey();
                 float current = StatsManager.Get_Numbered_Stat(key);
                 if (!CompareNumber(current, r.compare, r.value)) return false;
+=======
+        private static bool MeetsRequirements(List<TraitRequirement> reqs)
+        {
+            if (reqs == null || reqs.Count == 0) return true;
+            for (int i = 0; i < reqs.Count; i++)
+            {
+                var r = reqs[i];
+                float current = StatsManager.Get_Numbered_Stat(r.trait.ToString());
+                if (!CompareNumber(current, r.compare, r.value))
+                    return false;
+>>>>>>> main
             }
             return true;
         }

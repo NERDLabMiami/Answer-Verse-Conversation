@@ -7,6 +7,7 @@ namespace VNEngine
     public enum Trait { Humor, Charisma, Empathy, Grades }
     public enum NumberCompare { GreaterThan, GreaterOrEqual, Equal, LessOrEqual, LessThan }
 
+<<<<<<< HEAD
 
 // GateTraitsNode.cs (add alongside existing types)
     [System.Serializable]
@@ -25,6 +26,14 @@ namespace VNEngine
             if (!string.IsNullOrEmpty(traitKey)) return traitKey;
             return GateTraitsNode.TraitKey(enumTrait); // existing mapper
         }
+=======
+    [System.Serializable]
+    public class TraitRequirement
+    {
+        public Trait trait;
+        public NumberCompare compare = NumberCompare.GreaterOrEqual;
+        public float value = 1f;     // e.g., Empathy >= 2
+>>>>>>> main
     }
 
     public enum FootballCheckType
@@ -56,7 +65,11 @@ namespace VNEngine
     public class GateTraitsNode : Node
     {
         [Header("Requirements (All must pass)")]
+<<<<<<< HEAD
         public List<FlexibleTraitRequirement> traitRequirements = new();
+=======
+        public List<TraitRequirement> traitRequirements = new List<TraitRequirement>();
+>>>>>>> main
         public FootballRequirement footballRequirement = new FootballRequirement { check = FootballCheckType.None };
 
         [Header("On Success")]
@@ -128,7 +141,11 @@ namespace VNEngine
             for (int i = 0; i < traitRequirements.Count; i++)
             {
                 var req = traitRequirements[i];
+<<<<<<< HEAD
                 float current = StatsManager.Get_Numbered_Stat(req.ResolveKey());
+=======
+                float current = GetTrait(req.trait);
+>>>>>>> main
                 if (!CompareNumber(current, req.compare, req.value))
                     return false;
             }
@@ -212,9 +229,13 @@ namespace VNEngine
 
         // ------- TRAIT HELPERS (string keys centralized here) -------
 
+<<<<<<< HEAD
         public static IEnumerable<string> AllTraitKeys()
             => System.Enum.GetValues(typeof(Trait)).Cast<Trait>().Select(TraitKey);
         public static string TraitKey(Trait t)
+=======
+        private static string TraitKey(Trait t)
+>>>>>>> main
         {
             switch (t)
             {

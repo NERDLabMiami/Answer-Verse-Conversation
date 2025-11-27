@@ -171,6 +171,7 @@ MonoBehaviour:
   slide_out: 0
   fade_out: 1
   wait_for_actors_to_exit: 1
+<<<<<<< HEAD
 --- !u!1 &17240798
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +492,8 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+=======
+>>>>>>> main
 --- !u!1 &47584765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,6 +1073,7 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+<<<<<<< HEAD
 --- !u!1 &117506023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,6 +1286,8 @@ MonoBehaviour:
   cur_node: 0
   active: 0
   finished_conversation: 0
+=======
+>>>>>>> main
 --- !u!1 &146693463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1337,7 @@ MonoBehaviour:
   choices:
   - text: 1 horse-sized duck.
     nextConversation: {fileID: 979845540}
+<<<<<<< HEAD
     requirements:
     - enumTrait: 0
       traitKey: Empathy
@@ -1418,6 +1425,19 @@ MonoBehaviour:
   cur_node: 0
   active: 0
   finished_conversation: 0
+=======
+    requirements: []
+  - text: 100 duck-sized horses.
+    nextConversation: {fileID: 681890577}
+    requirements: []
+  - text: Why are you so concerned about ducks and horses?
+    nextConversation: {fileID: 1990828457}
+    requirements:
+    - trait: 0
+      compare: 0
+      value: 1
+  hideDialogueUI: 1
+>>>>>>> main
 --- !u!1 &200476567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,6 +2789,7 @@ MonoBehaviour:
   fade_in_time: 1
   destination: 3
   custom_position: {fileID: 1823725680}
+<<<<<<< HEAD
 --- !u!1 &336607283
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,6 +3036,8 @@ Transform:
   m_Father: {fileID: 1403527251}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> main
 --- !u!1001 &370588197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4019,6 +4042,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &569440213
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,6 +4203,8 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+=======
+>>>>>>> main
 --- !u!1 &576720663
 GameObject:
   m_ObjectHideFlags: 0
@@ -8457,6 +8483,7 @@ MonoBehaviour:
   m_Script: {fileID: 1967302909}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!1 &1051897205
 GameObject:
   m_ObjectHideFlags: 0
@@ -8777,6 +8804,8 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+=======
+>>>>>>> main
 --- !u!1 &1098695090
 GameObject:
   m_ObjectHideFlags: 0
@@ -8907,6 +8936,7 @@ MonoBehaviour:
   fade_out: 0
   fade_in: 1
   wait_for_all_fading: 1
+<<<<<<< HEAD
 --- !u!1 &1134035947
 GameObject:
   m_ObjectHideFlags: 0
@@ -9395,6 +9425,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2429956619842599082, guid: 630ec1afbd9b641719bede10078cd2da, type: 3}
   m_PrefabInstance: {fileID: 1172659187}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> main
 --- !u!1 &1180875088
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,6 +9831,7 @@ RectTransform:
   m_AnchoredPosition: {x: -488, y: -274.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+<<<<<<< HEAD
 --- !u!1 &1293820536
 GameObject:
   m_ObjectHideFlags: 0
@@ -9926,6 +9959,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6c96011818384806a063571a6eee403, type: 3}
+=======
+>>>>>>> main
 --- !u!1 &1331070961
 GameObject:
   m_ObjectHideFlags: 0
@@ -9979,6 +10014,7 @@ MonoBehaviour:
   cur_node: 0
   active: 0
   finished_conversation: 0
+<<<<<<< HEAD
 --- !u!1 &1346093324
 GameObject:
   m_ObjectHideFlags: 0
@@ -10231,6 +10267,8 @@ MonoBehaviour:
   includeTraitSnapshot: 1
   hideDialogueUI: 1
   traitRegistry: {fileID: 11400000, guid: 07ee5c0effa71461e890422cadb4786e, type: 2}
+=======
+>>>>>>> main
 --- !u!1 &1358473087
 GameObject:
   m_ObjectHideFlags: 0
@@ -10701,7 +10739,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroy_when_finished: 0
+<<<<<<< HEAD
   start_conversation_when_done: {fileID: 291362450}
+=======
+  start_conversation_when_done: {fileID: 2131705729}
+>>>>>>> main
   cur_node: 0
   active: 0
   finished_conversation: 0
@@ -10720,6 +10762,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1407132375
 GameObject:
   m_ObjectHideFlags: 0
@@ -10796,6 +10839,8 @@ MonoBehaviour:
   includeTraitSnapshot: 1
   hideDialogueUI: 1
   traitRegistry: {fileID: 11400000, guid: 07ee5c0effa71461e890422cadb4786e, type: 2}
+=======
+>>>>>>> main
 --- !u!1 &1418921109
 GameObject:
   m_ObjectHideFlags: 0
@@ -10848,6 +10893,7 @@ MonoBehaviour:
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
+<<<<<<< HEAD
 --- !u!1 &1449956021
 GameObject:
   m_ObjectHideFlags: 0
@@ -11008,6 +11054,8 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+=======
+>>>>>>> main
 --- !u!1 &1451721014
 GameObject:
   m_ObjectHideFlags: 0
@@ -11126,6 +11174,7 @@ MonoBehaviour:
   m_Script: {fileID: 1967302909}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!1 &1545994664
 GameObject:
   m_ObjectHideFlags: 0
@@ -11286,6 +11335,8 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+=======
+>>>>>>> main
 --- !u!1 &1551158771
 GameObject:
   m_ObjectHideFlags: 0
@@ -12794,6 +12845,7 @@ MonoBehaviour:
   m_Script: {fileID: 1967302909}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!1001 &1792568033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12932,6 +12984,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2429956619842599082, guid: 630ec1afbd9b641719bede10078cd2da, type: 3}
   m_PrefabInstance: {fileID: 1792568033}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> main
 --- !u!1 &1804089925
 GameObject:
   m_ObjectHideFlags: 0
@@ -14079,6 +14133,7 @@ MonoBehaviour:
   m_Script: {fileID: 1967302909}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!1 &1945502252
 GameObject:
   m_ObjectHideFlags: 0
@@ -14323,6 +14378,8 @@ MonoBehaviour:
   includeTraitSnapshot: 1
   hideDialogueUI: 1
   traitRegistry: {fileID: 11400000, guid: 07ee5c0effa71461e890422cadb4786e, type: 2}
+=======
+>>>>>>> main
 --- !u!115 &1967302909
 MonoScript:
   m_ObjectHideFlags: 0
@@ -14735,6 +14792,7 @@ MonoBehaviour:
   cur_node: 0
   active: 0
   finished_conversation: 0
+<<<<<<< HEAD
 --- !u!1 &1997339658
 GameObject:
   m_ObjectHideFlags: 0
@@ -14895,6 +14953,8 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+=======
+>>>>>>> main
 --- !u!1 &2002780339
 GameObject:
   m_ObjectHideFlags: 0
@@ -15055,6 +15115,7 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+<<<<<<< HEAD
 --- !u!1 &2027151547
 GameObject:
   m_ObjectHideFlags: 0
@@ -15106,6 +15167,8 @@ MonoBehaviour:
   cur_node: 0
   active: 0
   finished_conversation: 0
+=======
+>>>>>>> main
 --- !u!1 &2043719667
 GameObject:
   m_ObjectHideFlags: 0
@@ -15627,7 +15690,10 @@ Transform:
   - {fileID: 553864161}
   - {fileID: 878035275}
   - {fileID: 146693464}
+<<<<<<< HEAD
   - {fileID: 341738555}
+=======
+>>>>>>> main
   m_Father: {fileID: 561909551}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
