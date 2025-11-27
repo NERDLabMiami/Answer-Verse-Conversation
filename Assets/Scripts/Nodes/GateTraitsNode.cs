@@ -7,12 +7,24 @@ namespace VNEngine
     public enum Trait { Humor, Charisma, Empathy, Grades }
     public enum NumberCompare { GreaterThan, GreaterOrEqual, Equal, LessOrEqual, LessThan }
 
+
+// GateTraitsNode.cs (add alongside existing types)
     [System.Serializable]
-    public class TraitRequirement
+    public class FlexibleTraitRequirement
     {
-        public Trait trait;
+        // Back-compat path:
+//        public enumTrait = Trait.Humor; // existing enum
+
+        // New flexible path (preferred):
+        public string traitKey;               // if non-empty, use this
+
         public NumberCompare compare = NumberCompare.GreaterOrEqual;
-        public float value = 1f;     // e.g., Empathy >= 2
+        public float value = 1f;
+        public string ResolveKey()
+        {
+            if (!string.IsNullOrEmpty(traitKey)) return traitKey;
+            return GateTraitsNode.TraitKey(Trait.Charisma); // existing mapper
+        }
     }
 
     public enum FootballCheckType
@@ -44,7 +56,7 @@ namespace VNEngine
     public class GateTraitsNode : Node
     {
         [Header("Requirements (All must pass)")]
-        public List<TraitRequirement> traitRequirements = new List<TraitRequirement>();
+        public List<FlexibleTraitRequirement> traitRequirements = new();
         public FootballRequirement footballRequirement = new FootballRequirement { check = FootballCheckType.None };
 
         [Header("On Success")]
@@ -116,7 +128,7 @@ namespace VNEngine
             for (int i = 0; i < traitRequirements.Count; i++)
             {
                 var req = traitRequirements[i];
-                float current = GetTrait(req.trait);
+                float current = StatsManager.Get_Numbered_Stat(req.ResolveKey());
                 if (!CompareNumber(current, req.compare, req.value))
                     return false;
             }
@@ -200,7 +212,9 @@ namespace VNEngine
 
         // ------- TRAIT HELPERS (string keys centralized here) -------
 
-        private static string TraitKey(Trait t)
+        public static IEnumerable<string> AllTraitKeys()
+            => System.Enum.GetValues(typeof(Trait)).Cast<Trait>().Select(TraitKey);
+        public static string TraitKey(Trait t)
         {
             switch (t)
             {
