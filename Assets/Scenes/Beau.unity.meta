@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Beau.unity.meta
 guid: 0a51f16339e8949ca85148fd96ffd84d
 DefaultImporter:
+========
+guid: 630ec1afbd9b641719bede10078cd2da
+PrefabImporter:
+>>>>>>>> main:Assets/Resources/Conversation Pieces/OpenGameData Event.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

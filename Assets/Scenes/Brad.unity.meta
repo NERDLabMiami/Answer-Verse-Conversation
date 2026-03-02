@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Brad.unity.meta
 guid: a53b0999acd0e498388ad6068175e2c2
+========
+guid: 0a51f16339e8949ca85148fd96ffd84d
+>>>>>>>> main:Assets/Scenes/Beau.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
