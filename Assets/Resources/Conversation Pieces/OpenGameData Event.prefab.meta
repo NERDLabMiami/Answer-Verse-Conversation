@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Conversation Pieces/OpenGameData Event.prefab.meta
 guid: 630ec1afbd9b641719bede10078cd2da
 PrefabImporter:
+========
+guid: a53b0999acd0e498388ad6068175e2c2
+DefaultImporter:
+>>>>>>>> main:Assets/Scenes/Brad.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
