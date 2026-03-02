@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Editor/OpenGameDataNodeEditor.cs.meta
 guid: 82af42cd349c54160a2a36ed40d85d40
 MonoImporter:
   externalObjects: {}
@@ -9,3 +10,6 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+========
+guid: 3188064b4e78c42508acbcb8eb52a371
+>>>>>>>> main:Assets/Editor/VNEngineEditor.cs.meta
