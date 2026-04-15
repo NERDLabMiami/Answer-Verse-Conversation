@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Purnell_1.unity
+    guid: edb87ae995bdd4ca686e83031881c901
+  - enabled: 1
     path: Assets/Scenes/Breanna.unity
     guid: eeac5a997c8f44d629b8cdab35482cc0
   - enabled: 1
