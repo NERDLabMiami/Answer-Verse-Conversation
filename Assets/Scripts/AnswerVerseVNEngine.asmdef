@@ -1,0 +1,19 @@
+{
+    "name": "AnswerVerseVNEngine",
+    "rootNamespace": "",
+    "references": [
+        "FMODUnity",
+        "OGD.Log",
+        "Unity.TextMeshPro",
+        "PlayerPrefsExtra"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

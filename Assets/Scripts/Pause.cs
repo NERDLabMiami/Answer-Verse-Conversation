@@ -13,11 +13,6 @@ namespace VNEngine
 
         public string toggle_pause_key = "Pause";
 
-        public bool pause_all_audio_when_paused = false;
-        public bool pause_voices_when_paused = false;
-        public bool pause_music_when_paused = false;
-
-
         [HideInInspector]
         public bool paused = false;
 
@@ -47,36 +42,19 @@ namespace VNEngine
         // Pause
         private void PauseGame()
         {
-         FMODAudioManager.Instance.Pause(true);   
+            AudioManager.audio_manager.Pause_Audio(true);
             pause_menu.SetActive(true);
             Time.timeScale = 0;
             paused = true;
-/*
-            if (pause_all_audio_when_paused)
-                AudioListener.pause = true;
-            if (pause_voices_when_paused)
-                //AudioManager.audio_manager.voice_audio_source.Pause();
-            if (pause_music_when_paused)
-//
-            AudioManager.audio_manager.background_music_audio_source.Pause();
-  */
         }
         // Resume/Unpause
         public void ResumeGame()
         {
-            FMODAudioManager.Instance.Pause(false);   
+            AudioManager.audio_manager.Pause_Audio(false);
 
             pause_menu.SetActive(false);
             Time.timeScale = 1;
             paused = false;
-/*
-            if (pause_all_audio_when_paused)
-                AudioListener.pause = false;
-            if (pause_voices_when_paused)
-  //              AudioManager.audio_manager.voice_audio_source.UnPause();
-            if (pause_music_when_paused)
-  //              AudioManager.audio_manager.background_music_audio_source.UnPause();
-  */
         }
 
 
