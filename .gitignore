@@ -71,3 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /.idea
+
+# Crash dumps and editor logs
+mono_crash*.json
+fmod_editor.log
