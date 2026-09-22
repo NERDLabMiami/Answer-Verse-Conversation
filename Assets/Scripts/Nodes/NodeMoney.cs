@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Adds (or subtracts, if negative) an amount from the player's money stat.
     public class NodeMoney : Node
     {
         public int amount;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Adds a character to the player's contact/friend list.
     public class NodeContact : Node
     {
         public Character character;

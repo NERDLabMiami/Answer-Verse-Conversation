@@ -308,6 +308,11 @@ namespace VNEngine.EditorTools
     }
 
     // ==== WINDOW ==============================================================
+    // AnswerVerse VNEngine's writing pipeline. Lets a writer round-trip a conversation's
+    // node tree to/from CSV: export one conversation or a whole folder of them for editing
+    // in a spreadsheet, then re-import to patch the scene's nodes to match. NodeExportTag
+    // (below) gives each exported node a stable ID so patch imports match nodes correctly
+    // even after reordering.
     public class VNConversationIOWindow : EditorWindow
     {
         [MenuItem("Pipeline/Writing/Conversation IO")]

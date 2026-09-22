@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Pans every actor currently on scene by a fixed offset.
     public class PanNode : Node
     {
         public Vector3 desiredPosition;

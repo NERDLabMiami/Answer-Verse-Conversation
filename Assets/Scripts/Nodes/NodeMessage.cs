@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Delivers a text message, adding it to the player's message list if not already received.
     public class NodeMessage : Node
     {
         public TextMessage textMessage;

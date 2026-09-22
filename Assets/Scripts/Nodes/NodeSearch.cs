@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Opens a search mini-interaction canvas for the player to find an object.
     public class NodeSearch : Node
     {
         public FindObject searchingCanvas;

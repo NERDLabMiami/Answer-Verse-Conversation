@@ -5,7 +5,7 @@ using TMPro;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Displays a text overlay on screen.
     public class NodeTextOverlay : Node
     {
 

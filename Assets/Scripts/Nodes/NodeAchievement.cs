@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Grants a Steam achievement (currently a no-op - the Steamworks calls below are commented out).
     public class NodeAchievement : Node
     {
         public string achievement;
