@@ -1574,7 +1574,8 @@ MonoBehaviour:
   - text: Didn't we just have this conversation?
     nextConversation: {fileID: 681890577}
     requirements:
-    - traitKey: Humor
+    - enumTrait: 0
+      traitKey: Humor
       compare: 1
       value: 1
     buttonModifier: {fileID: 0}
@@ -1585,7 +1586,8 @@ MonoBehaviour:
   - text: I want to slap you silly. Is your nose unbreakable?
     nextConversation: {fileID: 1433608398}
     requirements:
-    - traitKey: Humor
+    - enumTrait: 0
+      traitKey: Humor
       compare: 1
       value: 2
     buttonModifier: {fileID: 0}
@@ -6813,7 +6815,7 @@ MonoBehaviour:
   executed_from_load: 0
   actor_name_from: 0
   actor_name: Eric
-  new_image: {fileID: 21300000, guid: df5cb74e5629d184ca70241b018718c9, type: 3}
+  new_image: {fileID: 21300000, guid: 34d8b389546376347903c9ff5673af49, type: 3}
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -8215,6 +8217,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
