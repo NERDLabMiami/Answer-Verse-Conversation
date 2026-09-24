@@ -27,8 +27,11 @@ namespace VNEngine
 
         public void StartNewConversation()
         {
+            ConversationManager current = this.transform.GetComponentInParent<ConversationManager>();
+            if (current != null)
+                current.Finish_Conversation();
+
             conversation_to_start.Start_Conversation();
-            this.transform.GetComponentInParent<ConversationManager>().Finish_Conversation();
 
             //        Finish_Node();
         }

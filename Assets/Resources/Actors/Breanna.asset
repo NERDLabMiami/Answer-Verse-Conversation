@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ca6937d41114c4f8d9532b288dcbc8, type: 3}
+  m_Name: Breanna
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.Actor
+  actor_name: Breanna
+  display_name: 
+  outfits:
+  - outfit_name: Default
+    expressions:
+    - name: Angry
+      pose: 2
+      sprite: {fileID: 21300000, guid: 7e59376594cb4774b9d09311296d5416, type: 3}
+    - name: Angry
+      pose: 1
+      sprite: {fileID: 21300000, guid: 03f0f0470e48a2b4e940c45a206494d2, type: 3}
+    - name: Confused
+      pose: 2
+      sprite: {fileID: 21300000, guid: c9a211d11d2b7054cbcf2d8d890551d9, type: 3}
+    - name: Confused
+      pose: 1
+      sprite: {fileID: 21300000, guid: ea6cf6f5929573248a7cacf07b9eb8c1, type: 3}
+    - name: Happy
+      pose: 0
+      sprite: {fileID: 21300000, guid: 9e63d90c726e87e43a3854e582d4803e, type: 3}
+    - name: Neutral
+      pose: 2
+      sprite: {fileID: 21300000, guid: 8c39d5be82c8a27428117bce9bb5926d, type: 3}
+    - name: Neutral
+      pose: 1
+      sprite: {fileID: 21300000, guid: 7e464405efd56364b8222ffeee85b04b, type: 3}
+    - name: Talking A
+      pose: 2
+      sprite: {fileID: 21300000, guid: b56335658f2c6ba41a064c14b1e8c87b, type: 3}
+    - name: Talking B
+      pose: 2
+      sprite: {fileID: 21300000, guid: 96b7804691a70cf4eb75bd0136ad442e, type: 3}
+    - name: Talking A
+      pose: 1
+      sprite: {fileID: 21300000, guid: 047fcc33e7a299b4f9416a9f381317ee, type: 3}
+    - name: Sad
+      pose: 2
+      sprite: {fileID: 21300000, guid: ab35dd1fbaca5574d9aedeba1abe5523, type: 3}
+    - name: Scared
+      pose: 2
+      sprite: {fileID: 21300000, guid: 3bf06708dff4b3649a7f247627bc0530, type: 3}
+    - name: Scared
+      pose: 1
+      sprite: {fileID: 21300000, guid: eb3f822d43724a942accc70eb0ae2084, type: 3}
+    - name: Surprised
+      pose: 2
+      sprite: {fileID: 21300000, guid: 2fdbb15c322221d418a30e4a3c4a6676, type: 3}
+    - name: Surprised
+      pose: 1
+      sprite: {fileID: 21300000, guid: 84c9a4d98d618b1428dc54abe7938aa9, type: 3}
+    - name: Sad
+      pose: 1
+      sprite: {fileID: 21300000, guid: 43bc67c789548904b9774ca0a866a445, type: 3}
+  - outfit_name: Braids
+    expressions:
+    - name: Angry
+      pose: 2
+      sprite: {fileID: 21300000, guid: 40c3e6328776b234db5f1bebc3f3de56, type: 3}
+    - name: Angry
+      pose: 1
+      sprite: {fileID: 21300000, guid: 24fe2158a53fda9429dc88f9754d9f74, type: 3}
+    - name: Confused
+      pose: 2
+      sprite: {fileID: 21300000, guid: b938fa39f262c0149a8d1f198647832f, type: 3}
+    - name: Confused
+      pose: 1
+      sprite: {fileID: 21300000, guid: 75355aa69f1a18940b271cea0be2e427, type: 3}
+    - name: Happy
+      pose: 0
+      sprite: {fileID: 21300000, guid: 152f0b8b9ad48144fa78f9b03b784e3c, type: 3}
+    - name: Neutral
+      pose: 2
+      sprite: {fileID: 21300000, guid: e8821020665d2dc4196b305e0ad5765c, type: 3}
+    - name: Neutral
+      pose: 1
+      sprite: {fileID: 21300000, guid: 2acd272b99603b84ea344f2f5bfae423, type: 3}
+    - name: Sad
+      pose: 1
+      sprite: {fileID: 21300000, guid: 8d6c13089439ab8449801bb67169e65b, type: 3}
+    - name: Surprised
+      pose: 2
+      sprite: {fileID: 21300000, guid: 4d03ceaa8ab401649be06f853c4b40dc, type: 3}
+    - name: Surprised
+      pose: 1
+      sprite: {fileID: 21300000, guid: 5cad76ae6262aa944b7c7b0b6912010e, type: 3}
+  default_outfit_index: 1
+  default_expression_index: 6

@@ -4,23 +4,40 @@ using UnityEditor;
 
 namespace VNEngine
 {
-    // Give this script a custom UI interface used in conjunction with the new Stats ssystem (see AlterStatNode and StatsManager)
+    // Give this script a custom UI interface used in conjunction with the new Stats system (see StatsManager)
     [CustomEditor(typeof(ChoiceNode))]
     public class ChoiceNodeEditor : Editor
     {
+        const int max_requirements_per_choice = 20;
+
         float default_label_width;
 
         override public void OnInspectorGUI()
         {
             default_label_width = EditorGUIUtility.labelWidth;
+            try
+            {
+                DrawInspector();
+            }
+            finally
+            {
+                // Restored even if an exception is thrown mid-draw, so a bad frame here can't leave
+                // EditorGUIUtility.labelWidth corrupted for every inspector drawn after this one.
+                EditorGUIUtility.labelWidth = default_label_width;
+            }
+        }
 
+        void DrawInspector()
+        {
             var choices = target as ChoiceNode;
+
+            VNNodeEditorGUI.DrawCategoryBanner(VNNodeEditorGUI.NodeCategory.Branching);
 
             choices.Name_Of_Choice = EditorGUILayout.TextField("Name of Choice:", choices.Name_Of_Choice);
             GUILayout.BeginHorizontal();
-            EditorGUIUtility.labelWidth = 90;
+            EditorGUIUtility.labelWidth = VNNodeEditorGUI.ShortLabelWidth;
             choices.Number_Of_Choices = Mathf.Abs(Mathf.Min(ChoiceNode.max_number_of_buttons, EditorGUILayout.IntField("# of Choices:", choices.Number_Of_Choices, GUILayout.Width(110))));
-            EditorGUIUtility.labelWidth = 50;
+            EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
             choices.Hide_Dialogue_UI = EditorGUILayout.Toggle("Hide UI:", choices.Hide_Dialogue_UI);
             GUILayout.EndHorizontal();
             for (int x = 0; x < choices.Show_Choice_Was_Selected_Before.Length; x++)
@@ -32,7 +49,7 @@ namespace VNEngine
                 }
             }
 
-            EditorGUIUtility.labelWidth = 150;
+            EditorGUIUtility.labelWidth = VNNodeEditorGUI.StandardLabelWidth;
             choices.randomize_choices_order = EditorGUILayout.Toggle("Randomize button order:", choices.randomize_choices_order);
             choices.Localize_Choice_Text = EditorGUILayout.Toggle("Localize choice text:", choices.Localize_Choice_Text);
             if (choices.Localize_Choice_Text == true)
@@ -41,10 +58,10 @@ namespace VNEngine
             }
             EditorGUIUtility.labelWidth = default_label_width;
 
-            EditorGUIUtility.labelWidth = 180;
+            EditorGUIUtility.labelWidth = VNNodeEditorGUI.WideLabelWidth;
             choices.use_image_native_size_for_buttons = EditorGUILayout.Toggle("Use image button native size:", choices.use_image_native_size_for_buttons);
 
-            EditorGUIUtility.labelWidth = 180;
+            EditorGUIUtility.labelWidth = VNNodeEditorGUI.WideLabelWidth;
             choices.default_selection = (Select_Default_Choice)EditorGUILayout.EnumPopup("Default Selected Choiced:", choices.default_selection);
 
             EditorGUILayout.LabelField("");
@@ -53,62 +70,64 @@ namespace VNEngine
             for (int x = 0; x < choices.Number_Of_Choices; x++)
             {
                 //int button_number = x + 1;
-                EditorGUIUtility.labelWidth = 90;
+                EditorGUIUtility.labelWidth = VNNodeEditorGUI.ShortLabelWidth;
                 choices.Button_Text[x] = EditorGUILayout.TextField("Button " + x + " Text:", choices.Button_Text[x]);
-                EditorGUIUtility.labelWidth = 95;
+                if (string.IsNullOrWhiteSpace(choices.Button_Text[x]))
+                    EditorGUILayout.HelpBox("No button text - this choice will render as a blank clickable button.", MessageType.Warning);
+                EditorGUIUtility.labelWidth = VNNodeEditorGUI.ShortLabelWidth;
                 choices.Has_Requirements[x] = (Choice_Stat_Requirement)EditorGUILayout.EnumPopup("Requires Stats?", choices.Has_Requirements[x]);
 
                 if (choices.Has_Requirements[x] == Choice_Stat_Requirement.Has_Requirements)
                 {
                     // Loop through each requirement
-                    for (int req = 0; req < 20; req++)
+                    for (int req = 0; req < max_requirements_per_choice; req++)
                     {
                         // Stop if we encounter the done
-                        if (req > 0 && choices.Logic[x * 20 + req - 1] == Choice_Boolean_Logic.Done)
+                        if (req > 0 && choices.Logic[x * max_requirements_per_choice + req - 1] == Choice_Boolean_Logic.Done)
                         {
                             break;
                         }
 
-                        choices.Requirement_Type[x * 20 + req] = (Choice_Condition)EditorGUILayout.EnumPopup("", choices.Requirement_Type[x * 20 + req]);
+                        choices.Requirement_Type[x * max_requirements_per_choice + req] = (Choice_Condition)EditorGUILayout.EnumPopup("", choices.Requirement_Type[x * max_requirements_per_choice + req]);
 
                         EditorGUIUtility.labelWidth = default_label_width;
                         GUILayout.BeginHorizontal();
-                        switch (choices.Requirement_Type[x * 20 + req])
+                        switch (choices.Requirement_Type[x * max_requirements_per_choice + req])
                         {
                             case Choice_Condition.Float_Stat_Requirement:
-                                EditorGUIUtility.labelWidth = 40;
-                                choices.Stat_Name[x * 20 + req] = EditorGUILayout.TextField("Stat:", choices.Stat_Name[x * 20 + req]);
-                                EditorGUIUtility.labelWidth = 20;
-                                choices.Float_Stat_Is[x * 20 + req] = (Float_Stat_Comparator)EditorGUILayout.EnumPopup("is", choices.Float_Stat_Is[x * 20 + req]);
-                                choices.Float_Compare_Value[x * 20 + req] = EditorGUILayout.FloatField(choices.Float_Compare_Value[x * 20 + req]);
+                                EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
+                                choices.Stat_Name[x * max_requirements_per_choice + req] = EditorGUILayout.TextField("Stat:", choices.Stat_Name[x * max_requirements_per_choice + req]);
+                                EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
+                                choices.Float_Stat_Is[x * max_requirements_per_choice + req] = (Float_Stat_Comparator)EditorGUILayout.EnumPopup("is", choices.Float_Stat_Is[x * max_requirements_per_choice + req]);
+                                choices.Float_Compare_Value[x * max_requirements_per_choice + req] = EditorGUILayout.FloatField(choices.Float_Compare_Value[x * max_requirements_per_choice + req]);
                                 break;
 
                             case Choice_Condition.Bool_Stat_Requirement:
-                                EditorGUIUtility.labelWidth = 40;
-                                choices.Stat_Name[x * 20 + req] = EditorGUILayout.TextField("Stat:", choices.Stat_Name[x * 20 + req]);
-                                EditorGUIUtility.labelWidth = 20;
-                                choices.Bool_Compare_Value[x * 20 + req] = EditorGUILayout.Toggle("is", choices.Bool_Compare_Value[x * 20 + req]);
+                                EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
+                                choices.Stat_Name[x * max_requirements_per_choice + req] = EditorGUILayout.TextField("Stat:", choices.Stat_Name[x * max_requirements_per_choice + req]);
+                                EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
+                                choices.Bool_Compare_Value[x * max_requirements_per_choice + req] = EditorGUILayout.Toggle("is", choices.Bool_Compare_Value[x * max_requirements_per_choice + req]);
                                 break;
 
 
                             case Choice_Condition.String_Stat_Requirement:
-                                EditorGUIUtility.labelWidth = 40;
-                                choices.Stat_Name[x * 20 + req] = EditorGUILayout.TextField("Stat:", choices.Stat_Name[x * 20 + req]);
-                                choices.String_Is[x * 20 + req] = (Result)EditorGUILayout.EnumPopup("", choices.String_Is[x * 20 + req]);
-                                choices.String_Compare_Value[x * 20 + req] = EditorGUILayout.TextField(choices.String_Compare_Value[x * 20 + req]);
+                                EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
+                                choices.Stat_Name[x * max_requirements_per_choice + req] = EditorGUILayout.TextField("Stat:", choices.Stat_Name[x * max_requirements_per_choice + req]);
+                                choices.String_Is[x * max_requirements_per_choice + req] = (Result)EditorGUILayout.EnumPopup("", choices.String_Is[x * max_requirements_per_choice + req]);
+                                choices.String_Compare_Value[x * max_requirements_per_choice + req] = EditorGUILayout.TextField(choices.String_Compare_Value[x * max_requirements_per_choice + req]);
                                 break;
 
 
                             case Choice_Condition.Object_Is_Null:
-                                EditorGUIUtility.labelWidth = 45;
-                                choices.Check_Null_Object[x * 20 + req] = (GameObject)EditorGUILayout.ObjectField("Object ", choices.Check_Null_Object[x * 20 + req], typeof(GameObject), true);
-                                choices.Bool_Compare_Value[x * 20 + req] = EditorGUILayout.Toggle("is null: ", choices.Bool_Compare_Value[x * 20 + req]);
+                                EditorGUIUtility.labelWidth = VNNodeEditorGUI.NarrowLabelWidth;
+                                choices.Check_Null_Object[x * max_requirements_per_choice + req] = (GameObject)EditorGUILayout.ObjectField("Object ", choices.Check_Null_Object[x * max_requirements_per_choice + req], typeof(GameObject), true);
+                                choices.Bool_Compare_Value[x * max_requirements_per_choice + req] = EditorGUILayout.Toggle("is null: ", choices.Bool_Compare_Value[x * max_requirements_per_choice + req]);
                                 break;
                         }
                         GUILayout.EndHorizontal();
                         EditorGUIUtility.labelWidth = default_label_width;
 
-                        choices.Logic[x * 20 + req] = (Choice_Boolean_Logic)EditorGUILayout.EnumPopup("", choices.Logic[x * 20 + req]);
+                        choices.Logic[x * max_requirements_per_choice + req] = (Choice_Boolean_Logic)EditorGUILayout.EnumPopup("", choices.Logic[x * max_requirements_per_choice + req]);
                     }
 
                     // Requirements not met section
@@ -123,15 +142,12 @@ namespace VNEngine
                     }
                 }
 
-                EditorGUIUtility.labelWidth = 190;
+                EditorGUIUtility.labelWidth = VNNodeEditorGUI.WideLabelWidth;
                 choices.Show_Choice_Was_Selected_Before[x] = EditorGUILayout.Toggle("Show if was previously selected:", choices.Show_Choice_Was_Selected_Before[x]);
 
-                //EditorGUIUtility.labelWidth = default_label_width;
                 EditorGUILayout.LabelField("");
             }
 
-
-            EditorGUIUtility.labelWidth = default_label_width;
             serializedObject.ApplyModifiedProperties();
             base.OnInspectorGUI();
         }

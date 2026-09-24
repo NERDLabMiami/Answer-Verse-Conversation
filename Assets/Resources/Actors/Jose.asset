@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ca6937d41114c4f8d9532b288dcbc8, type: 3}
+  m_Name: Jose
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.Actor
+  actor_name: Jose
+  display_name: 
+  outfits:
+  - outfit_name: Default
+    expressions:
+    - name: Confused
+      pose: 0
+      sprite: {fileID: 21300000, guid: 59e8a9ed4a6a0ff4588d74c90d06838e, type: 3}
+    - name: Happy
+      pose: 0
+      sprite: {fileID: 21300000, guid: 7305d0ce854794a48ad25aed138eb2dc, type: 3}
+    - name: Mad
+      pose: 0
+      sprite: {fileID: 21300000, guid: 27dd695d11593254394c8926e0d8ba19, type: 3}
+    - name: Natural
+      pose: 0
+      sprite: {fileID: 21300000, guid: 34db797c61b3a334399adf563d6b27d6, type: 3}
+    - name: Sad
+      pose: 0
+      sprite: {fileID: 21300000, guid: 5f72db2ec7795ca4e963283636cf3103, type: 3}
+    - name: Shocked
+      pose: 0
+      sprite: {fileID: 21300000, guid: 76817e30e92a08a40905b8d7dfcab216, type: 3}
+    - name: Smile
+      pose: 0
+      sprite: {fileID: 21300000, guid: 29a32a8180fc3ab47827a87c1544ed9b, type: 3}
+  - outfit_name: Sunglasses
+    expressions:
+    - name: Confused
+      pose: 0
+      sprite: {fileID: 21300000, guid: 239e701669c9f0446adc5bc394b60814, type: 3}
+    - name: Eyeroll
+      pose: 0
+      sprite: {fileID: 21300000, guid: 116e3bc233f39df4bad66351d3fa4125, type: 3}
+    - name: Happy
+      pose: 0
+      sprite: {fileID: 21300000, guid: e87ed22948b629848b29350ae2310c33, type: 3}
+    - name: Shocked
+      pose: 0
+      sprite: {fileID: 21300000, guid: 357677617fd753f469138187366e03f1, type: 3}
+  default_outfit_index: 0
+  default_expression_index: 0

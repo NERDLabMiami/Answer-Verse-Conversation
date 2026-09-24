@@ -21,6 +21,10 @@ namespace VNEngine
 
     public enum Select_Default_Choice { None, Top_Choice, Bottom_Choice };
 
+    // Was defined on IfNode before its removal; kept here since ChoiceNode's String_Stat_Requirement
+    // comparison is its only remaining consumer.
+    public enum Result { Is, Is_Not };
+
     // Displays the choices outlined. Does not continue to the next node.
     // Each choice leads to a prescribed conversation.
     public class ChoiceNode : Node

@@ -14,8 +14,10 @@ namespace VNEngine
     public class DialogueNode : Node
     {
         public Dialogue_Source actor_name_from = Dialogue_Source.Text_From_Editor;    // Does our actors name come from the editor, or a CSV?
-        public string actor;    // Name of actor to use for talking
+        public Actor actor_data;    // Reference to the Actor asset talking. Used when actor_name_from == Text_From_Editor
+        public string actor;    // Name of actor to use for talking. Used when actor_name_from != Text_From_Editor (CSV key / Stat name)
         private string actual_actor;    // Actual value depends on variable actor_name_from
+        public bool speaker_name_matches_actor = true;    // If true (and Actor name is from the editor), the speaker name label automatically follows the Actor's display name instead of the manual fields below
         public Dialogue_Source speaker_name_from = Dialogue_Source.Text_From_Editor;    // Does our speakers name come from the editor, or a CSV?
         public string textbox_title;    // Name to be placed at top of textbox. Ex: 'Bob'
         public bool fetch_localized_stat_value = false;     // If speaker_name_from.Text_From_String_Stat, you can specify if you want to localize the string value fetched from the Stat
@@ -46,7 +48,20 @@ namespace VNEngine
         public override void Run_Node()
         {
            // Debug.Log("Running Dialogue: " + gameObject.name);
-            actual_actor = VNSceneManager.GetStringFromSource(actor, actor_name_from);
+            // Resolve which Actor is speaking. Text_From_Editor uses the drag-and-drop actor_data
+            // (immune to typos); the CSV/Stat sources fall back to the freeform string field, since a
+            // dynamically-determined actor can't be known as an object reference at edit time.
+            ActorInstance speaker;
+            if (actor_name_from == Dialogue_Source.Text_From_Editor)
+            {
+                speaker = actor_data != null ? ActorManager.Get_Actor(actor_data) : null;
+                actual_actor = actor_data != null ? actor_data.actor_name : "";
+            }
+            else
+            {
+                actual_actor = VNSceneManager.GetStringFromSource(actor, actor_name_from);
+                speaker = ActorManager.Get_Actor(actual_actor);
+            }
 
             VNSceneManager.scene_manager.Show_UI(true);  // Ensure dialogue panel is visible
 
@@ -62,7 +77,6 @@ namespace VNEngine
             StartCoroutine(Animate_Text(text));
 
             // If the actor field is filled in and the actor is present on the scene
-            Actor speaker = ActorManager.Get_Actor(actual_actor);
             if (actual_actor != ""
                 && speaker != null)
             {
@@ -284,8 +298,14 @@ namespace VNEngine
         // force_change means the language was changed, immediately stop animating the text and just set the text to done
         public void GetLocalizedText(bool force_change)
         {
+            // Speaker name: when synced, follow the actor's display name automatically. Otherwise (or when
+            // the actor is CSV/Stat-sourced, or no actor is assigned) fall back to the manual textbox_title field.
+            if (speaker_name_matches_actor && actor_name_from == Dialogue_Source.Text_From_Editor && actor_data != null)
+            {
+                UIManager.ui_manager.speaker_name_text.text = actor_data.Get_Display_Name();
+            }
             // Localize and/or insert stats into the title of the text box if needed
-            if (!string.IsNullOrEmpty(textbox_title))
+            else if (!string.IsNullOrEmpty(textbox_title))
             {
                 string speaker_title = VNSceneManager.GetStringFromSource(textbox_title, speaker_name_from, fetch_localized_stat_value:this.fetch_localized_stat_value);
 
@@ -316,6 +336,11 @@ namespace VNEngine
                 // }
 
                 UIManager.ui_manager.speaker_name_text.text = speaker_title;
+            }
+            else
+            {
+                // No speaker name entered - clear the label instead of silently leaving the previous speaker's name on screen
+                UIManager.ui_manager.speaker_name_text.text = "";
             }
 
 

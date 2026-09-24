@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq; // for counts on football record
+using System.Linq;
 
 namespace VNEngine
 {
@@ -45,52 +45,63 @@ namespace VNEngine
     [System.Serializable]
     public class TraitDelta
     {
-        public Trait trait;
+        public Trait trait = Trait.Humor;   // legacy back-compat (field name preserved for existing prefab data)
+        public string traitKey;             // preferred
         public float amount; // positive or negative; modifies current value
+
+        public string ResolveKey() => string.IsNullOrEmpty(traitKey) ? GateTraitsNode.TraitKey(trait) : traitKey;
     }
 
     /// <summary>
-    /// Gates a branch on core traits and/or football performance,
-    /// then applies success/failure deltas and optionally jumps.
+    /// Gates a branch on core traits, then applies success/failure deltas and optionally jumps.
     /// </summary>
     public class GateTraitsNode : Node
     {
         [Header("Requirements (All must pass)")]
         public List<FlexibleTraitRequirement> traitRequirements = new();
-        public FootballRequirement footballRequirement = new FootballRequirement { check = FootballCheckType.None };
+        [SerializeField] private TraitRegistry traitRegistry;
 
-        [Header("On Success")]
+        [Header("Trait Requirements Met")]
         public List<TraitDelta> successDeltas = new List<TraitDelta>();
-        public ConversationManager successConversation;  // <-- jump target (conversation)
-        [TextArea] public string successLogMessage;
-        public bool continueCurrentOnSuccess = false;    // if no successConversation, continue current
+        // Mutually exclusive: continue the current conversation, or jump to successConversation.
+        public bool continueCurrentOnSuccess = true;
+        public ConversationManager successConversation;  // used only when continueCurrentOnSuccess is false
 
-        [Header("On Failure")]
+        [Header("Trait Requirements Not Met")]
         public List<TraitDelta> failureDeltas = new List<TraitDelta>();
-        public ConversationManager failureConversation;  // <-- jump target (conversation)
-        [TextArea] public string failureLogMessage;
-        public bool continueCurrentOnFailure = true; 
+        // Mutually exclusive: continue the current conversation, or jump to failureConversation.
+        public bool continueCurrentOnFailure = true;
+        public ConversationManager failureConversation;  // used only when continueCurrentOnFailure is false
+
+        [Header("Advanced")]
+        public bool logOutcome = false;  // logs "Trait Requirements Met/Not Met" when this node runs
+
+        private void Reset()
+        {
+            if (traitRegistry == null) traitRegistry = TraitRegistry.Load();
+        }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (!Application.isPlaying && traitRegistry == null) traitRegistry = TraitRegistry.Load();
+        }
+#endif
+
         public override void Run_Node()
         {
-            bool passed = EvaluateTraitRequirements() && EvaluateFootballRequirement();
+            bool passed = EvaluateTraitRequirements();
 
             if (passed)
             {
                 ApplyDeltas(successDeltas);
-                if (!string.IsNullOrEmpty(successLogMessage))
-                    //VNSceneManager.scene_manager.Add_To_Log("System", successLogMessage);
+                if (logOutcome)
+                    VNSceneManager.scene_manager.Add_To_Log("System", "Trait Requirements Met");
 
-                if (successConversation != null)
+                if (!continueCurrentOnSuccess && successConversation != null)
                 {
                     successConversation.Start_Conversation();
                     go_to_next_node = false;  // do not auto-advance the current conversation
-                    Finish_Node();
-                    return;
-                }
-                else if (!continueCurrentOnSuccess)
-                {
-                    // If no target and not continuing, just stop advancing
-                    go_to_next_node = false;
                     Finish_Node();
                     return;
                 }
@@ -98,25 +109,19 @@ namespace VNEngine
             else
             {
                 ApplyDeltas(failureDeltas);
-                if (!string.IsNullOrEmpty(failureLogMessage))
-//                    VNSceneManager.scene_manager.Add_To_Log("System", failureLogMessage);
+                if (logOutcome)
+                    VNSceneManager.scene_manager.Add_To_Log("System", "Trait Requirements Not Met");
 
-                if (failureConversation != null)
+                if (!continueCurrentOnFailure && failureConversation != null)
                 {
                     failureConversation.Start_Conversation();
                     go_to_next_node = false;
                     Finish_Node();
                     return;
                 }
-                else if (!continueCurrentOnFailure)
-                {
-                    go_to_next_node = false;
-                    Finish_Node();
-                    return;
-                }
             }
 
-            // Fallthrough: keep going in the current conversation
+            // Fallthrough: continue the current conversation
             Finish_Node();
         }
 
@@ -133,57 +138,6 @@ namespace VNEngine
                     return false;
             }
             return true;
-        }
-
-        private bool EvaluateFootballRequirement()
-        {
-            switch (footballRequirement.check)
-            {
-                case FootballCheckType.None:
-                    return true;
-
-                case FootballCheckType.IsWinningRecord:
-                {
-                    var (wins, losses, played, winRate) = GetFootballRecord();
-                    return wins > losses;
-                }
-
-                case FootballCheckType.WinsAtLeast:
-                {
-                    var (wins, _, __, ___) = GetFootballRecord();
-                    return wins >= Mathf.RoundToInt(footballRequirement.threshold);
-                }
-
-                case FootballCheckType.WinRateAtLeast:
-                {
-                    var record = GetFootballRecord();
-                    // If no games played, treat as not meeting threshold (designer intent is typically progress-based)
-                    return record.played > 0 && record.winRate >= footballRequirement.threshold;
-                }
-
-                default:
-                    return true;
-            }
-        }
-
-        private (int wins, int losses, int played, float winRate) GetFootballRecord()
-        {
-            // FootballSchedule JSON stored in StatsManager (see Calendar.cs)
-            string json = StatsManager.Get_String_Stat("FootballSchedule");
-            if (string.IsNullOrEmpty(json))
-                return (0, 0, 0, 0f);
-
-         /*   FootballGameListWrapper wrapper = JsonUtility.FromJson<FootballGameListWrapper>(json);
-            if (wrapper == null || wrapper.games == null)
-                return (0, 0, 0, 0f);
-
-            int wins = wrapper.games.Count(g => g.played && g.won);
-            int losses = wrapper.games.Count(g => g.played && !g.won);
-            int played = wins + losses;
-            float winRate = (played > 0) ? (float)wins / played : 0f;
-           */
-//            return (wins, losses, played, winRate);
-            return (0, 0, 0, 0);
         }
 
         private static bool CompareNumber(float current, NumberCompare op, float target)
@@ -205,8 +159,9 @@ namespace VNEngine
         {
             foreach (var d in deltas)
             {
-                float current = GetTrait(d.trait);
-                SetTrait(d.trait, current + d.amount);
+                string key = d.ResolveKey();
+                float current = StatsManager.Get_Numbered_Stat(key);
+                StatsManager.Set_Numbered_Stat(key, current + d.amount);
             }
         }
 
@@ -224,16 +179,6 @@ namespace VNEngine
                 case Trait.Grades:   return "Grades";
                 default:             return t.ToString();
             }
-        }
-
-        private static float GetTrait(Trait t)
-        {
-            return StatsManager.Get_Numbered_Stat(TraitKey(t));
-        }
-
-        private static void SetTrait(Trait t, float value)
-        {
-            StatsManager.Set_Numbered_Stat(TraitKey(t), value);
         }
 
         public override void Finish_Node()

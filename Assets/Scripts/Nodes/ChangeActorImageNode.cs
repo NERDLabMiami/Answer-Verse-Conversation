@@ -8,9 +8,12 @@ namespace VNEngine
     public class ChangeActorImageNode : Node
     {
         public Dialogue_Source actor_name_from = Dialogue_Source.Text_From_Editor;
-        public string actor_name;   // Actor who is to change images
+        public Actor actor_data;    // Reference to the Actor asset whose image should change. Used when actor_name_from == Text_From_Editor
+        public string actor_name;   // Actor who is to change images. Used when actor_name_from != Text_From_Editor (CSV key / Stat name)
         private string actual_actor_name;
-        public Sprite new_image;
+        public string expression_name;   // Name of the expression (emotion only - no pose/outfit baked in) to switch to
+        public string outfit_name = "";  // Which outfit to pull the expression from. "" = whatever outfit is currently active/default - rarely touched
+        public Pose pose = Pose.Unspecified;   // Which pose variant of the expression to use, when the expression has more than one
         public bool fade_in_new_image = true;  // Whether or not to fade out the old image
         float fade_out_time = 0.4f;     // In seconds
         public bool lighten_actor;
@@ -18,15 +21,30 @@ namespace VNEngine
 
         public override void Run_Node()
         {
-            actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
-
-            if (ActorManager.Is_Actor_On_Scene(actual_actor_name))
+            // Text_From_Editor uses the drag-and-drop actor_data (immune to typos); the CSV/Stat
+            // sources fall back to the freeform string field, since a dynamically-determined actor can't
+            // be known as an object reference at edit time.
+            ActorInstance actor;
+            Actor resolved_data = actor_data;
+            if (actor_name_from == Dialogue_Source.Text_From_Editor)
             {
-                Actor actor = ActorManager.Get_Actor(actual_actor_name);
+                actual_actor_name = actor_data != null ? actor_data.actor_name : "";
+                actor = actor_data != null ? ActorManager.Get_Actor(actor_data) : null;
+            }
+            else
+            {
+                actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+                actor = ActorManager.Get_Actor(actual_actor_name);
+                resolved_data = actor != null ? actor.data : null;
+            }
+
+            if (actor != null)
+            {
                 SaveManager.SetSaveFeature(this, actor.gameObject);
 
+                Sprite new_image = resolved_data != null ? resolved_data.Get_Sprite(outfit_name, expression_name, pose) : null;
 
-                if (fade_in_new_image)
+                if (fade_in_new_image && !UIManager.scene_setup_active)
                 {
                     Sprite old_sprite = actor.cur_image.overrideSprite;
 
@@ -61,12 +79,12 @@ namespace VNEngine
             {
                 Finish_Node();
 
-                Debug.Log(actual_actor_name + " is not on the scene. Remember to correctly name your actor and use 'EnterActorNode'");
+                Debug.LogWarning(actual_actor_name + " is not on the scene. Remember to correctly name your actor and use 'EnterActorNode'");
             }
         }
 
 
-        IEnumerator Wait(Actor actor, float how_long)
+        IEnumerator Wait(ActorInstance actor, float how_long)
         {
             yield return new WaitForSeconds(how_long);
             actor.fading_child_image.gameObject.SetActive(false);

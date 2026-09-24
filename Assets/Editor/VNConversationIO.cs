@@ -186,67 +186,11 @@ namespace VNEngine.EditorTools
         public ChoicePayload choice;
         public ChangeActorImagePayload changeActorImage;
         public SetBackgroundPayload setBackground;
-        public SetBackgroundTransparentPayload setBackgroundTransparent;
         public EnterActorPayload enterActor;
-        public IfNodePayload ifNode;
+        public ShowChoicePayload showChoice;
     }
 
     // ---- Payloads ------------------------------------------------------------
-    [Serializable] class IfPayload
-    {
-        [Serializable] public class ConditionItem
-        {
-            public string condition;        // enum name of VNEngine.Condition
-            public string statName;         // Stat_Name[i]
-            public bool   boolValue;        // Bool_Compare_Value[i]
-            public float  floatValue;       // Float_Compare_Value[i]
-            public string stringValue;      // String_Compare_Value[i]
-            public string stringIs;         // enum name VNEngine.Result
-            public string floatCompare;     // enum name Float_Stat_Comparator
-            public string nullObjectName;   // Check_Null_Object[i]?.name (for human readability)
-            public string activeObjectName; // Check_Active_Object[i]?.name
-            public string logicAfter;       // enum name VNEngine.Boolean_Logic that follows this condition (empty on last)
-        }
-
-        public string expect;               // enum name VNEngine.Condition_Is
-        public string action;               // enum name VNEngine.Requirement_Met_Action
-        public string conversationName;     // Conversation_To_Switch_To?.name
-        public string nodeName;            // Node_To_Switch_To?.name
-        public bool   continueConversation; // Continue_Conversation
-        public List<ConditionItem> conditions = new();
-    }
-// ---- Payloads ------------------------------------------------------------
-// (keep your existing payload classes here)
-
-    [Serializable] class IfNodePayload
-    {
-        public string conditionIs;              // Condition_Is enum name
-        public string action;                   // Requirement_Met_Action enum name
-        public bool continueConversation;
-
-        public string conversationName;         // Conversation_To_Switch_To?.name (for Change_Conversation)
-        public string nodeToSwitchToName;       // Node_To_Switch_To?.name (for Jump_to_Middle_of_Conversation)
-
-        public List<IfCond> conditions = new(); // one entry per index 0..Number_Of_Conditions-1
-    }
-
-    [Serializable] class IfCond
-    {
-        public string kind;         // Condition enum name
-        public string statName;     // Stat_Name[i]
-
-        public bool   boolValue;    // Bool_Compare_Value[i]
-        public float  floatValue;   // Float_Compare_Value[i]
-        public string stringValue;  // String_Compare_Value[i]
-
-        public string stringIs;     // Result enum name (Is / Is_Not)
-        public string floatCompare; // Float_Stat_Comparator enum name (if used)
-
-        public string nullObject;   // Check_Null_Object[i]?.name
-        public string activeObject; // Check_Active_Object[i]?.name
-
-        public string logicBefore;  // Boolean_Logic enum name connecting (i-1) -> i (for i>0)
-    }
 
     [Serializable] class ChoicePayload
     {
@@ -276,8 +220,9 @@ namespace VNEngine.EditorTools
     [Serializable] class ChangeActorImagePayload
     {
         public string actorName;
-        public string imageGuid;
-        public string imageFile; // file name (no extension)
+        public string expressionName; // name of the expression (emotion only, no pose/outfit) to switch to
+        public string outfitName;     // "" = whatever outfit is currently active/default
+        public string pose;           // Pose enum name ("Unspecified"/"Straight"/"Side")
         public bool fadeIn;
         public bool lightenActor;
         public bool bringToFront;
@@ -290,12 +235,8 @@ namespace VNEngine.EditorTools
         public bool setForeground;
         public bool fadeIn;
         public bool fadeOut;
-    }
-
-    [Serializable] class SetBackgroundTransparentPayload
-    {
-        public bool fadeIn;
-        public bool fadeOut;
+        public string fadeStyle;   // enum name of SetBackground.Fade_Style
+        public float fadeDuration;
     }
 
     [Serializable] class EnterActorPayload
@@ -307,6 +248,29 @@ namespace VNEngine.EditorTools
         public string destination;     // Actor_Positions enum name
     }
 
+    [Serializable] class ShowChoicePayload
+    {
+        public bool hideDialogueUI;
+        public List<ShowChoiceItem> choices = new();
+    }
+    [Serializable] class ShowChoiceItem
+    {
+        public string id;                  // nodeGuid#index
+        public string text;
+        public string nextConversationName;// resolved to a ConversationManager by name on import; null => continue current
+        public List<ShowChoiceRequirement> requirements = new();
+        public string label, category, variant;
+        public bool enableLogging;
+        // buttonModifier (an asset reference) is intentionally not round-tripped via CSV —
+        // there's no simple textual key for it.
+    }
+    [Serializable] class ShowChoiceRequirement
+    {
+        public string traitKey;
+        public string compare; // NumberCompare enum name
+        public float value;
+    }
+
     // ==== WINDOW ==============================================================
     // AnswerVerse VNEngine's writing pipeline. Lets a writer round-trip a conversation's
     // node tree to/from CSV: export one conversation or a whole folder of them for editing
@@ -315,7 +279,7 @@ namespace VNEngine.EditorTools
     // even after reordering.
     public class VNConversationIOWindow : EditorWindow
     {
-        [MenuItem("Pipeline/Writing/Conversation IO")]
+        [MenuItem("VNEngine/Writing/Conversation IO")]
         private static void Open() => GetWindow<VNConversationIOWindow>(true, "Conversation IO");
 
         [SerializeField] private GameObject conversationRoot;
@@ -380,6 +344,15 @@ void OnGUI()
                 }
             }
         }
+
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Remove Export Tags Under Selected Root (Release Cleanup)", GUILayout.Height(24)))
+        {
+            int removed = RemoveExportTags(conversationRoot);
+            if (removed > 0)
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(conversationRoot.scene);
+            Debug.Log($"[VNConversationIO] Removed {removed} NodeExportTag(s) under '{conversationRoot.name}'.");
+        }
     }
 
     EditorGUILayout.EndScrollView();
@@ -389,9 +362,12 @@ void OnGUI()
         static bool IsValidConversationSetRoot(GameObject go)
         {
             if (!go) return false;
-            // "Set" = direct children that are ConversationManager(s). We only look at direct children,
-            // matching your structure description.
-            return go.transform.Cast<Transform>().Any(t => t.parent == go.transform && t.GetComponent<VNEngine.ConversationManager>() != null);
+            // "Set" = at least one ConversationManager somewhere in the subtree, at any depth.
+            // Conversations in this project are nested inside purely organizational folder
+            // GameObjects (e.g. Conversations > Example - Trait Gating > Example 1 - Groundhog Day
+            // Continued > Example 1 - Groundhog Day Awareness), not always as direct children.
+            return go.GetComponentsInChildren<VNEngine.ConversationManager>(true)
+                     .Any(cm => cm.gameObject != go);
         }
 
         static bool HasAnyNodeChild(Transform t)
@@ -406,11 +382,18 @@ void OnGUI()
             if (!System.IO.Directory.Exists(folderPath))
                 System.IO.Directory.CreateDirectory(folderPath);
 
+            // Walk the whole subtree rather than only direct children - conversations can sit
+            // several folder levels below setRoot (see IsValidConversationSetRoot above).
+            var conversationManagers = setRoot
+                .GetComponentsInChildren<VNEngine.ConversationManager>(true)
+                .OrderBy(cm => cm.transform.GetSiblingIndex())
+                .ToList();
+
             int exported = 0, skipped = 0;
-            foreach (Transform child in setRoot.transform)
+            var usedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var cm in conversationManagers)
             {
-                var cm = child.GetComponent<VNEngine.ConversationManager>();
-                if (!cm) continue;
+                var child = cm.transform;
 
                 // Avoid exporting empty shells
                 if (!HasAnyNodeChild(child))
@@ -421,7 +404,12 @@ void OnGUI()
 
                 // Reuse the existing per-conversation exporter so we keep behavior consistent
                 var safeName = child.name.Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
-                var outPath = Path.Combine(folderPath, safeName + "_nodes.csv");
+                var fileBase = safeName;
+                int suffix = 1;
+                while (!usedNames.Add(fileBase))
+                    fileBase = safeName + "_" + (++suffix); // guard against same-named conversations in different folders
+
+                var outPath = Path.Combine(folderPath, fileBase + "_nodes.csv");
 
                 try
                 {
@@ -448,41 +436,41 @@ void OnGUI()
 }
 
         // ==== PAYLOAD BUILDERS ================================================
-        static IfNodePayload BuildIfNodePayload(VNEngine.IfNode n)
+        static ShowChoicePayload BuildShowChoicePayload(VNEngine.ShowChoiceNode n, string nodeGuid)
         {
-            var p = new IfNodePayload
+            var payload = new ShowChoicePayload
             {
-                conditionIs = GetEnumName(n, "Is_Condition_Met"),
-                action = GetEnumName(n, "Action"),
-                continueConversation = GetBool(n, "Continue_Conversation"),
-                conversationName = n.Conversation_To_Switch_To ? n.Conversation_To_Switch_To.name : null,
-                nodeToSwitchToName = n.Node_To_Switch_To ? n.Node_To_Switch_To.name : null
+                hideDialogueUI = GetBool(n, "hideDialogueUI")
             };
 
-            int count = GetInt(n, "Number_Of_Conditions");
-            count = Mathf.Clamp(count, 0, VNEngine.IfNode.max_number_of_conditions);
-
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < n.choices.Count; i++)
             {
-                var c = new IfCond
+                var c = n.choices[i];
+                var item = new ShowChoiceItem
                 {
-                    kind         = Enum.GetName(typeof(VNEngine.Condition), n.Conditions[i]),
-                    statName     = n.Stat_Name[i],
-                    boolValue    = n.Bool_Compare_Value[i],
-                    floatValue   = n.Float_Compare_Value[i],
-                    stringValue  = n.String_Compare_Value[i],
-                    stringIs     = Enum.GetName(typeof(VNEngine.Result), n.String_Is[i]),
-                    floatCompare = Enum.GetName(typeof(Float_Stat_Comparator), n.Float_Stat_Is[i]),
-                    nullObject   = n.Check_Null_Object[i]   ? n.Check_Null_Object[i].name   : null,
-                    activeObject = n.Check_Active_Object[i] ? n.Check_Active_Object[i].name : null,
-                    logicBefore  = (i > 0) ? Enum.GetName(typeof(VNEngine.Boolean_Logic), n.Logic[i - 1]) : null
+                    id = $"{nodeGuid}#{i}",
+                    text = c.text,
+                    nextConversationName = c.nextConversation ? c.nextConversation.name : null,
+                    label = c.label,
+                    category = c.category,
+                    variant = c.variant,
+                    enableLogging = c.enableLogging
                 };
-                p.conditions.Add(c);
+                foreach (var r in c.requirements)
+                {
+                    item.requirements.Add(new ShowChoiceRequirement
+                    {
+                        traitKey = r.ResolveKey(),
+                        compare = Enum.GetName(typeof(NumberCompare), r.compare),
+                        value = r.value
+                    });
+                }
+                payload.choices.Add(item);
             }
 
-            return p;
+            return payload;
         }
-        
+
         static DialoguePayload BuildDialoguePayload(VNEngine.DialogueNode dn)
         {
             string actorName = GetString(dn, "actor");
@@ -542,12 +530,12 @@ void OnGUI()
 
         static ChangeActorImagePayload BuildChangeActorImagePayload(VNEngine.ChangeActorImageNode n)
         {
-            var (guid, file) = AssetGuidAndFile(n, "new_image");
             return new ChangeActorImagePayload
             {
                 actorName = GetString(n, "actor_name"),
-                imageGuid = guid,
-                imageFile = file,
+                expressionName = GetString(n, "expression_name"),
+                outfitName = GetString(n, "outfit_name"),
+                pose = GetEnumName(n, "pose"),
                 fadeIn = GetBool(n, "fade_in_new_image"),
                 lightenActor = GetBool(n, "lighten_actor"),
                 bringToFront = GetBool(n, "bring_actor_to_front")
@@ -563,17 +551,9 @@ void OnGUI()
                 imageFile = file,
                 setForeground = GetBool(n, "set_foreground"),
                 fadeIn = GetBool(n, "fade_in"),
-                fadeOut = GetBool(n, "fade_out")
-            };
-        }
-
-        static SetBackgroundTransparentPayload BuildSetBackgroundTransparentPayload(
-            object n)
-        {
-            return new SetBackgroundTransparentPayload
-            {
-                fadeIn = GetBool(n, "fade_in"),
-                fadeOut = GetBool(n, "fade_out")
+                fadeOut = GetBool(n, "fade_out"),
+                fadeStyle = GetEnumName(n, "fade_style"),
+                fadeDuration = GetFloat(n, "fade_duration")
             };
         }
 
@@ -598,67 +578,53 @@ void OnGUI()
                 if (!child.GetComponent<NodeExportTag>()) child.gameObject.AddComponent<NodeExportTag>();
             }
         }
-        
+
+        // ==== RELEASE CLEANUP =================================================
+        // NodeExportTag is declared in this Editor-only file, so it doesn't exist in player builds -
+        // any GameObject still carrying one when a scene ships shows up as a "missing script" warning
+        // at runtime. Strip them before cutting a release build; running the writing tools again
+        // afterward just re-adds fresh tags (with new IDs) as needed, so this is safe to run repeatedly.
+        static int RemoveExportTags(GameObject root)
+        {
+            var tags = root.GetComponentsInChildren<NodeExportTag>(true);
+            foreach (var tag in tags)
+                Undo.DestroyObjectImmediate(tag);
+            return tags.Length;
+        }
+
+        [MenuItem("VNEngine/Writing/Remove Export Tags From All Open Scenes (Release Cleanup)")]
+        private static void RemoveExportTagsFromAllOpenScenes()
+        {
+            int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;
+            int totalRemoved = 0;
+
+            for (int i = 0; i < sceneCount; i++)
+            {
+                var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+                if (!scene.isLoaded) continue;
+
+                int removedInScene = 0;
+                foreach (var rootGo in scene.GetRootGameObjects())
+                    removedInScene += RemoveExportTags(rootGo);
+
+                if (removedInScene > 0)
+                {
+                    UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+                    totalRemoved += removedInScene;
+                    Debug.Log($"[VNConversationIO] Removed {removedInScene} NodeExportTag(s) from scene '{scene.name}'.");
+                }
+            }
+
+            if (totalRemoved == 0)
+                Debug.Log("[VNConversationIO] No NodeExportTag components found in any open scene.");
+            else
+                EditorUtility.DisplayDialog("Remove Export Tags",
+                    $"Removed {totalRemoved} NodeExportTag component(s) across the open scene(s).\n\nRemember to save before building.",
+                    "OK");
+        }
+
+
  
-    static void ApplyIfNodePayload(VNEngine.IfNode n, IfNodePayload p)
-{
-    // Enums
-    SetEnum(n, "Is_Condition_Met", p.conditionIs);
-    SetEnum(n, "Action",           p.action);
-
-    Set(n, "Continue_Conversation", p.continueConversation);
-
-    // Optional targets by name (best effort)
-    if (!string.IsNullOrEmpty(p.conversationName))
-    {
-        var all = Resources.FindObjectsOfTypeAll<VNEngine.ConversationManager>();
-        var cm = all.FirstOrDefault(x => x.name == p.conversationName);
-        if (cm) n.Conversation_To_Switch_To = cm;
-    }
-
-    if (!string.IsNullOrEmpty(p.nodeToSwitchToName))
-    {
-        // Try to find a node with that name under any Conversation
-        var allNodes = Resources.FindObjectsOfTypeAll<VNEngine.Node>();
-        var target = allNodes.FirstOrDefault(x => x.name == p.nodeToSwitchToName);
-        if (target) n.Node_To_Switch_To = target;
-    }
-
-    // Conditions
-    int count = p.conditions?.Count ?? 0;
-    count = Mathf.Clamp(count, 0, VNEngine.IfNode.max_number_of_conditions);
-    Set(n, "Number_Of_Conditions", count);
-
-    for (int i = 0; i < count; i++)
-    {
-        var c = p.conditions[i];
-
-        // Enums/values
-        if (!string.IsNullOrEmpty(c.kind))
-            n.Conditions[i] = (VNEngine.Condition)Enum.Parse(typeof(VNEngine.Condition), c.kind);
-        n.Stat_Name[i]        = c.statName ?? "";
-        n.Bool_Compare_Value[i]   = c.boolValue;
-        n.Float_Compare_Value[i]  = c.floatValue;
-        n.String_Compare_Value[i] = c.stringValue ?? "";
-
-        if (!string.IsNullOrEmpty(c.stringIs))
-            n.String_Is[i] = (VNEngine.Result)Enum.Parse(typeof(VNEngine.Result), c.stringIs);
-        if (!string.IsNullOrEmpty(c.floatCompare))
-            n.Float_Stat_Is[i] = (Float_Stat_Comparator)Enum.Parse(typeof(Float_Stat_Comparator), c.floatCompare);
-
-        // Best‑effort resolve object references by name (editor time)
-        if (!string.IsNullOrEmpty(c.nullObject))
-            n.Check_Null_Object[i] = FindSceneObjectByName(c.nullObject);
-        if (!string.IsNullOrEmpty(c.activeObject))
-            n.Check_Active_Object[i] = FindSceneObjectByName(c.activeObject);
-
-        // Logic joining (i-1) -> i
-        if (i > 0 && !string.IsNullOrEmpty(c.logicBefore))
-            n.Logic[i - 1] = (VNEngine.Boolean_Logic)Enum.Parse(typeof(VNEngine.Boolean_Logic), c.logicBefore);
-    }
-    
-}
-
 // --- CSV helpers ---
 
     static string CsvEscape(string s)
@@ -686,6 +652,28 @@ void OnGUI()
 // Split/join with '|'
     static string JoinPipe(IEnumerable<string> arr) => arr == null ? "" : string.Join("|", arr.Select(x => x ?? ""));
     static string[] SplitPipe(string s) => string.IsNullOrEmpty(s) ? Array.Empty<string>() : s.Split('|');
+
+// ShowChoiceNode requirement cell: multiple "traitKey:compare:value" triples per choice, joined with ';'
+    static string JoinRequirements(ShowChoiceItem item)
+        => string.Join(";", item.requirements.Select(r => $"{r.traitKey}:{r.compare}:{r.value.ToString(System.Globalization.CultureInfo.InvariantCulture)}"));
+
+    static List<VNEngine.FlexibleTraitRequirement> ParseRequirements(string cell)
+    {
+        var list = new List<VNEngine.FlexibleTraitRequirement>();
+        if (string.IsNullOrWhiteSpace(cell)) return list;
+        foreach (var triple in cell.Split(';'))
+        {
+            if (string.IsNullOrWhiteSpace(triple)) continue;
+            var parts = triple.Split(':');
+            if (parts.Length < 3) continue;
+            if (!float.TryParse(parts[2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var val))
+                continue;
+            if (!Enum.TryParse<VNEngine.NumberCompare>(parts[1], out var compare))
+                continue;
+            list.Add(new VNEngine.FlexibleTraitRequirement { traitKey = parts[0], compare = compare, value = val });
+        }
+        return list;
+    }
 
 // Minimal CSV line parser (handles quotes)
     static List<string> ParseCsvLine(string line)
@@ -823,9 +811,10 @@ void OnGUI()
             case "ChangeActorImageNode":
             {
                 var p = BuildChangeActorImagePayload((VNEngine.ChangeActorImageNode)node);
-                Put(row, "change_actorName",     p.actorName);
-                Put(row, "change_imageGuid",     p.imageGuid);
-                Put(row, "change_imageFile",     p.imageFile);
+                Put(row, "change_actorName",       p.actorName);
+                Put(row, "change_expressionName",  p.expressionName);
+                Put(row, "change_outfitName",      p.outfitName);
+                Put(row, "change_pose",            p.pose);
 //                Put(row, "change_fadeIn",        p.fadeIn);
 //                Put(row, "change_lightenActor",  p.lightenActor);
 ///                Put(row, "change_bringToFront",  p.bringToFront);
@@ -836,16 +825,11 @@ void OnGUI()
                 var p = BuildSetBackgroundPayload(node);
                 Put(row, "bg_imageGuid",     p.imageGuid);
                 Put(row, "bg_imageFile",     p.imageFile);
-//                Put(row, "bg_setForeground", p.setForeground);
-//                Put(row, "bg_fadeIn",        p.fadeIn);
-//                Put(row, "bg_fadeOut",       p.fadeOut);
-                break;
-            }
-            case "SetBackgroundTransparent":
-            {
-                var p = BuildSetBackgroundTransparentPayload(node);
-                Put(row, "bgT_fadeIn",  p.fadeIn);
-                Put(row, "bgT_fadeOut", p.fadeOut);
+                Put(row, "bg_setForeground", p.setForeground);
+                Put(row, "bg_fadeIn",        p.fadeIn);
+                Put(row, "bg_fadeOut",       p.fadeOut);
+                Put(row, "bg_fadeStyle",     p.fadeStyle);
+                Put(row, "bg_fadeDuration",  p.fadeDuration.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 break;
             }
             case "EnterActorNode":
@@ -858,12 +842,16 @@ void OnGUI()
 //                Put(row, "enter_destination",      p.destination);
                 break;
             }
-            case "IfNode":
+            case "ShowChoiceNode":
             {
-                var p = BuildIfNodePayload((VNEngine.IfNode)node);
-                Put(row, "if_conditionIs", p.conditionIs);
-                Put(row, "if_action",      p.action);
-                Put(row, "if_continue",    p.continueConversation);
+                var p = BuildShowChoicePayload((VNEngine.ShowChoiceNode)node, id);
+                Put(row, "showchoice_texts",         JoinPipe(p.choices.Select(c => c.text ?? "")));
+                Put(row, "showchoice_nextConv",      JoinPipe(p.choices.Select(c => c.nextConversationName ?? "")));
+                Put(row, "showchoice_requirements",  JoinPipe(p.choices.Select(JoinRequirements)));
+                Put(row, "showchoice_labels",        JoinPipe(p.choices.Select(c => c.label ?? "")));
+                Put(row, "showchoice_categories",    JoinPipe(p.choices.Select(c => c.category ?? "")));
+                Put(row, "showchoice_variants",      JoinPipe(p.choices.Select(c => c.variant ?? "")));
+                Put(row, "showchoice_enableLogging", JoinPipe(p.choices.Select(c => c.enableLogging ? "true" : "false")));
                 break;
             }
         }
@@ -918,20 +906,23 @@ void OnGUI()
 
     // change image
     int ca_name = Col("change_actorName");
-    int ca_guid = Col("change_imageGuid");
-    int ca_file = Col("change_imageFile");
+    int ca_expression = Col("change_expressionName");
+    int ca_outfit = Col("change_outfitName");
+    int ca_pose = Col("change_pose");
 
     // backgrounds
     int bg_guid = Col("bg_imageGuid"), bg_file = Col("bg_imageFile");
-
-    // bg transparent
-    int bgt_fadeIn=Col("bgT_fadeIn"), bgt_fadeOut=Col("bgT_fadeOut");
+    int bg_setForeground = Col("bg_setForeground");
+    int bg_fadeIn = Col("bg_fadeIn"), bg_fadeOut = Col("bg_fadeOut");
+    int bg_fadeStyle = Col("bg_fadeStyle"), bg_fadeDuration = Col("bg_fadeDuration");
 
     // enter actor
     int en_actor=Col("enter_actorName");
 
-    // if node
-    int if_is=Col("if_conditionIs"), if_act=Col("if_action"), if_cont=Col("if_continue");
+    // show choice
+    int sc_texts=Col("showchoice_texts"), sc_nextConv=Col("showchoice_nextConv"), sc_reqs=Col("showchoice_requirements");
+    int sc_labels=Col("showchoice_labels"), sc_categories=Col("showchoice_categories"), sc_variants=Col("showchoice_variants");
+    int sc_enableLogging=Col("showchoice_enableLogging");
 
     Undo.RegisterFullObjectHierarchyUndo(root, "Import VN CSV");
 
@@ -1022,17 +1013,26 @@ void OnGUI()
             {
                 var n = (VNEngine.ChangeActorImageNode)node;
                 var name = Cell(line, ca_name);
-                var guid = Cell(line, ca_guid);
-                var file = Cell(line, ca_file);
+                var expression = Cell(line, ca_expression);
+                var outfit = Cell(line, ca_outfit);
+                var pose = Cell(line, ca_pose);
 
                 if (!string.IsNullOrEmpty(name)) Set(n, "actor_name", name);
-
-                // only set if something valid actually resolves
-                bool set =
-                    TrySetAssetByGuidSafe(n, "new_image", guid) ||
-                    TrySetAssetByNameSafe(n, "new_image", file);
-
-                if (set) EditorUtility.SetDirty(n);
+                if (!string.IsNullOrEmpty(expression))
+                {
+                    Set(n, "expression_name", expression);
+                    EditorUtility.SetDirty(n);
+                }
+                if (!string.IsNullOrEmpty(outfit))
+                {
+                    Set(n, "outfit_name", outfit);
+                    EditorUtility.SetDirty(n);
+                }
+                if (!string.IsNullOrEmpty(pose))
+                {
+                    SetEnum(n, "pose", pose);
+                    EditorUtility.SetDirty(n);
+                }
                 break;
             }
 
@@ -1046,18 +1046,25 @@ void OnGUI()
                     TrySetAssetByGuidSafe(comp, "sprite", guid) ||
                     TrySetAssetByNameSafe(comp, "sprite", file);
 
+                if (TryParseBool(Cell(line, bg_setForeground), out var sf)) { Set(comp, "set_foreground", sf); set = true; }
+                if (TryParseBool(Cell(line, bg_fadeIn), out var fi)) { Set(comp, "fade_in", fi); set = true; }
+                if (TryParseBool(Cell(line, bg_fadeOut), out var fo)) { Set(comp, "fade_out", fo); set = true; }
+
+                var fadeStyleStr = Cell(line, bg_fadeStyle);
+                if (!string.IsNullOrEmpty(fadeStyleStr)) { SetEnum(comp, "fade_style", fadeStyleStr); set = true; }
+
+                var fadeDurationStr = Cell(line, bg_fadeDuration);
+                if (!string.IsNullOrEmpty(fadeDurationStr)
+                    && float.TryParse(fadeDurationStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var fd))
+                {
+                    Set(comp, "fade_duration", fd);
+                    set = true;
+                }
+
                 if (set) EditorUtility.SetDirty(comp);
                 break;
             }
 
-            case "SetBackgroundTransparent":
-            {
-                var comp = node;
-                if (TryParseBool(Cell(line, bgt_fadeIn),  out var fi)) Set(comp,"fade_in",  fi);
-                if (TryParseBool(Cell(line, bgt_fadeOut), out var fo)) Set(comp,"fade_out", fo);
-                EditorUtility.SetDirty(comp);
-                break;
-            }
             case "EnterActorNode":
             {
                 var n = (VNEngine.EnterActorNode)node;
@@ -1066,18 +1073,40 @@ void OnGUI()
                 EditorUtility.SetDirty(n);
                 break;
             }
-            case "IfNode":
+            case "ShowChoiceNode":
             {
-                var n = (VNEngine.IfNode)node;
-                var isStr  = Cell(line, if_is);
-                var actStr = Cell(line, if_act);
-                var contStr= Cell(line, if_cont);
+                var n = (VNEngine.ShowChoiceNode)node;
+                var texts      = SplitPipe(Cell(line, sc_texts));
+                var nextConv   = SplitPipe(Cell(line, sc_nextConv));
+                var reqs       = SplitPipe(Cell(line, sc_reqs));
+                var labels     = SplitPipe(Cell(line, sc_labels));
+                var categories = SplitPipe(Cell(line, sc_categories));
+                var variants   = SplitPipe(Cell(line, sc_variants));
+                var logging    = SplitPipe(Cell(line, sc_enableLogging));
 
-                if (!string.IsNullOrEmpty(isStr))  SetEnum(n,"Is_Condition_Met",  isStr);
-                if (!string.IsNullOrEmpty(actStr)) SetEnum(n,"Action",            actStr);
-                if (TryParseBool(contStr, out var bc)) Set(n,"Continue_Conversation", bc);
+                if (texts.Length > 0)
+                {
+                    var allConvs = Resources.FindObjectsOfTypeAll<VNEngine.ConversationManager>();
+                    var newChoices = new List<VNEngine.ShowChoiceNode.Choice>();
+                    for (int ci = 0; ci < texts.Length; ci++)
+                    {
+                        var c = new VNEngine.ShowChoiceNode.Choice { text = texts[ci] };
 
-                EditorUtility.SetDirty(n);
+                        var convName = ci < nextConv.Length ? nextConv[ci] : "";
+                        if (!string.IsNullOrEmpty(convName))
+                            c.nextConversation = allConvs.FirstOrDefault(x => x.name == convName);
+
+                        if (ci < reqs.Length) c.requirements = ParseRequirements(reqs[ci]);
+                        if (ci < labels.Length) c.label = labels[ci];
+                        if (ci < categories.Length) c.category = categories[ci];
+                        if (ci < variants.Length) c.variant = variants[ci];
+                        if (ci < logging.Length) TryParseBool(logging[ci], out c.enableLogging);
+
+                        newChoices.Add(c);
+                    }
+                    n.choices = newChoices;
+                    EditorUtility.SetDirty(n);
+                }
                 break;
             }
         }
@@ -1135,15 +1164,6 @@ void OnGUI()
     return false;
 }
 
-static GameObject FindSceneObjectByName(string name)
-{
-    if (string.IsNullOrEmpty(name)) return null;
-    var go = GameObject.Find(name);
-    if (go) return go;
-    var all = Resources.FindObjectsOfTypeAll<GameObject>();
-    return all.FirstOrDefault(x => x.name == name);
-}
-// Utility: tries to find a scene object by name (edit-time). Returns null if not found.
         static void ApplyTypedPayload(VNEngine.Node node, NodeRecord rec)
         {
             switch (rec.type)
@@ -1168,19 +1188,10 @@ static GameObject FindSceneObjectByName(string name)
                         ApplySetBackgroundPayload(node, rec.setBackground);
                     break;
 
-                case "SetBackgroundTransparent":
-                    if (rec.setBackgroundTransparent != null)
-                        ApplySetBackgroundTransparentPayload(node, rec.setBackgroundTransparent);
-                    break;
-
                 case "EnterActorNode":
                     if (rec.enterActor != null)
                         ApplyEnterActorPayload((VNEngine.EnterActorNode)node, rec.enterActor);
                     break;
-                
-                case "IfNode":
-                    if (rec.ifNode != null) ApplyIfNodePayload((VNEngine.IfNode)node, rec.ifNode);
-                    break;                
             }
         }
         static void ApplyDialoguePayload(VNEngine.DialogueNode dn, DialoguePayload p)
@@ -1218,18 +1229,21 @@ static GameObject FindSceneObjectByName(string name)
         static void ApplyChangeActorImagePayload(VNEngine.ChangeActorImageNode n, ChangeActorImagePayload p)
         {
             Set(n, "actor_name", p.actorName);
-            if (!string.IsNullOrEmpty(p.imageGuid))
-            {
-                var path = AssetDatabase.GUIDToAssetPath(p.imageGuid);
-                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-                if (sprite != null) SetObject(n, "new_image", sprite);
-            }
+            Set(n, "expression_name", p.expressionName);
+            Set(n, "outfit_name", p.outfitName);
+            if (!string.IsNullOrEmpty(p.pose))
+                SetEnum(n, "pose", p.pose);
         }
         static void ApplySetBackgroundPayload(object node /*SetBackground*/, SetBackgroundPayload p)
         {
             Set(node, "set_foreground", p.setForeground);
             Set(node, "fade_in", p.fadeIn);
             Set(node, "fade_out", p.fadeOut);
+
+            if (!string.IsNullOrEmpty(p.fadeStyle))
+                SetEnum(node, "fade_style", p.fadeStyle);
+            if (p.fadeDuration > 0f)
+                Set(node, "fade_duration", p.fadeDuration);
 
             if (!string.IsNullOrEmpty(p.imageGuid))
             {
@@ -1238,13 +1252,6 @@ static GameObject FindSceneObjectByName(string name)
                 if (sprite != null) SetObject(node, "sprite", sprite);
             }
         }
-        static void ApplySetBackgroundTransparentPayload(object node /*SetBackgroundTransparent*/,
-            SetBackgroundTransparentPayload p)
-        {
-            Set(node, "fade_in", p.fadeIn);
-            Set(node, "fade_out", p.fadeOut);
-        }
-
         static void ApplyEnterActorPayload(VNEngine.EnterActorNode n, EnterActorPayload p)
         {
             Set(n, "actor_name", p.actorName);
@@ -1360,11 +1367,12 @@ static GameObject FindSceneObjectByName(string name)
             "id","order","type","goName",
             "actorKey","speakerTitle","text",
             "choice_keys","choice_texts","choice_disabled",   // <-- add these two
-            "change_actorName","change_imageGuid","change_imageFile",
+            "change_actorName","change_expressionName","change_outfitName","change_pose",
             "bg_imageGuid","bg_imageFile",
-            "bgT_fadeIn","bgT_fadeOut",
+            "bg_setForeground","bg_fadeIn","bg_fadeOut","bg_fadeStyle","bg_fadeDuration",
             "enter_actorName",
-            "if_conditionIs","if_action","if_continue"
+            "showchoice_texts","showchoice_nextConv","showchoice_requirements",
+            "showchoice_labels","showchoice_categories","showchoice_variants","showchoice_enableLogging"
         };
         
 // safe put

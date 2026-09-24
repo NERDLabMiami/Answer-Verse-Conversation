@@ -7,8 +7,9 @@ namespace VNEngine
     // Moves the actor away from the center of the screen, while still staying on its current side (LEFT or RIGHT)
     public class MoveActorOutwardsNode : Node
     {
-        Dialogue_Source actor_name_from = Dialogue_Source.Text_From_Editor;
-        public string actor_name;
+        public Actor actor_data;    // Reference to the Actor asset to move outwards. Used when actor_name_from == Text_From_Editor
+        public Dialogue_Source actor_name_from = Dialogue_Source.Text_From_Editor;
+        public string actor_name;   // Used when actor_name_from != Text_From_Editor (CSV key / Stat name)
         private string actual_actor_name;
 
         public bool wait_until_actor_has_stopped = false;
@@ -16,17 +17,29 @@ namespace VNEngine
 
         public override void Run_Node()
         {
-            actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+            // Text_From_Editor uses the drag-and-drop actor_data (immune to typos); the CSV/Stat
+            // sources fall back to the freeform string field, since a dynamically-determined actor can't
+            // be known as an object reference at edit time.
+            ActorInstance actor;
+            if (actor_name_from == Dialogue_Source.Text_From_Editor)
+            {
+                actual_actor_name = actor_data != null ? actor_data.actor_name : "";
+                actor = actor_data != null ? ActorManager.Get_Actor(actor_data) : null;
+            }
+            else
+            {
+                actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+                actor = ActorManager.Get_Actor(actual_actor_name);
+            }
 
-            // Check if the Actor is on the scene
-            if (!ActorManager.Is_Actor_On_Scene(actual_actor_name))
+            if (actor == null)
             {
                 Debug.LogError(actual_actor_name + " actor is not on the scene. Please use an Enter Actor Node for " + actual_actor_name);
                 Finish_Node();
                 return;
             }
 
-            ActorManager.Move_Actor_Outwards(ActorManager.Get_Actor(actual_actor_name));
+            ActorManager.Move_Actor_Outwards(actor);
 
             if (wait_until_actor_has_stopped)
                 StartCoroutine(Wait_Until_Actor_Is_Stopped());
@@ -38,7 +51,7 @@ namespace VNEngine
         {
             yield return 0;
 
-            Actor actor = ActorManager.Get_Actor(actual_actor_name);
+            ActorInstance actor = ActorManager.Get_Actor(actual_actor_name);
             if (actor == null)
             {
                 Debug.Log("Could not find actor " + actual_actor_name);

@@ -75,3 +75,6 @@ crashlytics-build.properties
 # Crash dumps and editor logs
 mono_crash*.json
 fmod_editor.log
+
+# macOS
+.DS_Store

@@ -27,7 +27,7 @@ namespace VNEngine
                 }
                 else
                 {
-                    Actor actor = ActorManager.Get_Actor(actual_actor_name);
+                    ActorInstance actor = ActorManager.Get_Actor(actual_actor_name);
 
                     if (fade_out)
                     {
@@ -53,7 +53,7 @@ namespace VNEngine
 
 
         // Wait until the actor has left the scene
-        IEnumerator Wait(Actor actor)
+        IEnumerator Wait(ActorInstance actor)
         {
             while (actor != null && actor.gameObject.activeSelf)
                 yield return new WaitForSeconds(0.1f);

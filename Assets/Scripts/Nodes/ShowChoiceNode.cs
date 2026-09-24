@@ -146,7 +146,7 @@ namespace VNEngine
                 c.nextConversation.Start_Conversation();                              // start target :contentReference[oaicite:8]{index=8}
 
                 go_to_next_node = false;                                             // don’t auto-advance current node chain :contentReference[oaicite:9]{index=9}
-                CleanupAndHide();
+                CleanupAndHide(restoreDialogueUI: false);                             // let the target conversation reveal the UI when it starts talking
                 Finish_Node();
                 return;
             }
@@ -245,11 +245,11 @@ private static string WriteJson(object obj)
     return sb.ToString();
 }
 
-        private void CleanupAndHide()
+        private void CleanupAndHide(bool restoreDialogueUI = true)
         {
             ClearAllChoiceButtons();
             UIManager.ui_manager.choice_panel.SetActive(false);                       // close panel :contentReference[oaicite:11]{index=11}
-            if (hideDialogueUI)
+            if (hideDialogueUI && restoreDialogueUI)
                 VNSceneManager.scene_manager.Show_UI(true);                           // restore dialogue UI :contentReference[oaicite:12]{index=12}
         }
 

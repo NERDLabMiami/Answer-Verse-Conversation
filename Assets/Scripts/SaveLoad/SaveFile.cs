@@ -94,11 +94,11 @@ namespace VNEngine
             // Set play time
             VNSceneManager.scene_manager.play_time += time_played;
 
-            ActorManager.actors_on_scene = new List<Actor>();
-            ActorManager.exiting_actors = new List<Actor>();
-            ActorManager.left_actors = new List<Actor>();
-            ActorManager.right_actors = new List<Actor>();
-            ActorManager.center_actors = new List<Actor>();
+            ActorManager.actors_on_scene = new List<ActorInstance>();
+            ActorManager.exiting_actors = new List<ActorInstance>();
+            ActorManager.left_actors = new List<ActorInstance>();
+            ActorManager.right_actors = new List<ActorInstance>();
+            ActorManager.center_actors = new List<ActorInstance>();
 
             // Execute any Nodes that need to executed to create the scene (StaticImageNodes, SetBackground, SetMusicNode, ChangeActorImage, etc)
             foreach (string node_path in Nodes_to_Execute_on_Load)
@@ -246,7 +246,7 @@ namespace VNEngine
             // Flip any actors that are meant to be flipped
             foreach (string a in flipped_actors)
             {
-                Actor actor = ActorManager.Get_Actor(a);
+                ActorInstance actor = ActorManager.Get_Actor(a);
                 if (a != null)
                     actor.transform.localScale = new Vector3(-actor.transform.localScale.x, actor.transform.localScale.y, actor.transform.localScale.z);
             }

@@ -42,6 +42,8 @@ public class OpenGameDataNodeEditor : Editor
     {
         serializedObject.Update();
 
+        VNNodeEditorGUI.DrawCategoryBanner(VNNodeEditorGUI.NodeCategory.DataStats);
+
         // HEADER: Common
         EditorGUILayout.PropertyField(studyId, new GUIContent("Study ID"));
         EditorGUILayout.PropertyField(notes, new GUIContent("Notes"));

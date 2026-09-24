@@ -8,7 +8,7 @@ Two naming conventions coexist here, for historical reasons:
 
 - **`<Feature>Node`** (e.g. `DialogueNode`, `ChoiceNode`, `GateTraitsNode`) - the convention
   most nodes use, including newer additions.
-- **`Node<Feature>`** (e.g. `NodeMoney`, `NodeTask`, `NodeContact`, `NodeMessage`) - an older
+- **`Node<Feature>`** (e.g. `NodeTask`, `NodeContact`, `NodeMessage`, `NodeCheckpoint`) - an older
   batch of nodes tied to the game-simulation systems (`StatsManager`, `TaskManager`,
   `MessageManager`, etc.), built by copying `NodeTemplate.cs` before the naming settled.
 

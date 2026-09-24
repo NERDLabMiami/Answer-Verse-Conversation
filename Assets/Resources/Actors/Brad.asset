@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ca6937d41114c4f8d9532b288dcbc8, type: 3}
+  m_Name: Brad
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.Actor
+  actor_name: Brad
+  display_name: 
+  outfits:
+  - outfit_name: Default
+    expressions:
+    - name: Angry
+      pose: 1
+      sprite: {fileID: 21300000, guid: c0ecceac644b24aad9a792e0c4216f6d, type: 3}
+    - name: Angry
+      pose: 2
+      sprite: {fileID: 21300000, guid: f8330fee357ab4dcbba0008cd533a357, type: 3}
+    - name: Embarassed
+      pose: 1
+      sprite: {fileID: 21300000, guid: bc05938350ca04576a41f166860ef207, type: 3}
+    - name: Embarassed
+      pose: 2
+      sprite: {fileID: 21300000, guid: 6f9c61ed862f24d70b112568c3299e8b, type: 3}
+    - name: Confused
+      pose: 2
+      sprite: {fileID: 21300000, guid: 8229077b9c7184c85bedce706a9b5de6, type: 3}
+    - name: Confused
+      pose: 1
+      sprite: {fileID: 21300000, guid: 486566a01ce464da7b060b1364959c2e, type: 3}
+    - name: Talking
+      pose: 2
+      sprite: {fileID: 21300000, guid: e21009e742f184ce4978248aebbe24d9, type: 3}
+    - name: Happy
+      pose: 2
+      sprite: {fileID: 21300000, guid: 64a85ee08d0554ffcb6615234a63ba2a, type: 3}
+    - name: Happy
+      pose: 1
+      sprite: {fileID: 21300000, guid: 09b5767088e944d40b7e11b48361a2cd, type: 3}
+    - name: Talk
+      pose: 1
+      sprite: {fileID: 21300000, guid: 1fbe2e2184ae843289dbbcb12b361b22, type: 3}
+    - name: Neutral
+      pose: 1
+      sprite: {fileID: 21300000, guid: a1d6e609f55344199aed1bfec374f288, type: 3}
+    - name: Neutral
+      pose: 2
+      sprite: {fileID: 21300000, guid: 9ae4f106701e24e49ac88a54e2abe3a6, type: 3}
+    - name: Angry Variant
+      pose: 2
+      sprite: {fileID: 21300000, guid: 7670f9f301ce44cac8bc46503ace404a, type: 3}
+    - name: Angry Variant
+      pose: 1
+      sprite: {fileID: 21300000, guid: 0edd34f6f94a144d096d0891f5c4a75f, type: 3}
+  - outfit_name: Campus Rep
+    expressions:
+    - name: Welcome
+      pose: 1
+      sprite: {fileID: 21300000, guid: f3be58328d010437f8ea7396fdebefad, type: 3}
+    - name: Right Hand Out
+      pose: 2
+      sprite: {fileID: 21300000, guid: 35ba9f9247aaa4ebab532b4abac634b7, type: 3}
+    - name: Open Hands
+      pose: 1
+      sprite: {fileID: 21300000, guid: cae06397e00434790ba2d1da7bada78e, type: 3}
+    - name: Left Hand Out
+      pose: 2
+      sprite: {fileID: 21300000, guid: b23b392c5755941909678c496d311c33, type: 3}
+  default_outfit_index: 0
+  default_expression_index: 8
