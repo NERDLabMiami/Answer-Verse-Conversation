@@ -105,41 +105,6 @@ namespace VNEngine
             return numbered_stats[stat_name];
         }
 
-        // Checks if the given stat is > or < the value. Returns true/false.
-        // If no stat of that name is found, 0 is given as the stat's value
-        public static bool Compare_Float_Stat(string stat_name, Float_Stat_Comparator than, float value)
-        {
-            // Check if the stat exists
-            if (!StatsManager.Numbered_Stat_Exists(stat_name))
-            {
-                Debug.Log(stat_name + " Numbered Stat does not exist. Returning default value for stat: 0");
-            }
-
-            bool result = false;
-            // Check if it meets the requirements
-            float stat = StatsManager.Get_Numbered_Stat(stat_name);
-            Debug.Log($"{stat_name} is {stat}.");
-            switch (than)
-            {
-                case Float_Stat_Comparator.Greater_than:
-                    Debug.Log($"{stat_name} is {stat}. Greater!");
-
-                    result = stat > value;
-                    break;
-                case Float_Stat_Comparator.Less_than:
-                    Debug.Log($"{stat_name} is {stat}. Less!!");
-                    result = stat < value;
-                    break;
-                default:
-                    Debug.LogError($"{stat_name} is {stat}. Not a valid comparator.");
-                    break;
-            }
-            return result;
-        }
-
-
-
-
 
 
         // Returns a bool associated with the given name

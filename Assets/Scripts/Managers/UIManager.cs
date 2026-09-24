@@ -54,9 +54,8 @@ namespace VNEngine
 
         public Button continueButton;
 
-        // Used by ChoiceNode
         public Text choice_text_banner;
-        public Button[] choice_buttons;
+        public Button[] choice_buttons; // used by ShowChoiceNode
 
         public GameObject actor_positions;
 
@@ -376,11 +375,6 @@ private IEnumerator SmoothMoveSpeakerPanel(Vector2 targetPosition)
                 {
                     DialogueNode n = (DialogueNode)VNSceneManager.current_conversation.Get_Current_Node();
                     n.GetLocalizedText(true);
-                }
-                else if (VNSceneManager.current_conversation.Get_Current_Node().GetType() == typeof(ChoiceNode))
-                {
-                    ChoiceNode n = (ChoiceNode)VNSceneManager.current_conversation.Get_Current_Node();
-                    n.LanguageChanged();
                 }
             }
 

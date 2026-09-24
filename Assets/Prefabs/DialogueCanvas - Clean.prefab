@@ -15135,7 +15135,6 @@ GameObject:
   - component: {fileID: 2173009946101135344}
   - component: {fileID: 209360555794343932}
   - component: {fileID: 2938436451107360445}
-  - component: {fileID: 8308257606306069965}
   m_Layer: 5
   m_Name: Phone Panel
   m_TagString: Untagged
@@ -15201,20 +15200,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8308257606306069965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5063680618928728465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 837c07bd51cf9cf48be77c847752e31e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ContinueConversationOnClick: 0
-  defaultSelectionOnClose: {fileID: 0}
 --- !u!1 &5230237840304409471
 GameObject:
   m_ObjectHideFlags: 0
@@ -15303,7 +15288,6 @@ GameObject:
   - component: {fileID: 5508648370085002017}
   - component: {fileID: 5790250077926367387}
   - component: {fileID: 6261509106025073365}
-  - component: {fileID: 7989995861419893208}
   m_Layer: 5
   m_Name: Pause Panel
   m_TagString: Untagged
@@ -15369,20 +15353,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7989995861419893208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5311534720638686601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 837c07bd51cf9cf48be77c847752e31e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ContinueConversationOnClick: 0
-  defaultSelectionOnClose: {fileID: 0}
 --- !u!1 &5535592528885415446
 GameObject:
   m_ObjectHideFlags: 0
@@ -15394,7 +15364,6 @@ GameObject:
   - component: {fileID: 4418235550526273759}
   - component: {fileID: 6094447095644447261}
   - component: {fileID: 5074081401776509492}
-  - component: {fileID: 8110252036815896519}
   m_Layer: 5
   m_Name: Quit Panel
   m_TagString: Untagged
@@ -15460,20 +15429,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8110252036815896519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5535592528885415446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 837c07bd51cf9cf48be77c847752e31e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ContinueConversationOnClick: 0
-  defaultSelectionOnClose: {fileID: 0}
 --- !u!1 &5766299029150191321
 GameObject:
   m_ObjectHideFlags: 0

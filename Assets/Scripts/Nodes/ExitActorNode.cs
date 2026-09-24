@@ -9,6 +9,7 @@ namespace VNEngine
     {
         public Dialogue_Source actor_name_from = Dialogue_Source.Text_From_Editor;
         public string actor_name;
+        public Actor actor_data;    // Reference to the Actor asset to remove. Used when actor_name_from == Text_From_Editor
         private string actual_actor_name;
         public bool slide_out = false;  // If true, have the character slide out before being destroyed
         public bool fade_out = false;
@@ -16,19 +17,37 @@ namespace VNEngine
 
         public override void Run_Node()
         {
-            actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+            ActorInstance actor;
 
-            if (ActorManager.Is_Actor_On_Scene(actual_actor_name))
+            // Text_From_Editor uses the drag-and-drop actor_data (immune to typos); the CSV/Stat
+            // sources fall back to the freeform string field, since a dynamically-determined actor can't
+            // be known as an object reference at edit time.
+            if (actor_name_from == Dialogue_Source.Text_From_Editor)
+            {
+                if (actor_data == null)
+                {
+                    Debug.LogError("ExitActorNode has no Actor assigned.", this.gameObject);
+                    Finish_Node();
+                    return;
+                }
+
+                actor = ActorManager.Get_Actor(actor_data);
+            }
+            else
+            {
+                actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+                actor = ActorManager.Get_Actor(actual_actor_name);
+            }
+
+            if (actor != null)
             {
                 if (!slide_out && !fade_out)
                 {
-                    ActorManager.Remove_Actor(actual_actor_name);
+                    ActorManager.Remove_Actor(actor);
                     Finish_Node();
                 }
                 else
                 {
-                    ActorInstance actor = ActorManager.Get_Actor(actual_actor_name);
-
                     if (fade_out)
                     {
                         // Fade out
@@ -45,7 +64,7 @@ namespace VNEngine
             }
             else
             {
-                Debug.Log(actor_name + " is not on the scene. Remember to correctly name your actor and use 'EnterActorNode'");
+                Debug.Log((actor_data != null ? actor_data.actor_name : actor_name) + " is not on the scene. Remember to correctly name your actor and use 'EnterActorNode'");
 
                 Finish_Node();
             }

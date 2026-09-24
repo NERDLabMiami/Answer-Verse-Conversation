@@ -93,11 +93,6 @@ public class ShowChoiceNodeEditor : Editor
                         EditorGUILayout.HelpBox("No button text - this choice will render as a blank clickable button.", MessageType.Warning);
                     EditorGUILayout.PropertyField(ch.FindPropertyRelative("nextConversation"), new GUIContent("Jump To"));
 
-                    // Button modifier (ScriptableObject). If you haven't added it yet, comment this line out.
-                    var modifierProp = ch.FindPropertyRelative("buttonModifier");
-                    if (modifierProp != null)
-                        EditorGUILayout.PropertyField(modifierProp, new GUIContent("Button Modifier"));
-
                     // Requirements (FlexibleTraitRequirement list expected)
                     var reqsProp = ch.FindPropertyRelative("requirements");
                     VNNodeEditorGUI.DrawTraitRequirements(reqsProp, VNNodeEditorGUI.ResolveTraitKeys(traitRegistryProp));
@@ -148,9 +143,6 @@ public class ShowChoiceNodeEditor : Editor
 
                 var variantProp = ch.FindPropertyRelative("variant");
                 if (variantProp != null) variantProp.stringValue = string.Empty;
-
-                var modifierProp = ch.FindPropertyRelative("buttonModifier");
-                if (modifierProp != null) modifierProp.objectReferenceValue = null;
 
                 // If you have any other serialized fields on Choice, reset them here too.
             }

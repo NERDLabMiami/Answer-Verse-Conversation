@@ -22,38 +22,32 @@ excluded from builds). Two kinds of things live in this folder:
 ## `GameObject > VNEngine` menu (Hierarchy right-click / top GameObject menu)
 
 `VNAddNodeMenu.cs` adds a node to a conversation without dragging a prefab in from
-`Assets/Resources/Conversation Pieces/` by hand. Right-click (or select and use the top
-`GameObject` menu) a `ConversationManager` GameObject, or any node already parented under one,
-and cascade through `VNEngine > <Category>[/<Subcategory>] > <Node>`:
+`Assets/Resources/Conversation Pieces/` by hand.
+
+**New Conversation** creates a fresh `ConversationManager` GameObject and is only enabled when no
+`ConversationManager` is resolvable from the selection - the bootstrap step, mutually exclusive with
+every item below (which all require one to already exist). Like Unity's built-in `Create Empty`, it
+parents the new object under whatever's currently selected, or at the scene root if nothing is.
+
+Everything else: right-click (or select and use the top `GameObject` menu) a `ConversationManager`
+GameObject, or any node already parented under one, and cascade through
+`VNEngine > <Category>[/<Subcategory>] > <Node>`. The top level is split into the nodes used in
+nearly every conversation, and a `More` submenu for everything situational. `Dialogue` - the single
+most-used node - sits at the very base, a peer of `Actor`/`Background`/`Scene & System`, not nested
+inside any of them:
 
 ```
 VNEngine
+├── New Conversation
+├── Dialogue
 ├── Actor
-│   ├── Entrance
-│   │   ├── Enter Actor
-│   │   ├── Enter Multiple Actors
-│   │   ├── Exit Actor
-│   │   └── Exit All Actors
-│   ├── Movement
-│   │   ├── Actor Forward
-│   │   ├── Actor Backward
-│   │   ├── Actor Inward
-│   │   ├── Actor Outward
-│   │   └── Pan Actors
-│   ├── Visual
-│   │   ├── Brighten Actor
-│   │   ├── Brighten All Actors
-│   │   ├── Darken All Actors
-│   │   ├── Change Actor Image
-│   │   └── Flip Actor Face Direction
-│   └── Dialogue
-│       ├── Dialogue
-│       ├── Hide Dialogue Panel
-│       └── Think
+│   ├── Enter Actor
+│   ├── Enter Multiple Actors
+│   ├── Exit Actor
+│   ├── Exit All Actors
+│   └── Change Actor Image
 ├── Background
 │   ├── Set Background
-│   ├── Turn Off Background
-│   ├── Turn Off Foreground
 │   ├── Fade in from Black
 │   └── Fade out to Black
 ├── Scene & System
@@ -63,36 +57,62 @@ VNEngine
 │   │   └── Gate Stat Node
 │   ├── Begin Scene Setup
 │   ├── End Scene Setup
-│   ├── Change Conversation
-│   ├── Load Scene
-│   ├── Save Checkpoint
-│   ├── Play Sound Effect
-│   ├── Set Music
-│   ├── Keyboard Entry
-│   ├── Wait
-│   └── Time Passes
-├── Logging
-│   ├── Debug Stat Set
-│   └── OpenGameData Event
-└── Miscellaneous
-    ├── Closer Look
-    ├── Text Message
-    ├── New Contact
-    └── Task
+│   └── Load Scene
+└── More
+    ├── Actor
+    │   ├── Movement
+    │   │   ├── Actor Forward
+    │   │   ├── Actor Backward
+    │   │   ├── Actor Inward
+    │   │   ├── Actor Outward
+    │   │   └── Pan Actors
+    │   ├── Visual
+    │   │   ├── Brighten Actor
+    │   │   ├── Brighten All Actors
+    │   │   ├── Darken All Actors
+    │   │   └── Flip Actor Face Direction
+    │   └── Dialogue
+    │       ├── Hide Dialogue Panel
+    │       └── Think
+    ├── Background
+    │   ├── Turn Off Background
+    │   └── Turn Off Foreground
+    ├── Scene & System
+    │   ├── Save Checkpoint
+    │   ├── Play Sound Effect
+    │   ├── Set Music
+    │   ├── Keyboard Entry
+    │   ├── Wait
+    │   └── Time Passes
+    ├── Logging
+    │   ├── Debug Stat Set
+    │   └── OpenGameData Event
+    └── Miscellaneous
+        ├── Closer Look
+        ├── Text Message
+        ├── New Contact
+        └── Task
 ```
 
-Where the node lands depends on what you right-clicked: on the `ConversationManager` itself, it's
+There's deliberately no "Change Conversation" node here - the standard way to chain into another
+conversation is `ConversationManager.start_conversation_when_done`, or `Show Choices`' per-choice
+"Jump To" field for a branch-driven switch. (`ChangeConversationNode` itself still exists for the
+one legacy scene object using it; it's just not offered when adding new nodes.)
+
+Where a node lands depends on what you right-clicked: on the `ConversationManager` itself, it's
 appended as the last child; on an existing node, it's inserted immediately after it in sibling
 order - which is execution order, since `ConversationManager` runs its children in Hierarchy
-sibling order (`Assets/Scripts/Dialogue/ConversationManager.cs`). The menu is only enabled when a
-`ConversationManager` can be resolved from the current selection.
+sibling order (`Assets/Scripts/Dialogue/ConversationManager.cs`). Every item except
+`New Conversation` is only enabled when a `ConversationManager` can be resolved from the current
+selection; `New Conversation` is the exact inverse, enabled only when one *can't* be resolved.
 
 Each entry is a real `[MenuItem]` (not a runtime-built popup), so it renders as native cascading
-submenus. All ~40 share one validate method (`CanAdd`) since the enable condition - a
+submenus. All node-adding items share one validate method (`CanAdd`) since the enable condition - a
 `ConversationManager` resolvable from the selection - is identical for every node type.
 
 **Adding a new node type to the menu:** add a `[MenuItem(MenuRoot + "<Category>/<Node Name>", false, 10)]`
-method (one line, calling `Create(c, "<Prefab Name>")`) under the right category, and add the
-matching `[MenuItem(MenuRoot + "<Category>/<Node Name>", true)]` attribute to the shared `CanAdd`
-method. The prefab name must match a `.prefab` file in `Assets/Resources/Conversation Pieces/`
-exactly (display names in this menu don't always match the prefab file name, e.g. `KeyboardEntry`).
+method (one line, calling `Create(c, "<Prefab Name>")`) under the right category (`30` instead of
+`10` if it belongs under `More`), and add the matching `[MenuItem(MenuRoot + "<Category>/<Node
+Name>", true)]` attribute to the shared `CanAdd` method. The prefab name must match a `.prefab`
+file in `Assets/Resources/Conversation Pieces/` exactly (display names in this menu don't always
+match the prefab file name, e.g. `KeyboardEntry`).

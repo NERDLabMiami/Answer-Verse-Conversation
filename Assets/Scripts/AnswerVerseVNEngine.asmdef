@@ -5,7 +5,8 @@
         "FMODUnity",
         "OGD.Log",
         "Unity.TextMeshPro",
-        "PlayerPrefsExtra"
+        "PlayerPrefsExtra",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 namespace VNEngine
@@ -14,7 +15,6 @@ namespace VNEngine
             [TextArea] public string text;
             public ConversationManager nextConversation;      // null => continue current
             public List<FlexibleTraitRequirement> requirements = new List<FlexibleTraitRequirement>(); // ALL must pass
-            public ButtonModifier buttonModifier;
             public bool enableLogging;
             public string label;      // stable research ID, e.g. "gain_frame_A"
             public string category;   // optional grouping, e.g. "framing"
@@ -92,13 +92,26 @@ namespace VNEngine
                 UIManager.ui_manager.choice_buttons[i].gameObject.SetActive(false);
             }
 
-            // Animate & focus first active
+            // Animate & focus first active (gamepad only — mouse/keyboard shouldn't get a forced highlight)
             UIManager.ui_manager.AnimateChoiceButtons(_activeButtons);               // existing helper :contentReference[oaicite:6]{index=6}
-            if (_activeButtons.Count > 0)
+            if (_activeButtons.Count > 0 && Gamepad.current != null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(_activeButtons[0].gameObject);
             }
+
+            // If this choice is timed, hand the countdown everything it needs to run
+            // alongside the buttons (the sequencer never runs both nodes concurrently on its own).
+            var timed = GetComponent<TimedChoiceNode>();
+            if (timed != null)
+            {
+                var slotConversations = new List<ConversationManager>(visible.Count);
+                for (int slot = 0; slot < visible.Count; slot++)
+                    slotConversations.Add(choices[visible[slot]].nextConversation);
+
+                timed.BeginCountdown(this, _activeButtons, slotConversations, visible);
+            }
+
             if (logOnShow && Logging.Instance != null)
             {
                 var cm = GetComponentInParent<ConversationManager>();
@@ -120,6 +133,8 @@ namespace VNEngine
 
         private void OnChoice(int idx)
         {
+            GetComponent<TimedChoiceNode>()?.StopTimer();
+
             if (logOnSelect && Logging.Instance != null)
             {
                 var cm = GetComponentInParent<ConversationManager>();
@@ -141,19 +156,32 @@ namespace VNEngine
             // Jump? End current conversation then start target (same as ChoicesManager.Change_Conversation)
             if (c.nextConversation != null)
             {
-                if (VNSceneManager.current_conversation != null)
-                    VNSceneManager.current_conversation.Finish_Conversation();        // finish current :contentReference[oaicite:7]{index=7}
-                c.nextConversation.Start_Conversation();                              // start target :contentReference[oaicite:8]{index=8}
-
-                go_to_next_node = false;                                             // don’t auto-advance current node chain :contentReference[oaicite:9]{index=9}
-                CleanupAndHide(restoreDialogueUI: false);                             // let the target conversation reveal the UI when it starts talking
-                Finish_Node();
+                JumpToConversation(c.nextConversation);
                 return;
             }
 
             // Continue in current conversation
             CleanupAndHide();
             base.Finish_Node();                                                      // advance to next node in current convo :contentReference[oaicite:10]{index=10}
+        }
+
+        // Called externally by TimedChoiceNode when its countdown ends with a surviving
+        // button that matches default_choice - equivalent to the player clicking it.
+        internal void SelectChoiceExternally(int origIndex) => OnChoice(origIndex);
+
+        // Called externally by TimedChoiceNode when its countdown ends with no button
+        // left standing (the "silent" default_choice case).
+        internal void ForceJumpExternally(ConversationManager target) => JumpToConversation(target);
+
+        private void JumpToConversation(ConversationManager target)
+        {
+            if (VNSceneManager.current_conversation != null)
+                VNSceneManager.current_conversation.Finish_Conversation();        // finish current
+            target.Start_Conversation();                                         // start target
+
+            go_to_next_node = false;                                             // don’t auto-advance current node chain
+            CleanupAndHide(restoreDialogueUI: false);                            // let the target conversation reveal the UI when it starts talking
+            Finish_Node();
         }
 // Build array of descriptors for the presented buttons
         private List<Dictionary<string, object>> BuildOptionsArray()

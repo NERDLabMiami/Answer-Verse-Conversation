@@ -183,7 +183,6 @@ namespace VNEngine.EditorTools
 
         // One of these will be non-null, depending on `type`
         public DialoguePayload dialogue;
-        public ChoicePayload choice;
         public ChangeActorImagePayload changeActorImage;
         public SetBackgroundPayload setBackground;
         public EnterActorPayload enterActor;
@@ -191,19 +190,6 @@ namespace VNEngine.EditorTools
     }
 
     // ---- Payloads ------------------------------------------------------------
-
-    [Serializable] class ChoicePayload
-    {
-        public bool localize;
-        public List<ChoiceItem> choices = new();
-    }
-    [Serializable] class ChoiceItem
-    {
-        public string id;            // nodeGuid#index
-        public string key;           // Button_Text[i]
-        public string text;          // resolved or literal
-        public string disabledText;  // Disabled_Text[i]
-    }
 
     [Serializable] class DialoguePayload
     {
@@ -261,8 +247,6 @@ namespace VNEngine.EditorTools
         public List<ShowChoiceRequirement> requirements = new();
         public string label, category, variant;
         public bool enableLogging;
-        // buttonModifier (an asset reference) is intentionally not round-tripped via CSV —
-        // there's no simple textual key for it.
     }
     [Serializable] class ShowChoiceRequirement
     {
@@ -496,38 +480,6 @@ void OnGUI()
             };
         }
 
-        static ChoicePayload BuildChoicePayload(VNEngine.ChoiceNode cn, string nodeGuid)
-        {
-            var payload = new ChoicePayload
-            {
-                localize = GetBool(cn, "Localize_Choice_Text")
-            };
-
-            int n = GetInt(cn, "Number_Of_Choices");
-            var keys = GetStringArray(cn, "Button_Text");
-            var disabled = GetStringArray(cn, "Disabled_Text");
-
-            for (int i = 0; i < n; i++)
-            {
-                string k = (keys != null && i < keys.Length) ? keys[i] : "";
-                string d = (disabled != null && i < disabled.Length) ? disabled[i] : "";
-                string resolved = k;
-
-                if (payload.localize && !string.IsNullOrEmpty(k) && VNEngine.VNSceneManager.scene_manager != null)
-                    resolved = VNEngine.VNSceneManager.scene_manager.Get_Localized_Dialogue_Entry(k);
-
-                payload.choices.Add(new ChoiceItem
-                {
-                    id = $"{nodeGuid}#{i}",
-                    key = k,
-                    text = resolved,
-                    disabledText = d
-                });
-            }
-
-            return payload;
-        }
-
         static ChangeActorImagePayload BuildChangeActorImagePayload(VNEngine.ChangeActorImageNode n)
         {
             return new ChangeActorImagePayload
@@ -706,33 +658,6 @@ void OnGUI()
     }
     return cells;
 }
-// ---------- CHOICES: one-row export helper ----------
-    static (bool localize, string keysPipe, string textsPipe, string disabledPipe)
-    ExportRow_ChoiceNode(VNEngine.ChoiceNode cn, string nodeGuid)
-{
-    // Build runtime-ish payload to get resolved text if localization is on,
-    // but for the CSV we intentionally mirror keys <-> texts 1:1.
-    var payload = BuildChoicePayload(cn, nodeGuid);
-
-    var keys     = GetStringArray(cn, "Button_Text")   ?? Array.Empty<string>();
-    var disabled = GetStringArray(cn, "Disabled_Text") ?? Array.Empty<string>();
-
-    int n = Mathf.Max(0, GetInt(cn, "Number_Of_Choices"));
-
-    // truncate or pad to exactly n so export reflects the active choices only
-    if (keys.Length > n)      keys = keys.Take(n).ToArray();
-    else if (keys.Length < n) Array.Resize(ref keys, n);
-
-    if (disabled.Length > n)      disabled = disabled.Take(n).ToArray();
-    else if (disabled.Length < n) Array.Resize(ref disabled, n);
-
-    // mirror: keys == texts in CSV (import will keep them mirrored)
-    var keysPipe  = JoinPipe(keys.Select(s => s ?? ""));
-    var textsPipe = keysPipe;
-    var disPipe   = JoinPipe(disabled.Select(s => s ?? ""));
-
-    return (payload.localize, keysPipe, textsPipe, disPipe);}
-    
     static bool TryParseBool(string s, out bool value)
 {
     value = false;
@@ -793,19 +718,6 @@ void OnGUI()
                 Put(row, "text",             p.text);
 //                Put(row, "bringToFront",     p.bringToFront);
 //                Put(row, "darkenOthers",     p.darkenOthers);
-                break;
-            }
-            case "ChoiceNode":
-            {
-                var cn = (VNEngine.ChoiceNode)node;
-
-                // Use the existing helper to build CSV-friendly values
-                var (localize, keysPipe, textsPipe, disabledPipe) = ExportRow_ChoiceNode(cn, id);
-
-                // Write the columns expected by the unified CSV header
-                Put(row, "choice_keys",     keysPipe);
-                Put(row, "choice_texts",    textsPipe);
-                Put(row, "choice_disabled", disabledPipe);
                 break;
             }
             case "ChangeActorImageNode":
@@ -899,11 +811,6 @@ void OnGUI()
     int d_speaker  = Col("speakerTitle");
     int d_text     = Col("text");
 
-    // choices
-    int ch_keys = Col("choice_keys");
-    int ch_texts= Col("choice_texts");
-    int ch_dis  = Col("choice_disabled");
-
     // change image
     int ca_name = Col("change_actorName");
     int ca_expression = Col("change_expressionName");
@@ -967,48 +874,6 @@ void OnGUI()
                 EditorUtility.SetDirty(dn);
                 break;
             }
-            case "ChoiceNode":
-            {
-                var cn = (VNEngine.ChoiceNode)node;
-
-                // read from the CURRENT ROW, not re-parsing a single cell
-                string keysJoined    = Cell(line, ch_keys);
-                string textsJoined   = Cell(line, ch_texts);
-                string disabledJoin  = Cell(line, ch_dis);
-
-                // treat "none"/"null" as empty too
-                bool IsBlank(string s) =>
-                    string.IsNullOrWhiteSpace(s) || string.Equals(s, "none", StringComparison.OrdinalIgnoreCase) || string.Equals(s, "null", StringComparison.OrdinalIgnoreCase);
-
-                // mirror one into the other if only one is present
-                bool hasKeys = !IsBlank(keysJoined);
-                bool hasText = !IsBlank(textsJoined);
-                if (hasKeys && !hasText) textsJoined = keysJoined;
-                else if (!hasKeys && hasText) keysJoined = textsJoined;
-
-                if (hasKeys || hasText)
-                {
-                    var keys     = IsBlank(keysJoined)   ? Array.Empty<string>() : keysJoined.Split('|');
-                    var texts    = IsBlank(textsJoined)  ? Array.Empty<string>() : textsJoined.Split('|');
-                    var disabled = IsBlank(disabledJoin) ? Array.Empty<string>() : disabledJoin.Split('|');
-
-                    // keep length consistent (use keys/texts length as driver)
-                    int n = Math.Max(keys.Length, texts.Length);
-                    if (n == 0) break;
-
-                    Array.Resize(ref keys, n);
-                    Array.Resize(ref texts, n);
-                    Array.Resize(ref disabled, n);
-
-                    Set(cn, "Number_Of_Choices", n);
-                    SetArray(cn, "Button_Text",   keys);     // keys shown on buttons (or localization keys)
-                    SetArray(cn, "Disabled_Text", disabled); // optional disabled text
-
-                    EditorUtility.SetDirty(cn);
-                }
-                break;
-            }
-
             case "ChangeActorImageNode":
             {
                 var n = (VNEngine.ChangeActorImageNode)node;
@@ -1173,11 +1038,6 @@ void OnGUI()
                         ApplyDialoguePayload((VNEngine.DialogueNode)node, rec.dialogue);
                     break;
 
-                case "ChoiceNode":
-                    if (rec.choice != null)
-                        ApplyChoicePayload((VNEngine.ChoiceNode)node, rec.choice);
-                    break;
-
                 case "ChangeActorImageNode":
                     if (rec.changeActorImage != null)
                         ApplyChangeActorImagePayload((VNEngine.ChangeActorImageNode)node, rec.changeActorImage);
@@ -1204,27 +1064,6 @@ void OnGUI()
             Set(dn, "text", p.text);
             Set(dn, "bring_speaker_to_front", p.bringToFront);
             Set(dn, "darken_all_other_characters", p.darkenOthers);
-        }
-        static void ApplyChoicePayload(VNEngine.ChoiceNode cn, ChoicePayload p)
-        {
-            Set(cn, "Localize_Choice_Text", p.localize);
-            int n = p.choices?.Count ?? 0;
-            Set(cn, "Number_Of_Choices", n);
-
-            var keys = GetStringArray(cn, "Button_Text") ?? new string[Mathf.Max(6, n)];
-            var disabled = GetStringArray(cn, "Disabled_Text") ?? new string[Mathf.Max(6, n)];
-
-            if (keys.Length < n) Array.Resize(ref keys, n);
-            if (disabled.Length < n) Array.Resize(ref disabled, n);
-
-            for (int i = 0; i < n; i++)
-            {
-                keys[i] = p.choices[i]?.key ?? "";
-                disabled[i] = p.choices[i]?.disabledText ?? "";
-            }
-
-            SetArray(cn, "Button_Text", keys);
-            SetArray(cn, "Disabled_Text", disabled);
         }
         static void ApplyChangeActorImagePayload(VNEngine.ChangeActorImageNode n, ChangeActorImagePayload p)
         {
@@ -1366,7 +1205,6 @@ void OnGUI()
         static readonly string[] kUnifiedHeaders = new[]{
             "id","order","type","goName",
             "actorKey","speakerTitle","text",
-            "choice_keys","choice_texts","choice_disabled",   // <-- add these two
             "change_actorName","change_expressionName","change_outfitName","change_pose",
             "bg_imageGuid","bg_imageFile",
             "bg_setForeground","bg_fadeIn","bg_fadeOut","bg_fadeStyle","bg_fadeDuration",

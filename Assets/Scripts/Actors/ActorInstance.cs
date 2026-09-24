@@ -190,7 +190,7 @@ namespace VNEngine
                     if (!ActorManager.exiting_actors.Contains(this))
                         ActorManager.exiting_actors.Add(this);
                 }
-                desired_position.y = 0;
+                desired_position.y = ActorManager.actor_floor_y;
 
                 remove_when_out_of_sight = true;
             }
