@@ -107,7 +107,7 @@ namespace VNEngine
 
 
         // Call this to store the node that is running so it can executed when loaded
-        // Used by SetBackground, SetBackgroundTransparent, StaticImageNode, Music nodes
+        // Used by SetBackground, Music nodes
         public static void SetSaveFeature(Node node_that_is_running, GameObject object_containing_save_feature)
         {
             bool found_same_feature_on_object = false;

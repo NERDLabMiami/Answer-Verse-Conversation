@@ -6,43 +6,48 @@ namespace VNEngine
 {
     public class SetBackground : Node
     {
+        public enum Fade_Style
+        {
+            Fade_To_Black,  // Dips through solid black/white. Good for full scene changes.
+            Fade_Alpha      // Fades transparency only, letting whatever is behind show through.
+        }
+
         public Sprite sprite;
-        public bool set_foreground;
-        public bool fade_out;   //  Fades out, from white to black
-        public bool fade_in;        // Set the background to black immediately, then fade in the background image
+        public bool set_foreground;    // Foreground sits in front of Actors. Unchecked = sets the Background (behind Actors).
+        public bool fade_out;          // Fades the current image out before/instead of showing the new one
+        public bool fade_in;           // Fades the new image in instead of showing it instantly
+        public Fade_Style fade_style = Fade_Style.Fade_To_Black;
+        public float fade_duration = 2.0f;
 
         public override void Run_Node()
         {
+            StopAllCoroutines();
             activateImage();    // Ensure whatever image we're operating on is active
 
-            if (!fade_in && !fade_out)// && !fade_out_then_in_background)
+            // Loading a save, or being inside a Begin/End Scene Setup bracket, should apply the
+            // final state instantly, never play a fade animation
+            if (executed_from_load || UIManager.scene_setup_active || (!fade_in && !fade_out))
             {
-                // Simply set background or foreground and end if we aren't fading
-                if (!set_foreground)
-                {
-                    UIManager.ui_manager.background.sprite = sprite;
-                    UIManager.ui_manager.background.color = Color.white;
-                }
-                else
-                {
-                    UIManager.ui_manager.foreground.sprite = sprite;
-                    UIManager.ui_manager.foreground.color = Color.white;
-                }
-
+                Apply_Instant();
                 Finish_Node();
-            }
-            else
-            {
-                if (fade_out && fade_in)
-                    StartCoroutine(Fade_Out_Then_In_Coroutine(2.0f));
-                else if (fade_in)
-                    StartCoroutine(Fade_In_Coroutine(2.0f));
-                else if (fade_out)
-                    StartCoroutine(Fade_Out_Coroutine(2.0f));
+                return;
             }
 
+            if (fade_out && fade_in)
+                StartCoroutine(Fade_Out_Then_In_Coroutine(fade_duration));
+            else if (fade_in)
+                StartCoroutine(Fade_In_Coroutine(fade_duration));
+            else if (fade_out)
+                StartCoroutine(Fade_Out_Coroutine(fade_duration));
+        }
 
-            // Ensure we save the foreground or background in case the user Saves and Loads the game later
+
+        private void Apply_Instant()
+        {
+            Image img = getImage();
+            img.sprite = sprite;
+            img.color = Color.white;
+
             if (set_foreground)
                 SaveManager.SetSaveFeature(this, UIManager.ui_manager.foreground.gameObject);
             else
@@ -67,82 +72,94 @@ namespace VNEngine
         }
 
 
+        // The color the image should be in while it's fully hidden, for the current fade_style
+        private Color Get_Hidden_Color(Image img)
+        {
+            if (fade_style == Fade_Style.Fade_To_Black)
+                return Color.black;
+            else
+                return new Color(img.color.r, img.color.g, img.color.b, 0f);
+        }
+
+        // The color the image should be in while it's fully visible, for the current fade_style
+        private Color Get_Visible_Color(Image img)
+        {
+            if (fade_style == Fade_Style.Fade_To_Black)
+                return Color.white;
+            else
+                return new Color(img.color.r, img.color.g, img.color.b, 1f);
+        }
+
+
+        // Shared fade helper: lerps img.color from `from` to `to` over `over_time` seconds
+        IEnumerator Fade_To_Color_Coroutine(Image img, Color from, Color to, float over_time)
+        {
+            img.color = from;
+
+            float value = 0;
+            while (value < 1f)
+            {
+                value += Time.deltaTime / Mathf.Max(over_time, 0.0001f);
+                img.color = Color.Lerp(from, to, value);
+                yield return null;
+            }
+            img.color = to;
+        }
+
+
         IEnumerator Fade_Out_Then_In_Coroutine(float over_time)
         {
-            float value = 0;
-            over_time /= 2;
-            // Set it to completely transparent
             Image img = getImage();
-            img.color = Color.white;
+            Color visible = Get_Visible_Color(img);
+            Color hidden = Get_Hidden_Color(img);
 
-            // Fade the image to black
-            while (img.color != Color.black)
-            {
-                value += over_time / 100f;
-                img.color = Color.Lerp(Color.white, Color.black, value);
-                yield return new WaitForSeconds(over_time / 100);
-            }
+            yield return Fade_To_Color_Coroutine(img, visible, hidden, over_time / 2f);
 
-            // Change the image while it's black and you can't tell it's being changed
+            // Change the image while it's hidden and you can't tell it's being changed
             img.sprite = sprite;
-            img.color = Color.black;
 
-            // Fade image from black to white so we can see it again
-            value = 0;
-            while (img.color != Color.white)
-            {
-                value += over_time / 100f;
-                img.color = Color.Lerp(Color.black, Color.white, value);
-                yield return new WaitForSeconds(over_time / 100);
-            }
+            yield return Fade_To_Color_Coroutine(img, hidden, visible, over_time / 2f);
 
+            SaveFeature();
             Finish_Node();
-            yield break;
         }
 
 
         IEnumerator Fade_In_Coroutine(float over_time)
         {
             Image img = getImage();
-
-            // Change the background image and set it to black, and have it fade into white
             img.sprite = sprite;
-            img.color = Color.black;
+            Color hidden = Get_Hidden_Color(img);
+            Color visible = Get_Visible_Color(img);
 
-            // Fade the image from black to white, so we can see it
-            float value = 0;
-            while (img.color != Color.white)
-            {
-                value += over_time / 100f;
-                img.color = Color.Lerp(Color.black, Color.white, value);
-                yield return new WaitForSeconds(over_time / 100);
-            }
+            yield return Fade_To_Color_Coroutine(img, hidden, visible, over_time);
+
+            SaveFeature();
             Finish_Node();
-            yield break;
         }
 
 
-        // Fades to black
         IEnumerator Fade_Out_Coroutine(float over_time)
         {
-            float value = 0;
-
-            // Set it to completely transparent
             Image img = getImage();
-            img.color = Color.white;
+            Color visible = Get_Visible_Color(img);
+            Color hidden = Get_Hidden_Color(img);
 
-            // Fade the image to black
-            while (img.color != Color.black)
-            {
-                value += over_time / 100f;
-                img.color = Color.Lerp(Color.white, Color.black, value);
-                yield return new WaitForSeconds(over_time / 100);
-            }
+            yield return Fade_To_Color_Coroutine(img, visible, hidden, over_time);
 
+            SaveFeature();
             Finish_Node();
-            yield break;
         }
 
+
+        // Ensure we save the foreground or background in case the user Saves and Loads the game later
+        private void SaveFeature()
+        {
+            if (set_foreground)
+                SaveManager.SetSaveFeature(this, UIManager.ui_manager.foreground.gameObject);
+            else
+                SaveManager.SetSaveFeature(this, UIManager.ui_manager.background.gameObject);
+        }
 
 
         public override void Button_Pressed()

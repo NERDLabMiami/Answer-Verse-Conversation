@@ -14,6 +14,8 @@ namespace VNEngine
 
             var myScript = target as WaitNode;
 
+            VNNodeEditorGUI.DrawCategoryBanner(VNNodeEditorGUI.NodeCategory.SceneSystem);
+
             myScript.waiting_for = (Wait_Until)EditorGUILayout.EnumPopup("What are we waiting for? ", myScript.waiting_for);
 
             // Only show some fields based on stat_type

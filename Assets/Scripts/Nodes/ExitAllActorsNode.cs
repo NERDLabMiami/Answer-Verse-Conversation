@@ -26,7 +26,7 @@ namespace VNEngine
                 for (int x = ActorManager.actors_on_scene.Count - 1; x >= 0; x--)
                 {
                     Debug.Log("Exit all: " + ActorManager.actors_on_scene[x].actor_name);
-                    Actor actor = ActorManager.actors_on_scene[x];
+                    ActorInstance actor = ActorManager.actors_on_scene[x];
 
                     if (fade_out)
                     {

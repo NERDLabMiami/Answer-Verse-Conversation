@@ -316,7 +316,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 0}
   actor: Professor Blanche
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Professor Blanche
   fetch_localized_stat_value: 0
@@ -477,7 +479,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -638,7 +642,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -704,6 +710,8 @@ MonoBehaviour:
   set_foreground: 0
   fade_out: 0
   fade_in: 0
+  fade_style: 0
+  fade_duration: 2
 --- !u!1 &48989966
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,16 +753,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 48989966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14efe4bb02d1ee841ab94338a44f1406, type: 3}
+  m_Script: {fileID: 11500000, guid: 5176883eab49b6d4e9279aae31e3ee3a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.SetBackground
   go_to_next_node: 1
   executed_from_load: 0
   sprite: {fileID: 21300000, guid: d30161e14a6229e40a96f4b6288e4eeb, type: 3}
   set_foreground: 1
   fade_out: 0
   fade_in: 1
-  wait_for_all_fading: 1
+  fade_style: 1
+  fade_duration: 2
 --- !u!1 &70214785
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,8 +811,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor_name: Matthew
-  new_image: {fileID: 21300000, guid: c1044e974a2d5e547a86d0d99a9b36aa, type: 3}
+  expression_name: Tallking A
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -952,7 +964,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -1018,7 +1032,6 @@ MonoBehaviour:
   - text: It's a dining hall.
     nextConversation: {fileID: 1895638012}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 0
     label: 
     category: 
@@ -1026,7 +1039,6 @@ MonoBehaviour:
   - text: It's all a hallucination!
     nextConversation: {fileID: 653104506}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 0
     label: 
     category: 
@@ -1287,7 +1299,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -1448,7 +1462,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -1566,7 +1582,6 @@ MonoBehaviour:
   - text: Just fine.
     nextConversation: {fileID: 979845540}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 0
     label: 
     category: 
@@ -1574,10 +1589,10 @@ MonoBehaviour:
   - text: Didn't we just have this conversation?
     nextConversation: {fileID: 681890577}
     requirements:
-    - traitKey: Humor
+    - enumTrait: 0
+      traitKey: Humor
       compare: 1
       value: 1
-    buttonModifier: {fileID: 0}
     enableLogging: 0
     label: 
     category: 
@@ -1585,10 +1600,10 @@ MonoBehaviour:
   - text: I want to slap you silly. Is your nose unbreakable?
     nextConversation: {fileID: 1433608398}
     requirements:
-    - traitKey: Humor
+    - enumTrait: 0
+      traitKey: Humor
       compare: 1
       value: 2
-    buttonModifier: {fileID: 0}
     enableLogging: 0
     label: 
     category: 
@@ -1645,8 +1660,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 2c0d76229dcc5cd46a218c7d8e4e0d53, type: 3}
+  expression_name: Happy
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -1749,6 +1767,7 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Beau
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name_from: 0
   entrance_type: 1
   fade_in_time: 1
@@ -1899,7 +1918,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -1915,6 +1936,84 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!1001 &259503947
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 154954, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_Name
+      value: Change Actor Image
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403902, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: pose
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403902, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: actor_data
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e7465fe87ca24b2584632fc0dfe51b7, type: 2}
+    - target: {fileID: 11403902, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: outfit_name
+      value: Campus Rep
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403902, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+      propertyPath: expression_name
+      value: Welcome
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+--- !u!4 &259503948 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 446614, guid: 0525e4528d69c7c40b354d4a011b5b0f, type: 3}
+  m_PrefabInstance: {fileID: 259503947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &261288275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,8 +2023,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 261288276}
-  - component: {fileID: 261288278}
   - component: {fileID: 261288277}
+  - component: {fileID: 261288278}
   m_Layer: 0
   m_Name: Fade in from Black
   m_TagString: Untagged
@@ -1971,16 +2070,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 261288275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14efe4bb02d1ee841ab94338a44f1406, type: 3}
+  m_Script: {fileID: 11500000, guid: 5176883eab49b6d4e9279aae31e3ee3a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.SetBackground
   go_to_next_node: 1
   executed_from_load: 0
   sprite: {fileID: 21300000, guid: d30161e14a6229e40a96f4b6288e4eeb, type: 3}
   set_foreground: 1
   fade_out: 1
   fade_in: 0
-  wait_for_all_fading: 1
+  fade_style: 1
+  fade_duration: 2
 --- !u!1 &263359577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,10 +2111,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1944794888}
-  - {fileID: 1098695091}
+  - {fileID: 1867804193}
   - {fileID: 1180875089}
   - {fileID: 1491372084}
+  - {fileID: 1944794888}
+  - {fileID: 1151700981}
   - {fileID: 1748718530}
   - {fileID: 1033322968}
   - {fileID: 944442109}
@@ -2220,7 +2321,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -2286,7 +2389,6 @@ MonoBehaviour:
   - text: Set a 10 minute timer at 8:30pm and review today's notes.
     nextConversation: {fileID: 1013799309}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: set_timer_830
     category: plan
@@ -2294,7 +2396,6 @@ MonoBehaviour:
   - text: I'll try to remember to review at night.
     nextConversation: {fileID: 1013799309}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: try_to_remember
     category: plan
@@ -2302,7 +2403,6 @@ MonoBehaviour:
   - text: I'm too busy for this.
     nextConversation: {fileID: 1013799309}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: too_busy
     category: plan
@@ -2310,7 +2410,6 @@ MonoBehaviour:
   - text: I'll study psychically while I sleep.
     nextConversation: {fileID: 1013799309}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: psychic_sleep
     category: plan
@@ -2318,7 +2417,6 @@ MonoBehaviour:
   - text: Great idea.
     nextConversation: {fileID: 1013799309}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_great
     category: attitude
@@ -2369,16 +2467,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 291300002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14efe4bb02d1ee841ab94338a44f1406, type: 3}
+  m_Script: {fileID: 11500000, guid: 5176883eab49b6d4e9279aae31e3ee3a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.SetBackground
   go_to_next_node: 1
   executed_from_load: 0
   sprite: {fileID: 21300000, guid: d30161e14a6229e40a96f4b6288e4eeb, type: 3}
   set_foreground: 1
   fade_out: 0
   fade_in: 1
-  wait_for_all_fading: 1
+  fade_style: 1
+  fade_duration: 2
 --- !u!1 &291362448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2581,7 +2680,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -2742,7 +2843,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -2808,7 +2911,6 @@ MonoBehaviour:
   - text: Bad idea for me.
     nextConversation: {fileID: 326572558}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_bad
     category: attitude
@@ -2816,7 +2918,6 @@ MonoBehaviour:
   - text: Skeptical.
     nextConversation: {fileID: 326572558}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_skeptical
     category: attitude
@@ -2824,7 +2925,6 @@ MonoBehaviour:
   - text: Neutral.
     nextConversation: {fileID: 326572558}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_neutral
     category: attitude
@@ -2832,7 +2932,6 @@ MonoBehaviour:
   - text: Sounds helpful.
     nextConversation: {fileID: 326572558}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_helpful
     category: attitude
@@ -2840,7 +2939,6 @@ MonoBehaviour:
   - text: Great idea.
     nextConversation: {fileID: 326572558}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_great
     category: attitude
@@ -2900,7 +2998,6 @@ MonoBehaviour:
   - text: like my call.
     nextConversation: {fileID: 447522908}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: auto_high
     category: perceived_autonomy
@@ -2908,7 +3005,6 @@ MonoBehaviour:
   - text: a mix.
     nextConversation: {fileID: 447522908}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: auto_mid
     category: perceived_autonomy
@@ -2916,7 +3012,6 @@ MonoBehaviour:
   - text: kind of pushy.
     nextConversation: {fileID: 447522908}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: auto_low
     category: perceived_autonomy
@@ -3149,6 +3244,7 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Beau
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name_from: 0
   entrance_type: 1
   fade_in_time: 1
@@ -3299,7 +3395,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -3315,6 +3413,72 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!1001 &353600937
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 166144, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_Name
+      value: Set Background
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450446, guid: c4684da3f8acae649a257a0058030440, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 84f1ab7114ae1b14e9deb432c43e457a, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c4684da3f8acae649a257a0058030440, type: 3}
+--- !u!4 &353600938 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 494442, guid: c4684da3f8acae649a257a0058030440, type: 3}
+  m_PrefabInstance: {fileID: 353600937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &368032530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3481,6 +3645,84 @@ MonoBehaviour:
   cur_node: 0
   active: 0
   finished_conversation: 0
+--- !u!1001 &388677584
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 173796, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_Name
+      value: Exit Actor
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 192.52957
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 118.55607
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471904, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: fade_out
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471904, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: slide_out
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471904, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: actor_data
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e7465fe87ca24b2584632fc0dfe51b7, type: 2}
+    - target: {fileID: 11471904, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+      propertyPath: fade_out_time
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+--- !u!4 &388677585 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 461042, guid: 9980a9ae44b2f02419cb43085699fa49, type: 3}
+  m_PrefabInstance: {fileID: 388677584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &413179147
 GameObject:
   m_ObjectHideFlags: 0
@@ -3570,6 +3812,120 @@ Transform:
   - {fileID: 100061582}
   m_Father: {fileID: 1403527251}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &436372853
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[0].text
+      value: Show a character thinking
+      objectReference: {fileID: 0}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[1].text
+      value: Show a point and click example
+      objectReference: {fileID: 0}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[2].text
+      value: Show a study logging example
+      objectReference: {fileID: 0}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[3].text
+      value: Show a study logging example
+      objectReference: {fileID: 0}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[4].text
+      value: Show a trait gating example
+      objectReference: {fileID: 0}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[0].nextConversation
+      value: 
+      objectReference: {fileID: 88262182}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[1].nextConversation
+      value: 
+      objectReference: {fileID: 382590259}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[2].nextConversation
+      value: 
+      objectReference: {fileID: 291362450}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[3].nextConversation
+      value: 
+      objectReference: {fileID: 291362450}
+    - target: {fileID: -5680976229756527417, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: choices.Array.data[4].nextConversation
+      value: 
+      objectReference: {fileID: 2131705729}
+    - target: {fileID: 217157056254741107, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: timer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 217157056254741107, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: default_choice
+      value: 
+      objectReference: {fileID: 263359579}
+    - target: {fileID: 3881481011633796227, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_Name
+      value: Show Choices - Timed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+--- !u!4 &436372854 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3881481011633796228, guid: 73b6a3dbab1a25248b494abc84748f27, type: 3}
+  m_PrefabInstance: {fileID: 436372853}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &440671630
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,7 +4169,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -3829,6 +4187,76 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!1001 &464818823
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 141046, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_Name
+      value: Enter Actor
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 192.52957
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 118.55607
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11406702, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: actor_data
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e7465fe87ca24b2584632fc0dfe51b7, type: 2}
+    - target: {fileID: 11406702, guid: c39416a1af462c84280af9990952608c, type: 3}
+      propertyPath: destination
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c39416a1af462c84280af9990952608c, type: 3}
+--- !u!4 &464818824 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 450854, guid: c39416a1af462c84280af9990952608c, type: 3}
+  m_PrefabInstance: {fileID: 464818823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &477057453 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 30640523791286705, guid: c6c96011818384806a063571a6eee403, type: 3}
@@ -3979,7 +4407,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -3995,6 +4425,22 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!1 &494373983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 7509519032867895243, guid: 050186d06c7d3ba4ebfcd126475dd89e, type: 3}
+  m_PrefabInstance: {fileID: 1823725679}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1823725680}
+  m_Layer: 0
+  m_Name: Right Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &514480021
 GameObject:
   m_ObjectHideFlags: 0
@@ -4079,7 +4525,6 @@ MonoBehaviour:
   - text: I'll do 5 minutes the next morning at breakfast.
     nextConversation: {fileID: 1166897824}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: makeup_breakfast
     category: plan
@@ -4087,7 +4532,6 @@ MonoBehaviour:
   - text: I'll make up for it later.
     nextConversation: {fileID: 1166897824}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: makeup_later
     category: plan
@@ -4095,7 +4539,6 @@ MonoBehaviour:
   - text: I'll probably drop it.
     nextConversation: {fileID: 1166897824}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: drop_it
     category: plan
@@ -4103,7 +4546,6 @@ MonoBehaviour:
   - text: I'll hire a study goblin.
     nextConversation: {fileID: 1166897824}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: study_goblin
     category: plan
@@ -4163,15 +4605,17 @@ MonoBehaviour:
   - text: Easy, I'd go with one horse sized duck.
     nextConversation: {fileID: 1272595405}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 0
     label: 
     category: 
     variant: 
   - text: 100 duck sized horses? That's a mighty army!
     nextConversation: {fileID: 1062918231}
-    requirements: []
-    buttonModifier: {fileID: 0}
+    requirements:
+    - enumTrait: 0
+      traitKey: Humor
+      compare: 1
+      value: 1
     enableLogging: 0
     label: 
     category: 
@@ -4231,6 +4675,8 @@ MonoBehaviour:
   set_foreground: 0
   fade_out: 0
   fade_in: 0
+  fade_style: 0
+  fade_duration: 2
 --- !u!1 &553864160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4376,7 +4822,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -4426,6 +4874,7 @@ Transform:
   - {fileID: 1403527251}
   - {fileID: 1657488472}
   - {fileID: 901507031}
+  - {fileID: 1889252758}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &569440213
@@ -4573,7 +5022,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -4785,7 +5236,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -5319,7 +5772,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -5385,7 +5840,6 @@ MonoBehaviour:
   - text: No way. Not tonight.
     nextConversation: {fileID: 1394154276}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: no_way
     category: intention
@@ -5393,7 +5847,6 @@ MonoBehaviour:
   - text: Maybe once in awhile.
     nextConversation: {fileID: 1394154276}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: maybe_once
     category: intention
@@ -5401,7 +5854,6 @@ MonoBehaviour:
   - text: If I remember, sure.
     nextConversation: {fileID: 1394154276}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: if_i_remember
     category: intention
@@ -5409,7 +5861,6 @@ MonoBehaviour:
   - text: Yeah, I can try.
     nextConversation: {fileID: 1394154276}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: yeah_try
     category: intention
@@ -5417,7 +5868,6 @@ MonoBehaviour:
   - text: I'm in. I'll make time.
     nextConversation: {fileID: 1394154276}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: im_in
     category: intention
@@ -5557,6 +6007,7 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Professor Blanche
+  actor_data: {fileID: 0}
   actor_name_from: 0
   entrance_type: 1
   fade_in_time: 1
@@ -5682,8 +6133,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 0becc12b0428c1a4ca4186ec1dcbdf17, type: 3}
+  expression_name: Angry
+  outfit_name: 
+  pose: 0
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -5734,6 +6188,7 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Matthew
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor_name_from: 0
   entrance_type: 1
   fade_in_time: 0
@@ -5786,8 +6241,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: c3fa0d39780303f45bb44e7ef12244a8, type: 3}
+  expression_name: Talking A
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -5936,7 +6394,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -5999,8 +6459,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 2b46889af416898408ded7078fcd42cc, type: 3}
+  expression_name: Confused
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -6134,6 +6597,7 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Beau
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name_from: 0
   entrance_type: 1
   fade_in_time: 1
@@ -6185,6 +6649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_to_next_node: 1
   executed_from_load: 0
+  actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: 0c1c4af5d7b094c0e92e8f065b16220f, type: 2}
   actor_name: Eric
 --- !u!1 &948801792
 GameObject:
@@ -6233,8 +6699,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 2eeacb13317d61d4682c95cc25b077dc, type: 3}
+  expression_name: Neutral
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -6383,7 +6852,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -6749,7 +7220,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 0}
   actor: Professor Blanche
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Professor Blanche
   fetch_localized_stat_value: 0
@@ -6765,6 +7238,22 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!1 &1017838471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6434766446882369677, guid: 79d0d85a69681524e9cfa5e12b3083fd, type: 3}
+  m_PrefabInstance: {fileID: 1827714966}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1827714967}
+  m_Layer: 0
+  m_Name: Center Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1033322967
 GameObject:
   m_ObjectHideFlags: 0
@@ -6812,8 +7301,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: 0c1c4af5d7b094c0e92e8f065b16220f, type: 2}
   actor_name: Eric
-  new_image: {fileID: 21300000, guid: df5cb74e5629d184ca70241b018718c9, type: 3}
+  expression_name: Neutral
+  outfit_name: 
+  pose: 2
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -6918,11 +7410,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2202413b007c06439e79e6c2eda6c6d, type: 3}
---- !u!224 &1035914279 stripped
+--- !u!224 &1035914279
 RectTransform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 4909160717508902567, guid: f2202413b007c06439e79e6c2eda6c6d, type: 3}
   m_PrefabInstance: {fileID: 1035914278}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507631189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 708572963}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -600, y: -800}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1050790364
 GameObject:
   m_ObjectHideFlags: 0
@@ -6970,8 +7476,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 0331339ccdb7f784fb487862d68e422b, type: 3}
+  expression_name: Neutral
+  outfit_name: 
+  pose: 2
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -7025,7 +7534,6 @@ MonoBehaviour:
   - text: Yes
     nextConversation: {fileID: 413179149}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: consent_yes
     category: consent
@@ -7033,7 +7541,6 @@ MonoBehaviour:
   - text: Not today
     nextConversation: {fileID: 1614775693}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: consent_no
     category: consent
@@ -7143,7 +7650,6 @@ MonoBehaviour:
   - text: Set a 10 minute timer at 8:30pm and review today's notes.
     nextConversation: {fileID: 1011199962}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: set_timer_830
     category: plan
@@ -7151,7 +7657,6 @@ MonoBehaviour:
   - text: I'll try to remember to review at night.
     nextConversation: {fileID: 1011199962}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: try_to_remember
     category: plan
@@ -7159,7 +7664,6 @@ MonoBehaviour:
   - text: I'm too busy for this.
     nextConversation: {fileID: 1011199962}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: too_busy
     category: plan
@@ -7167,7 +7671,6 @@ MonoBehaviour:
   - text: I'll study psychically while I sleep.
     nextConversation: {fileID: 1011199962}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: psychic_sleep
     category: plan
@@ -7175,7 +7678,6 @@ MonoBehaviour:
   - text: Great idea.
     nextConversation: {fileID: 1011199962}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: att_great
     category: attitude
@@ -7330,7 +7832,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -7346,72 +7850,68 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
---- !u!1 &1098695090
-GameObject:
+--- !u!1001 &1113890684
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1098695091}
-  - component: {fileID: 1098695093}
-  - component: {fileID: 1098695092}
-  m_Layer: 0
-  m_Name: Fade in from Black
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1098695091
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098695090}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 263359578}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1098695092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 616146889872823457, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_Name
+      value: Begin Scene Setup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+--- !u!4 &1113890685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+  m_PrefabInstance: {fileID: 1113890684}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098695090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae561942d02efd6479240df1ebb914ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  go_to_next_node: 1
-  executed_from_load: 0
---- !u!114 &1098695093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098695090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14efe4bb02d1ee841ab94338a44f1406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  go_to_next_node: 1
-  executed_from_load: 0
-  sprite: {fileID: 21300000, guid: d30161e14a6229e40a96f4b6288e4eeb, type: 3}
-  set_foreground: 1
-  fade_out: 1
-  fade_in: 0
-  wait_for_all_fading: 1
 --- !u!1 &1134035947
 GameObject:
   m_ObjectHideFlags: 0
@@ -7557,7 +8057,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -7614,16 +8116,141 @@ MonoBehaviour:
   m_GameObject: {fileID: 1136875858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14efe4bb02d1ee841ab94338a44f1406, type: 3}
+  m_Script: {fileID: 11500000, guid: 5176883eab49b6d4e9279aae31e3ee3a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.SetBackground
   go_to_next_node: 1
   executed_from_load: 0
   sprite: {fileID: 21300000, guid: d30161e14a6229e40a96f4b6288e4eeb, type: 3}
   set_foreground: 1
   fade_out: 0
   fade_in: 1
-  wait_for_all_fading: 1
+  fade_style: 1
+  fade_duration: 2
+--- !u!1001 &1151700980
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 263359578}
+    m_Modifications:
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -564.1183
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1966.9231
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712083848724205299, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_Name
+      value: End Scene Setup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+--- !u!4 &1151700981 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+  m_PrefabInstance: {fileID: 1151700980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1159872591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712083848724205299, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+      propertyPath: m_Name
+      value: End Scene Setup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+--- !u!4 &1159872592 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2873715412717084580, guid: d482a158851f0426495dd1e78f14170b, type: 3}
+  m_PrefabInstance: {fileID: 1159872591}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1166897822
 GameObject:
   m_ObjectHideFlags: 0
@@ -7725,7 +8352,6 @@ MonoBehaviour:
   - text: I'll do 5 minutes the next morning at breakfast.
     nextConversation: {fileID: 172265255}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: makeup_breakfast
     category: plan
@@ -7733,7 +8359,6 @@ MonoBehaviour:
   - text: I'll make up for it later.
     nextConversation: {fileID: 172265255}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: makeup_later
     category: plan
@@ -7741,7 +8366,6 @@ MonoBehaviour:
   - text: I'll probably drop it.
     nextConversation: {fileID: 172265255}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: drop_it
     category: plan
@@ -7749,7 +8373,6 @@ MonoBehaviour:
   - text: I'll hire a study goblin.
     nextConversation: {fileID: 172265255}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: study_goblin
     category: plan
@@ -7952,10 +8575,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Beau
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name_from: 0
-  entrance_type: 1
+  entrance_type: 2
   fade_in_time: 1
-  destination: 3
+  destination: 0
   custom_position: {fileID: 1823725680}
 --- !u!1 &1228654342
 GameObject:
@@ -8052,7 +8676,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1255103677}
   - component: {fileID: 1255103676}
-  - component: {fileID: 1255103678}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8126,18 +8749,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1255103678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255103674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f797db7bd7c9458091ec531d1075ba9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1257706949
 GameObject:
   m_ObjectHideFlags: 0
@@ -8215,6 +8826,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -8306,8 +8918,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1293820537}
-  - component: {fileID: 1293820539}
   - component: {fileID: 1293820538}
+  - component: {fileID: 1293820539}
   m_Layer: 0
   m_Name: Fade in from Black
   m_TagString: Untagged
@@ -8353,16 +8965,87 @@ MonoBehaviour:
   m_GameObject: {fileID: 1293820536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14efe4bb02d1ee841ab94338a44f1406, type: 3}
+  m_Script: {fileID: 11500000, guid: 5176883eab49b6d4e9279aae31e3ee3a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.SetBackground
   go_to_next_node: 1
   executed_from_load: 0
   sprite: {fileID: 21300000, guid: d30161e14a6229e40a96f4b6288e4eeb, type: 3}
   set_foreground: 1
   fade_out: 1
   fade_in: 0
-  wait_for_all_fading: 1
+  fade_style: 1
+  fade_duration: 2
+--- !u!1001 &1295207539
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889252758}
+    m_Modifications:
+    - target: {fileID: 154954, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_Name
+      value: Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427020, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: text
+      value: Hi! How can I help?
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427020, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+      propertyPath: actor_data
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e7465fe87ca24b2584632fc0dfe51b7, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+--- !u!4 &1295207540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 446614, guid: 4f10f75c15dc9ad4d83fcd677e7eca85, type: 3}
+  m_PrefabInstance: {fileID: 1295207539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1300639133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8573,7 +9256,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -8639,7 +9324,6 @@ MonoBehaviour:
   - text: No way. Not tonight.
     nextConversation: {fileID: 1228654343}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: no_way
     category: intention
@@ -8647,7 +9331,6 @@ MonoBehaviour:
   - text: Maybe once in awhile.
     nextConversation: {fileID: 1228654343}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: maybe_once
     category: intention
@@ -8655,7 +9338,6 @@ MonoBehaviour:
   - text: If I remember, sure.
     nextConversation: {fileID: 1228654343}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: if_i_remember
     category: intention
@@ -8663,7 +9345,6 @@ MonoBehaviour:
   - text: Yeah, I can try.
     nextConversation: {fileID: 1228654343}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: yeah_try
     category: intention
@@ -8671,7 +9352,6 @@ MonoBehaviour:
   - text: I'm in. I'll make time.
     nextConversation: {fileID: 1228654343}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: im_in
     category: intention
@@ -8826,7 +9506,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -8987,7 +9669,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -9222,7 +9906,6 @@ MonoBehaviour:
   - text: If I plan it, I can always fit in 10 minutes.
     nextConversation: {fileID: 2027151549}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: efficacy_high
     category: self_efficacy
@@ -9230,7 +9913,6 @@ MonoBehaviour:
   - text: Some days I could, some days no.
     nextConversation: {fileID: 2027151549}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: efficacy_mid
     category: self_efficacy
@@ -9238,7 +9920,6 @@ MonoBehaviour:
   - text: Busy is busy. I won't keep it up.
     nextConversation: {fileID: 2027151549}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: efficacy_low
     category: self_efficacy
@@ -9295,8 +9976,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 389d071e723b7b445845de26acfe7f33, type: 3}
+  expression_name: Surprised
+  outfit_name: 
+  pose: 2
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -9497,7 +10181,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -9613,8 +10299,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 2c0d76229dcc5cd46a218c7d8e4e0d53, type: 3}
+  expression_name: Happy
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -9665,11 +10354,28 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name: Eric
+  actor_data: {fileID: 11400000, guid: 0c1c4af5d7b094c0e92e8f065b16220f, type: 2}
   actor_name_from: 0
-  entrance_type: 1
+  entrance_type: 2
   fade_in_time: 1
-  destination: 3
+  destination: 1
   custom_position: {fileID: 1035914279}
+--- !u!1 &1507631189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4909160717508902560, guid: f2202413b007c06439e79e6c2eda6c6d, type: 3}
+  m_PrefabInstance: {fileID: 1035914278}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035914279}
+  m_Layer: 0
+  m_Name: Left Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1545994664
 GameObject:
   m_ObjectHideFlags: 0
@@ -9815,7 +10521,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -10058,6 +10766,8 @@ MonoBehaviour:
   set_foreground: 0
   fade_out: 0
   fade_in: 0
+  fade_style: 0
+  fade_duration: 2
 --- !u!1 &1586485256
 GameObject:
   m_ObjectHideFlags: 0
@@ -10108,6 +10818,8 @@ MonoBehaviour:
   set_foreground: 0
   fade_out: 0
   fade_in: 0
+  fade_style: 0
+  fade_duration: 2
 --- !u!1 &1599297025
 GameObject:
   m_ObjectHideFlags: 0
@@ -10253,7 +10965,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -10319,7 +11033,6 @@ MonoBehaviour:
   - text: Crystal clear. I know exactly when and how.
     nextConversation: {fileID: 100061583}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: pc_crystal_clear
     category: plan_clarity
@@ -10327,7 +11040,6 @@ MonoBehaviour:
   - text: Pretty clear.
     nextConversation: {fileID: 100061583}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: pc_pretty_clear
     category: plan_clarity
@@ -10335,7 +11047,6 @@ MonoBehaviour:
   - text: Somewhat clear.
     nextConversation: {fileID: 100061583}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: pc_somewhat
     category: plan_clarity
@@ -10343,7 +11054,6 @@ MonoBehaviour:
   - text: Kinda fuzzy.
     nextConversation: {fileID: 100061583}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: pc_fuzzy
     category: plan_clarity
@@ -10351,7 +11061,6 @@ MonoBehaviour:
   - text: Not clear at all.
     nextConversation: {fileID: 100061583}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: pc_not_clear
     category: plan_clarity
@@ -10560,7 +11269,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -10884,7 +11595,6 @@ MonoBehaviour:
   - text: Calendar alarm named "10-min review."
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: calendar
     category: plan
@@ -10892,7 +11602,6 @@ MonoBehaviour:
   - text: Somewhere I'll see it.
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: somewhere_see_it
     category: plan
@@ -10900,7 +11609,6 @@ MonoBehaviour:
   - text: No reminder.
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: no_reminder
     category: plan
@@ -10908,7 +11616,6 @@ MonoBehaviour:
   - text: On a carrier pigeon.
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: carrier_pigeon
     category: plan
@@ -11251,8 +11958,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_to_next_node: 1
   executed_from_load: 0
-  actor_name_from: 0
+  actor_name_from: 1
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -11413,7 +12122,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: 0c1c4af5d7b094c0e92e8f065b16220f, type: 2}
   actor: Eric
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Eric
   fetch_localized_stat_value: 0
@@ -11652,8 +12363,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 4846d93041e69d347aecb106bede02e9, type: 3}
+  expression_name: Surprised
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -11765,8 +12479,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 2c0d76229dcc5cd46a218c7d8e4e0d53, type: 3}
+  expression_name: Happy
+  outfit_name: 
+  pose: 1
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -11871,11 +12588,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 050186d06c7d3ba4ebfcd126475dd89e, type: 3}
---- !u!224 &1823725680 stripped
+--- !u!224 &1823725680
 RectTransform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 7509519032867895242, guid: 050186d06c7d3ba4ebfcd126475dd89e, type: 3}
   m_PrefabInstance: {fileID: 1823725679}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494373983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 708572963}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 600, y: -800}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!1001 &1827714966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11977,11 +12708,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79d0d85a69681524e9cfa5e12b3083fd, type: 3}
---- !u!224 &1827714967 stripped
+--- !u!224 &1827714967
 RectTransform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 6434766446882369676, guid: 79d0d85a69681524e9cfa5e12b3083fd, type: 3}
   m_PrefabInstance: {fileID: 1827714966}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017838471}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 708572963}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -800}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1856512588
 GameObject:
   m_ObjectHideFlags: 0
@@ -12127,14 +12872,15 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
   dialogue_from: 0
   localized_key: 
-  text: First, a quick gut-check. If I suggested a 10-minute review each night, which
-    reply sounds most like you right now?
+  text: First, a quick gut-check. If I suggested a 10-minute review each night, which reply sounds most like you right now?
   talking_beeps: {fileID: 0}
   darken_all_other_characters: 1
   bring_speaker_to_front: 1
@@ -12144,6 +12890,68 @@ MonoBehaviour:
   done_printing: 0
   no_voice_playing: 0
   done_voice_clip: 0
+--- !u!1001 &1867804192
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 263359578}
+    m_Modifications:
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -564.1183
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1966.9231
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 616146889872823457, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+      propertyPath: m_Name
+      value: Begin Scene Setup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+--- !u!4 &1867804193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 572289348848320564, guid: 9bad15998c0bb4d30bd728bf72f8bad0, type: 3}
+  m_PrefabInstance: {fileID: 1867804192}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1868928649
 GameObject:
   m_ObjectHideFlags: 0
@@ -12289,7 +13097,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -12356,6 +13166,63 @@ Transform:
   - {fileID: 117506024}
   - {fileID: 284347807}
   m_Father: {fileID: 368032531}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1889252756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889252758}
+  - component: {fileID: 1889252757}
+  m_Layer: 0
+  m_Name: Example - Timed Choice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1889252757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889252756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.ConversationManager
+  destroy_when_finished: 0
+  start_conversation_when_done: {fileID: 0}
+  cur_node: 0
+  active: 0
+  finished_conversation: 0
+--- !u!4 &1889252758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889252756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1113890685}
+  - {fileID: 353600938}
+  - {fileID: 464818824}
+  - {fileID: 259503948}
+  - {fileID: 1159872592}
+  - {fileID: 1295207540}
+  - {fileID: 388677585}
+  - {fileID: 436372854}
+  m_Father: {fileID: 561909551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1895638010
 GameObject:
@@ -12553,7 +13420,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 0}
   actor: Professor Blanche
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Professor Blanche
   fetch_localized_stat_value: 0
@@ -12750,7 +13619,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 990f47bf881fcf6498703fcfa1fa6e98, type: 3}
   set_foreground: 0
   fade_out: 0
-  fade_in: 0
+  fade_in: 1
+  fade_style: 0
+  fade_duration: 2
 --- !u!1 &1945502252
 GameObject:
   m_ObjectHideFlags: 0
@@ -12896,7 +13767,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -12962,7 +13835,6 @@ MonoBehaviour:
   - text: Calendar alarm named "10-min review."
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: calendar
     category: plan
@@ -12970,7 +13842,6 @@ MonoBehaviour:
   - text: Somewhere I'll see it.
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: somewhere_see_it
     category: plan
@@ -12978,7 +13849,6 @@ MonoBehaviour:
   - text: No reminder.
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: no_reminder
     category: plan
@@ -12986,7 +13856,6 @@ MonoBehaviour:
   - text: On a carrier pigeon.
     nextConversation: {fileID: 708709358}
     requirements: []
-    buttonModifier: {fileID: 0}
     enableLogging: 1
     label: carrier_pigeon
     category: plan
@@ -13236,8 +14105,11 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor_name: Beau
-  new_image: {fileID: 21300000, guid: 0becc12b0428c1a4ca4186ec1dcbdf17, type: 3}
+  expression_name: Angry
+  outfit_name: 
+  pose: 0
   fade_in_new_image: 0
   lighten_actor: 0
   bring_actor_to_front: 0
@@ -13566,7 +14438,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -13727,7 +14601,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -13972,7 +14848,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: d95cdd99923ef4179b30fa5f48ead02c, type: 2}
   actor: Matthew
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Matthew
   fetch_localized_stat_value: 0
@@ -14229,6 +15107,8 @@ MonoBehaviour:
   set_foreground: 0
   fade_out: 0
   fade_in: 0
+  fade_style: 0
+  fade_duration: 2
 --- !u!1 &2131705727
 GameObject:
   m_ObjectHideFlags: 0
@@ -14429,7 +15309,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0
@@ -14590,7 +15472,9 @@ MonoBehaviour:
   go_to_next_node: 1
   executed_from_load: 0
   actor_name_from: 0
+  actor_data: {fileID: 11400000, guid: a7204d3ead17548319a5aa4a209ff0fe, type: 2}
   actor: Beau
+  speaker_name_matches_actor: 1
   speaker_name_from: 0
   textbox_title: Beau
   fetch_localized_stat_value: 0

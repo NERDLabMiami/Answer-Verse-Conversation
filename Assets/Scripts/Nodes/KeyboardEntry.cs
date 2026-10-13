@@ -5,7 +5,7 @@ using TMPro;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Opens an on-screen text input field and writes the entered text to a string stat.
     public class KeyboardEntry : Node
     {
         public GameObject textEntryPrefab;

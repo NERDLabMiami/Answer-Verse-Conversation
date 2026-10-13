@@ -10,15 +10,26 @@ namespace VNEngine
     {
         // In the DialogueCanvas, under AudioManager that creates a new object for every new sound effect to play, each of which uses the sound effects volume slider for volume level
         public bool use_audiosource_on_this_object;
+#if ANSWERVERSE_FMOD
+        public string event_path;
+#else
         public AudioClip sound_clip;
+#endif
 
 
         public override void Run_Node()
         {
+#if ANSWERVERSE_FMOD
+            if (!string.IsNullOrEmpty(event_path) && use_audiosource_on_this_object)
+                AudioManager.audio_manager.Play_Sound_Effect_FMOD(event_path);
+            else
+                gameObject.GetComponent<AudioSource>().Play();
+#else
             if (sound_clip == null || !use_audiosource_on_this_object)
                 gameObject.GetComponent<AudioSource>().Play();
             else
                 AudioManager.audio_manager.Play_Sound_Effect(sound_clip);
+#endif
 
             Finish_Node();
         }

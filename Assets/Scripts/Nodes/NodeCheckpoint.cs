@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Advances the week checkpoint stat (if later than the current one) and saves a checkpoint.
     public class NodeCheckpoint : Node
     {
         public int week;

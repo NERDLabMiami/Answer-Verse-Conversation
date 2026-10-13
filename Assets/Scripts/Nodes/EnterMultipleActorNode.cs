@@ -25,14 +25,14 @@ namespace VNEngine
             for(int i = 0; i < actor_name.Length; i++)
             {
                 actual_actor_name[i] = VNSceneManager.GetStringFromSource(actor_name[i], actor_name_from);
-                Actor actor_script;
+                ActorInstance actor_script;
 
                 // Check if the actor is already present
                 if (ActorManager.Is_Actor_On_Scene(actual_actor_name[i]))
                 {
                     // Actor is already on the scene
                     Debug.Log("Actor " + actual_actor_name + " already on scene");
-                    actor_script = ActorManager.Get_Actor(actual_actor_name[i]).GetComponent<Actor>();
+                    actor_script = ActorManager.Get_Actor(actual_actor_name[i]);
                     Finish_Node();
                     return;
                 }

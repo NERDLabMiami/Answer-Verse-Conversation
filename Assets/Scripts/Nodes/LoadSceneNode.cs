@@ -8,7 +8,9 @@ namespace VNEngine
     public class LoadSceneNode : Node
     {
         public string level_to_load;
-        private string autoSaveScene = "Cutscene";
+
+        [SerializeField] [Tooltip("If set, relays through this interstitial scene (which should save then load 'Scene After Save' itself) instead of loading level_to_load directly.")]
+        private string autoSaveScene = "";
 
         public bool async_loading = false;  // If you want to use a loading screen, set this to true
 
@@ -16,16 +18,19 @@ namespace VNEngine
         public override void Run_Node()
         {
             // Simply loads the specified scene
-            Debug.Log("Switching level: " + level_to_load + " after playing cutscene...");
+            Debug.Log("Switching level: " + level_to_load + "...");
             PlayerPrefs.SetString("Scene After Save", level_to_load);
             Time.timeScale = 1;
 
             if (!async_loading)
-//                UnityEngine.SceneManagement.SceneManager.LoadScene(level_to_load);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(autoSaveScene);
-
-                    else
-                        StartCoroutine(Async_Load_Level());
+            {
+                if (!string.IsNullOrEmpty(autoSaveScene))
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(autoSaveScene);
+                else
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(level_to_load);
+            }
+            else
+                StartCoroutine(Async_Load_Level());
         }
 
 
@@ -36,8 +41,8 @@ namespace VNEngine
             string active_scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             DestroyImmediate(UnityEngine.EventSystems.EventSystem.current.gameObject);
 
-            //            AsyncOperation AO = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(level_to_load, UnityEngine.SceneManagement.LoadSceneMode.Additive);
-            AsyncOperation AO = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(autoSaveScene, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            string sceneToLoad = !string.IsNullOrEmpty(autoSaveScene) ? autoSaveScene : level_to_load;
+            AsyncOperation AO = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneToLoad, UnityEngine.SceneManagement.LoadSceneMode.Additive);
             AO.allowSceneActivation = false;
             int progress = (int)(AO.progress * 100f);
             while (AO.progress < 0.9f)
@@ -60,7 +65,7 @@ namespace VNEngine
             UIManager.ui_manager.loading_text.gameObject.SetActive(false);
 
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(active_scene);
-            Debug.Log("Done Async loading & switching to level: " + autoSaveScene);
+            Debug.Log("Done Async loading & switching to level: " + sceneToLoad);
         }
 
 

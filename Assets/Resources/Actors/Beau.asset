@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ca6937d41114c4f8d9532b288dcbc8, type: 3}
+  m_Name: Beau
+  m_EditorClassIdentifier: AnswerVerseVNEngine::VNEngine.Actor
+  actor_name: Beau
+  display_name: 
+  outfits:
+  - outfit_name: Default
+    expressions:
+    - name: Angry
+      pose: 0
+      sprite: {fileID: 21300000, guid: 0becc12b0428c1a4ca4186ec1dcbdf17, type: 3}
+    - name: Confused
+      pose: 2
+      sprite: {fileID: 21300000, guid: 649e4ba168bf0db4a936723b7e2010f7, type: 3}
+    - name: Confused
+      pose: 1
+      sprite: {fileID: 21300000, guid: 2b46889af416898408ded7078fcd42cc, type: 3}
+    - name: Happy
+      pose: 1
+      sprite: {fileID: 21300000, guid: 2c0d76229dcc5cd46a218c7d8e4e0d53, type: 3}
+    - name: Neutral
+      pose: 2
+      sprite: {fileID: 21300000, guid: 0331339ccdb7f784fb487862d68e422b, type: 3}
+    - name: Neutral
+      pose: 1
+      sprite: {fileID: 21300000, guid: 2eeacb13317d61d4682c95cc25b077dc, type: 3}
+    - name: Talking A
+      pose: 2
+      sprite: {fileID: 21300000, guid: dc8a2f222fac14c4494f3421432a8a60, type: 3}
+    - name: Talking A
+      pose: 1
+      sprite: {fileID: 21300000, guid: c3fa0d39780303f45bb44e7ef12244a8, type: 3}
+    - name: Talking B
+      pose: 2
+      sprite: {fileID: 21300000, guid: df8b2381806e622499bae97769fc1b96, type: 3}
+    - name: Talking B
+      pose: 1
+      sprite: {fileID: 21300000, guid: e631ef6e2025ef44db5c65cc768b48fb, type: 3}
+    - name: Sad
+      pose: 1
+      sprite: {fileID: 21300000, guid: 494859235186c1d428cf52df32a98e43, type: 3}
+    - name: Scared
+      pose: 2
+      sprite: {fileID: 21300000, guid: 397fb41caf05bad42820f66abb3479b1, type: 3}
+    - name: Scared
+      pose: 1
+      sprite: {fileID: 21300000, guid: 541dd62ba7383824ea4306972eef8607, type: 3}
+    - name: Surprised
+      pose: 2
+      sprite: {fileID: 21300000, guid: 389d071e723b7b445845de26acfe7f33, type: 3}
+    - name: Surprised
+      pose: 1
+      sprite: {fileID: 21300000, guid: 4846d93041e69d347aecb106bede02e9, type: 3}
+  default_outfit_index: 0
+  default_expression_index: 5

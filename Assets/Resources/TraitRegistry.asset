@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberedTraitKeys:
   - Humor
-  - Charisma
   - Empathy
-  - Grades
-  booleanTraitKeys:
-  - 
+  - Charisma
+  booleanTraitKeys: []
   stringTraitKeys: []

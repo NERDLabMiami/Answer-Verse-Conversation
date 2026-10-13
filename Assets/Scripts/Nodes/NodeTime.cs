@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Advances the player's elapsed-weeks stat.
     public class NodeTime : Node
     {
         public float weeksPassed;

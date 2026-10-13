@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Pans every actor currently on scene by a fixed offset.
     public class PanNode : Node
     {
         public Vector3 desiredPosition;
         // Called initially when the node is run, put most of your logic here
         public override void Run_Node()
         {
-            Actor[] actors = ActorManager.actors_on_scene.ToArray();
+            ActorInstance[] actors = ActorManager.actors_on_scene.ToArray();
             for(int i = 0; i < actors.Length; i++)
             {
                 actors[i].desired_position += desiredPosition;

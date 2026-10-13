@@ -9,6 +9,7 @@ namespace VNEngine
     {
 
         public string actor_name;
+        public Actor actor_data;    // Reference to the Actor asset to bring on scene. Used when actor_name_from == Text_From_Editor
         public Dialogue_Source actor_name_from = Dialogue_Source.Text_From_Editor;    // Does our speakers name come from the editor, or a CSV?
         private string actual_actor_name;   // Value actually used within script. It's value depends on what actor_name_from is set to
         public Entrance_Type entrance_type;
@@ -21,34 +22,61 @@ namespace VNEngine
 
         public override void Run_Node()
         {
-            // Get our actor name
-            actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+            ActorInstance actor_script;
 
-            Actor actor_script;
-
-            // Check if the actor is already present
-            if (ActorManager.Is_Actor_On_Scene(actual_actor_name))
+            // Text_From_Editor uses the drag-and-drop actor_data (immune to typos); the CSV/Stat
+            // sources fall back to the freeform string field, since a dynamically-determined actor can't
+            // be known as an object reference at edit time.
+            if (actor_name_from == Dialogue_Source.Text_From_Editor)
             {
-                // Actor is already on the scene
+                if (actor_data == null)
+                {
+                    Debug.LogError("EnterActorNode has no Actor assigned.", this.gameObject);
+                    Finish_Node();
+                    return;
+                }
+                actual_actor_name = actor_data.actor_name;
 
-                actor_script = ActorManager.Get_Actor(actual_actor_name).GetComponent<Actor>();
-                Finish_Node();
-                return;
+                // Check if the actor is already present
+                if (ActorManager.Is_Actor_On_Scene(actor_data))
+                {
+                    actor_script = ActorManager.Get_Actor(actor_data);
+                    Finish_Node();
+                    return;
+                }
+
+                if (VNSceneManager.verbose_debug_logs)
+                    Debug.Log("Creating new actor " + actual_actor_name);
+
+                actor_script = (destination == Actor_Positions.CUSTOM && custom_position != null)
+                    ? ActorManager.Instantiate_Actor(actor_data, destination, custom_position)
+                    : ActorManager.Instantiate_Actor(actor_data, destination);
             }
             else
             {
+                // Get our actor name
+                actual_actor_name = VNSceneManager.GetStringFromSource(actor_name, actor_name_from);
+
+                // Check if the actor is already present
+                if (ActorManager.Is_Actor_On_Scene(actual_actor_name))
+                {
+                    actor_script = ActorManager.Get_Actor(actual_actor_name);
+                    Finish_Node();
+                    return;
+                }
+
                 // Actor is not in the scene. Instantiate it
                 if (VNSceneManager.verbose_debug_logs)
                     Debug.Log("Creating new actor " + actual_actor_name);
 
-                if (destination == Actor_Positions.CUSTOM && custom_position != null)
-                    actor_script = ActorManager.Instantiate_Actor(actual_actor_name, destination, custom_position);
-                else
-                    actor_script = ActorManager.Instantiate_Actor(actual_actor_name, destination);
+                actor_script = (destination == Actor_Positions.CUSTOM && custom_position != null)
+                    ? ActorManager.Instantiate_Actor(actual_actor_name, destination, custom_position)
+                    : ActorManager.Instantiate_Actor(actual_actor_name, destination);
             }
             SaveManager.SetSaveFeature(this, actor_script.gameObject);
 
-            switch (entrance_type)
+            var effective_entrance = UIManager.scene_setup_active ? Entrance_Type.None : entrance_type;
+            switch (effective_entrance)
             {
                 case Entrance_Type.Slide_In:
                     actor_script.Slide_In(destination, 2.0f);
@@ -60,6 +88,7 @@ namespace VNEngine
                     StartCoroutine(Wait(fade_in_time + 0.2f));
                     break;
                 case Entrance_Type.None:
+                    actor_script.Place_At_Position(destination);
                     Finish_Node();
                     break;
             }
@@ -79,7 +108,7 @@ namespace VNEngine
 
         public override void Finish_Node()
         {
-            //StopAllCoroutines();
+            StopAllCoroutines();
 
             base.Finish_Node();
         }

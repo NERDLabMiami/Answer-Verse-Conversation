@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace VNEngine
 {
-    // Not used in real code. Merely a template to copy and paste from when creating new nodes.
+    // Assigns or completes a to-do task via TaskManager.
     public class NodeTask : Node
     {
         public string taskTitle;
